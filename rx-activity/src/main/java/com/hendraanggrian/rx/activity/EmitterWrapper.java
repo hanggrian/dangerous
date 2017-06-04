@@ -1,8 +1,19 @@
 package com.hendraanggrian.rx.activity;
 
-/**
- * Created by hendraanggrian on 04/06/2017.
- */
+import android.support.annotation.NonNull;
 
-public class EmitterWrapper {
+import io.reactivex.ObservableEmitter;
+
+/**
+ * @author Hendra Anggrian (hendraanggrian@gmail.com)
+ */
+final class EmitterWrapper<T> {
+
+    final boolean isSimple;
+    @NonNull final ObservableEmitter<T> emitter;
+
+    EmitterWrapper(boolean isSimple, @NonNull ObservableEmitter<T> emitter) {
+        this.isSimple = isSimple;
+        this.emitter = emitter;
+    }
 }
