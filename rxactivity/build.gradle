@@ -1,0 +1,19 @@
+apply plugin: 'com.android.library'
+// apply plugin: 'com.novoda.bintray-release'
+// apply from: 'https://raw.githubusercontent.com/HendraAnggrian/hendraanggrian.github.io/master/bintray.gradle'
+
+android {
+    compileSdkVersion versions.sdk.target
+    buildToolsVersion versions.buildTools
+    defaultConfig {
+        minSdkVersion versions.sdk.min
+        targetSdkVersion versions.sdk.target
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+    }
+}
+
+dependencies {
+    compile "com.android.support:support-fragment:$versions.support"
+    compile "com.hendraanggrian:support-utils:$versions.utils"
+    compile "io.reactivex.rxjava2:rxjava:$versions.rxjava"
+}
