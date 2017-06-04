@@ -14,6 +14,5 @@ android {
 
 dependencies {
     compile "com.android.support:support-fragment:$versions.support"
-    compile "com.hendraanggrian:support-utils:$versions.utils"
     compile "io.reactivex.rxjava2:rxjava:$versions.rxjava"
 }

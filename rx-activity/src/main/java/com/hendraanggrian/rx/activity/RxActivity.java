@@ -1,4 +1,4 @@
-package com.hendraanggrian.rxactivity;
+package com.hendraanggrian.rx.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,7 +25,7 @@ public final class RxActivity {
     }
 
     @NonNull
-    public static Observable<Result> startForResultAAA(@NonNull final Activity activity, @NonNull final Intent intent) {
+    public static Observable<Result> startForAny(@NonNull final Activity activity, @NonNull final Intent intent) {
         return Observable.create(new ObservableOnSubscribe<Result>() {
             @Override
             public void subscribe(@io.reactivex.annotations.NonNull ObservableEmitter<Result> e) throws Exception {
@@ -38,7 +38,7 @@ public final class RxActivity {
 
     @NonNull
     public static Observable<Intent> startForResult(@NonNull final Activity activity, @NonNull final Intent intent) {
-        return startForResultAAA(activity, intent).map(new Function<Result, Intent>() {
+        return startForAny(activity, intent).map(new Function<Result, Intent>() {
             @Override
             public Intent apply(@io.reactivex.annotations.NonNull Result result) throws Exception {
                 return result.data;

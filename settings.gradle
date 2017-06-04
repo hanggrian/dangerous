@@ -1,2 +1,2 @@
-include ':rxactivity'
+include ':rx-activity'
 include ':example'

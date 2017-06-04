@@ -1,4 +1,4 @@
-package com.hendraanggrian.rxactivity;
+package com.hendraanggrian.rx.activity;
 
 import android.content.Intent;
 
