@@ -10,7 +10,7 @@ import android.support.annotation.RequiresApi;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-interface StartableOptions extends Startable {
+interface WithOptionsStartable {
 
     @TargetApi(16)
     @RequiresApi(16)

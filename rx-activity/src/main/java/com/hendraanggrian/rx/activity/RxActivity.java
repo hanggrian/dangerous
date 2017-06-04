@@ -2,6 +2,7 @@ package com.hendraanggrian.rx.activity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import io.reactivex.ObservableOnSubscribe;
 public final class RxActivity {
 
     private final static SparseArray<EmitterWrapper<?>> REQUESTS = new SparseArray<>();
+    private static final int MAX_REQUEST_CODE = 65535;
     private static WeakReference<Random> RANDOM_REQUEST_CODE;
 
     private RxActivity() {
@@ -30,52 +32,148 @@ public final class RxActivity {
 
     @NonNull
     public static Observable<Intent> startForResult(@NonNull final Activity activity, @NonNull Intent intent) {
-        return createActivityStarter(new StartableSimple() {
+        return createActivityStarter(new WithoutOptionsStartable() {
             @Override
             public void startActivityForResult(@NonNull Intent intent, int requestCode) {
                 activity.startActivityForResult(intent, requestCode);
             }
-        }, null, intent);
+        }, intent, null);
     }
 
     @NonNull
     public static Observable<Intent> startForResult(@NonNull final Activity activity, @NonNull Intent intent, @Nullable Bundle options) {
-        return createActivityStarter(new StartableOptions() {
+        return createActivityStarter(new WithOptionsStartable() {
             @TargetApi(16)
             @RequiresApi(16)
             @Override
             public void startActivityForResult(@NonNull Intent intent, int requestCode, @Nullable Bundle options) {
                 activity.startActivityForResult(intent, requestCode, options);
             }
-        }, options, intent);
+        }, intent, options);
     }
 
     @NonNull
     public static Observable<ActivityResult> startForAny(@NonNull final Activity activity, @NonNull Intent intent) {
-        return createActivityStarter(new StartableSimple() {
+        return createActivityStarter(new WithoutOptionsStartable() {
             @Override
             public void startActivityForResult(@NonNull Intent intent, int requestCode) {
                 activity.startActivityForResult(intent, requestCode);
             }
-        }, null, intent);
+        }, intent, null);
     }
 
-    /*@NonNull
-    public static Observable<ActivityResult> startForAny(@NonNull Activity activity, @NonNull Intent intent) {
-        return createActivityStarterForActivity(ActivityResult.class, activity, intent);
-    }*/
+    @NonNull
+    public static Observable<ActivityResult> startForAny(@NonNull final Activity activity, @NonNull Intent intent, @Nullable Bundle options) {
+        return createActivityStarter(new WithOptionsStartable() {
+            @TargetApi(16)
+            @RequiresApi(16)
+            @Override
+            public void startActivityForResult(@NonNull Intent intent, int requestCode, @Nullable Bundle options) {
+                activity.startActivityForResult(intent, requestCode, options);
+            }
+        }, intent, options);
+    }
 
     @NonNull
-    private static <T> Observable<T> createActivityStarter(@NonNull final Startable startable, @Nullable final Bundle options, @NonNull final Intent intent) {
+    public static Observable<Intent> startForResult(@NonNull final Fragment fragment, @NonNull Intent intent) {
+        return createActivityStarter(new WithoutOptionsStartable() {
+            @Override
+            public void startActivityForResult(@NonNull Intent intent, int requestCode) {
+                fragment.startActivityForResult(intent, requestCode);
+            }
+        }, intent, null);
+    }
+
+    @NonNull
+    public static Observable<Intent> startForResult(@NonNull final Fragment fragment, @NonNull Intent intent, @Nullable Bundle options) {
+        return createActivityStarter(new WithOptionsStartable() {
+            @TargetApi(16)
+            @RequiresApi(16)
+            @Override
+            public void startActivityForResult(@NonNull Intent intent, int requestCode, @Nullable Bundle options) {
+                fragment.startActivityForResult(intent, requestCode, options);
+            }
+        }, intent, options);
+    }
+
+    @NonNull
+    public static Observable<ActivityResult> startForAny(@NonNull final Fragment fragment, @NonNull Intent intent) {
+        return createActivityStarter(new WithoutOptionsStartable() {
+            @Override
+            public void startActivityForResult(@NonNull Intent intent, int requestCode) {
+                fragment.startActivityForResult(intent, requestCode);
+            }
+        }, intent, null);
+    }
+
+    @NonNull
+    public static Observable<ActivityResult> startForAny(@NonNull final Fragment fragment, @NonNull Intent intent, @Nullable Bundle options) {
+        return createActivityStarter(new WithOptionsStartable() {
+            @TargetApi(16)
+            @RequiresApi(16)
+            @Override
+            public void startActivityForResult(@NonNull Intent intent, int requestCode, @Nullable Bundle options) {
+                fragment.startActivityForResult(intent, requestCode, options);
+            }
+        }, intent, options);
+    }
+
+    @NonNull
+    public static Observable<Intent> startForResult(@NonNull final android.support.v4.app.Fragment fragment, @NonNull Intent intent) {
+        return createActivityStarter(new WithoutOptionsStartable() {
+            @Override
+            public void startActivityForResult(@NonNull Intent intent, int requestCode) {
+                fragment.startActivityForResult(intent, requestCode);
+            }
+        }, intent, null);
+    }
+
+    @NonNull
+    public static Observable<Intent> startForResult(@NonNull final android.support.v4.app.Fragment fragment, @NonNull Intent intent, @Nullable Bundle options) {
+        return createActivityStarter(new WithOptionsStartable() {
+            @TargetApi(16)
+            @RequiresApi(16)
+            @Override
+            public void startActivityForResult(@NonNull Intent intent, int requestCode, @Nullable Bundle options) {
+                fragment.startActivityForResult(intent, requestCode, options);
+            }
+        }, intent, options);
+    }
+
+    @NonNull
+    public static Observable<ActivityResult> startForAny(@NonNull final android.support.v4.app.Fragment fragment, @NonNull Intent intent) {
+        return createActivityStarter(new WithoutOptionsStartable() {
+            @Override
+            public void startActivityForResult(@NonNull Intent intent, int requestCode) {
+                fragment.startActivityForResult(intent, requestCode);
+            }
+        }, intent, null);
+    }
+
+    @NonNull
+    public static Observable<ActivityResult> startForAny(@NonNull final android.support.v4.app.Fragment fragment, @NonNull Intent intent, @Nullable Bundle options) {
+        return createActivityStarter(new WithOptionsStartable() {
+            @TargetApi(16)
+            @RequiresApi(16)
+            @Override
+            public void startActivityForResult(@NonNull Intent intent, int requestCode, @Nullable Bundle options) {
+                fragment.startActivityForResult(intent, requestCode, options);
+            }
+        }, intent, options);
+    }
+
+    @NonNull
+    private static <T> Observable<T> createActivityStarter(@NonNull final Object startable, @NonNull final Intent intent, @Nullable final Bundle options) {
         return Observable.create(new ObservableOnSubscribe<T>() {
             @Override
             public void subscribe(@io.reactivex.annotations.NonNull ObservableEmitter<T> e) throws Exception {
                 int requestCode = generateRandom();
-                REQUESTS.append(requestCode, new EmitterWrapper<>(startable instanceof StartableSimple, e));
-                if (startable instanceof StartableSimple) {
-                    ((StartableSimple) startable).startActivityForResult(intent, requestCode);
-                } else if (startable instanceof StartableOptions && Build.VERSION.SDK_INT >= 16) {
-                    ((StartableOptions) startable).startActivityForResult(intent, requestCode, options);
+                boolean isSimple = startable instanceof WithoutOptionsStartable;
+                REQUESTS.append(requestCode, new EmitterWrapper<>(isSimple, e));
+                if (isSimple) {
+                    ((WithoutOptionsStartable) startable).startActivityForResult(intent, requestCode);
+                } else if (startable instanceof WithOptionsStartable && Build.VERSION.SDK_INT >= 16) {
+                    ((WithOptionsStartable) startable).startActivityForResult(intent, requestCode, options);
                 }
             }
         });
@@ -103,12 +201,18 @@ public final class RxActivity {
         if (RANDOM_REQUEST_CODE == null) {
             RANDOM_REQUEST_CODE = new WeakReference<>(new Random());
         }
+        final int requestCode;
         Random random = RANDOM_REQUEST_CODE.get();
         if (random != null) {
-            return random.nextInt(255);
+            requestCode = random.nextInt(MAX_REQUEST_CODE);
+        } else {
+            random = new Random();
+            requestCode = random.nextInt(MAX_REQUEST_CODE);
+            RANDOM_REQUEST_CODE = new WeakReference<>(random);
         }
-        random = new Random();
-        RANDOM_REQUEST_CODE = new WeakReference<>(random);
-        return random.nextInt(255);
+        if (REQUESTS.indexOfKey(requestCode) < 0) {
+            return requestCode;
+        }
+        return generateRandom();
     }
 }

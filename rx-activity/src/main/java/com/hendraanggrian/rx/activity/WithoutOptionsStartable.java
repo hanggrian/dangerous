@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-interface StartableSimple extends Startable {
+interface WithoutOptionsStartable {
 
     void startActivityForResult(@NonNull Intent intent, int requestCode);
 }
