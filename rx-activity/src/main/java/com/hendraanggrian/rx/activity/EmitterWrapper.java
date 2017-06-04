@@ -9,11 +9,11 @@ import io.reactivex.ObservableEmitter;
  */
 final class EmitterWrapper<T> {
 
-    final boolean isSimple;
+    @NonNull final Class<T> cls;
     @NonNull final ObservableEmitter<T> emitter;
 
-    EmitterWrapper(boolean isSimple, @NonNull ObservableEmitter<T> emitter) {
-        this.isSimple = isSimple;
+    EmitterWrapper(@NonNull Class<T> cls, @NonNull ObservableEmitter<T> emitter) {
+        this.cls = cls;
         this.emitter = emitter;
     }
 }

@@ -10,7 +10,9 @@ import android.support.annotation.RequiresApi;
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-interface WithOptionsStartable {
+interface ActivityStartable {
+
+    void startActivityForResult(@NonNull Intent intent, int requestCode);
 
     @TargetApi(16)
     @RequiresApi(16)

@@ -2,48 +2,42 @@ package com.example.rxactivityexample;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 
 import com.hendraanggrian.rx.activity.RxActivity;
+import com.hendraanggrian.support.utils.widget.Toasts;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.button1) Button button1;
     @BindView(R.id.button2) Button button2;
-    private Unbinder unbinder;
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_main;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        unbinder = ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        RxActivity.startForAny(this, new Intent())
+        /*RxActivity.startForResult(this, new Intent(this, ExampleActivity.class))
+                .subscribe(data -> {
+                    Toasts.showShort(this, data.getStringExtra("TEST"));
+                });*/
+
+        RxActivity.startForAny(this, new Intent(this, ExampleActivity.class))
                 .subscribe(activityResult -> {
-
+                    Toasts.showShort(this, String.valueOf(activityResult.resultCode));
+                    Toasts.showShort(this, activityResult.data.getStringExtra("TEST"));
                 });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        RxActivity.onActivityResult(requestCode, resultCode, data);
     }
 }
