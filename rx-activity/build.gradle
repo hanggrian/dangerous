@@ -15,4 +15,13 @@ android {
 dependencies {
     compile "com.android.support:support-fragment:$versions.support"
     compile "io.reactivex.rxjava2:rxjava:$versions.rxjava"
+
+    androidTestCompile("com.android.support.test:runner:$versions.runner") {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$versions.espresso") {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+
+    testCompile "junit:junit:$versions.junit"
 }

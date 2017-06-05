@@ -23,9 +23,9 @@ import io.reactivex.ObservableOnSubscribe;
  */
 public final class RxActivity {
 
-    private final static SparseArray<EmitterWrapper<?>> REQUESTS = new SparseArray<>();
-    private static final int MAX_REQUEST_CODE = 65535;
-    private static WeakReference<Random> RANDOM_REQUEST_CODE;
+    @NonNull final static SparseArray<EmitterWrapper<?>> REQUESTS = new SparseArray<>();
+    @Nullable static WeakReference<Random> RANDOM_REQUEST_CODE;
+    private static final int MAX_REQUEST_CODE = 65535; // 16-bit int
 
     private RxActivity() {
     }
@@ -146,7 +146,7 @@ public final class RxActivity {
         return Observable.create(new ObservableOnSubscribe<T>() {
             @Override
             public void subscribe(@io.reactivex.annotations.NonNull ObservableEmitter<T> e) throws Exception {
-                int requestCode = generateRandom();
+                int requestCode = generateRequestCode();
                 REQUESTS.append(requestCode, new EmitterWrapper<>(cls, e));
                 if (Build.VERSION.SDK_INT >= 16) {
                     startable.startActivityForResult(intent, requestCode, options);
@@ -167,7 +167,7 @@ public final class RxActivity {
                 if (resultCode == Activity.RESULT_OK) {
                     wrapper.emitter.onNext(data);
                 } else {
-                    wrapper.emitter.onError(new ActivityCanceledException());
+                    wrapper.emitter.onError(new ActivityCanceledException(requestCode, data));
                 }
             }
             wrapper.emitter.onComplete();
@@ -175,22 +175,19 @@ public final class RxActivity {
         }
     }
 
-    private static int generateRandom() {
+    static int generateRequestCode() {
         if (RANDOM_REQUEST_CODE == null) {
             RANDOM_REQUEST_CODE = new WeakReference<>(new Random());
         }
-        final int requestCode;
         Random random = RANDOM_REQUEST_CODE.get();
-        if (random != null) {
-            requestCode = random.nextInt(MAX_REQUEST_CODE);
-        } else {
+        if (random == null) {
             random = new Random();
-            requestCode = random.nextInt(MAX_REQUEST_CODE);
             RANDOM_REQUEST_CODE = new WeakReference<>(random);
         }
+        int requestCode = random.nextInt(MAX_REQUEST_CODE);
         if (REQUESTS.indexOfKey(requestCode) < 0) {
             return requestCode;
         }
-        return generateRandom();
+        return generateRequestCode();
     }
 }
