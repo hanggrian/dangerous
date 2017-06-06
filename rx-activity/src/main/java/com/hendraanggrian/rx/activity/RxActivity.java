@@ -3,7 +3,9 @@ package com.hendraanggrian.rx.activity;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,68 +33,74 @@ public final class RxActivity {
     }
 
     @NonNull
-    public static Observable<Intent> startForResult(@NonNull final Activity activity, @NonNull Intent intent) {
+    public static Observable<Intent> startForOK(@NonNull final Activity activity, @NonNull Intent intent) {
         return createStarter(Intent.class, makeStartableForActivity(activity), intent, null);
     }
 
     @NonNull
-    public static Observable<Intent> startForResult(@NonNull final Activity activity, @NonNull Intent intent, @Nullable Bundle options) {
+    public static Observable<Intent> startForOK(@NonNull final Activity activity, @NonNull Intent intent, @Nullable Bundle options) {
         return createStarter(Intent.class, makeStartableForActivity(activity), intent, options);
     }
 
     @NonNull
-    public static Observable<ActivityResult> startForAny(@NonNull final Activity activity, @NonNull Intent intent) {
+    public static Observable<ActivityResult> startForResult(@NonNull final Activity activity, @NonNull Intent intent) {
         return createStarter(ActivityResult.class, makeStartableForActivity(activity), intent, null);
     }
 
     @NonNull
-    public static Observable<ActivityResult> startForAny(@NonNull final Activity activity, @NonNull Intent intent, @Nullable Bundle options) {
+    public static Observable<ActivityResult> startForResult(@NonNull final Activity activity, @NonNull Intent intent, @Nullable Bundle options) {
         return createStarter(ActivityResult.class, makeStartableForActivity(activity), intent, options);
     }
 
     @NonNull
-    public static Observable<Intent> startForResult(@NonNull final Fragment fragment, @NonNull Intent intent) {
+    public static Observable<Intent> startForOK(@NonNull final Fragment fragment, @NonNull Intent intent) {
         return createStarter(Intent.class, makeStartableForFragment(fragment), intent, null);
     }
 
     @NonNull
-    public static Observable<Intent> startForResult(@NonNull final Fragment fragment, @NonNull Intent intent, @Nullable Bundle options) {
+    public static Observable<Intent> startForOK(@NonNull final Fragment fragment, @NonNull Intent intent, @Nullable Bundle options) {
         return createStarter(Intent.class, makeStartableForFragment(fragment), intent, options);
     }
 
     @NonNull
-    public static Observable<ActivityResult> startForAny(@NonNull final Fragment fragment, @NonNull Intent intent) {
+    public static Observable<ActivityResult> startForResult(@NonNull final Fragment fragment, @NonNull Intent intent) {
         return createStarter(ActivityResult.class, makeStartableForFragment(fragment), intent, null);
     }
 
     @NonNull
-    public static Observable<ActivityResult> startForAny(@NonNull final Fragment fragment, @NonNull Intent intent, @Nullable Bundle options) {
+    public static Observable<ActivityResult> startForResult(@NonNull final Fragment fragment, @NonNull Intent intent, @Nullable Bundle options) {
         return createStarter(ActivityResult.class, makeStartableForFragment(fragment), intent, options);
     }
 
     @NonNull
-    public static Observable<Intent> startForResult(@NonNull final android.support.v4.app.Fragment fragment, @NonNull Intent intent) {
+    public static Observable<Intent> startForOK(@NonNull final android.support.v4.app.Fragment fragment, @NonNull Intent intent) {
         return createStarter(Intent.class, makeStartableForSupportFragment(fragment), intent, null);
     }
 
     @NonNull
-    public static Observable<Intent> startForResult(@NonNull final android.support.v4.app.Fragment fragment, @NonNull Intent intent, @Nullable Bundle options) {
+    public static Observable<Intent> startForOK(@NonNull final android.support.v4.app.Fragment fragment, @NonNull Intent intent, @Nullable Bundle options) {
         return createStarter(Intent.class, makeStartableForSupportFragment(fragment), intent, options);
     }
 
     @NonNull
-    public static Observable<ActivityResult> startForAny(@NonNull final android.support.v4.app.Fragment fragment, @NonNull Intent intent) {
+    public static Observable<ActivityResult> startForResult(@NonNull final android.support.v4.app.Fragment fragment, @NonNull Intent intent) {
         return createStarter(ActivityResult.class, makeStartableForSupportFragment(fragment), intent, null);
     }
 
     @NonNull
-    public static Observable<ActivityResult> startForAny(@NonNull final android.support.v4.app.Fragment fragment, @NonNull Intent intent, @Nullable Bundle options) {
+    public static Observable<ActivityResult> startForResult(@NonNull final android.support.v4.app.Fragment fragment, @NonNull Intent intent, @Nullable Bundle options) {
         return createStarter(ActivityResult.class, makeStartableForSupportFragment(fragment), intent, options);
     }
 
     @NonNull
     private static ActivityStartable makeStartableForActivity(@NonNull final Activity activity) {
         return new ActivityStartable() {
+            @NonNull
+            @Override
+            public PackageManager getPackageManager() {
+                return activity.getPackageManager();
+            }
+
             @Override
             public void startActivityForResult(@NonNull Intent intent, int requestCode) {
                 activity.startActivityForResult(intent, requestCode);
@@ -110,6 +118,15 @@ public final class RxActivity {
     @NonNull
     private static ActivityStartable makeStartableForFragment(@NonNull final Fragment fragment) {
         return new ActivityStartable() {
+            @NonNull
+            @Override
+            public PackageManager getPackageManager() {
+                if (Build.VERSION.SDK_INT >= 23)
+                    return fragment.getContext().getPackageManager();
+                else
+                    return fragment.getActivity().getPackageManager();
+            }
+
             @Override
             public void startActivityForResult(@NonNull Intent intent, int requestCode) {
                 fragment.startActivityForResult(intent, requestCode);
@@ -127,6 +144,12 @@ public final class RxActivity {
     @NonNull
     private static ActivityStartable makeStartableForSupportFragment(@NonNull final android.support.v4.app.Fragment fragment) {
         return new ActivityStartable() {
+            @NonNull
+            @Override
+            public PackageManager getPackageManager() {
+                return fragment.getContext().getPackageManager();
+            }
+
             @Override
             public void startActivityForResult(@NonNull Intent intent, int requestCode) {
                 fragment.startActivityForResult(intent, requestCode);
@@ -146,12 +169,17 @@ public final class RxActivity {
         return Observable.create(new ObservableOnSubscribe<T>() {
             @Override
             public void subscribe(@io.reactivex.annotations.NonNull ObservableEmitter<T> e) throws Exception {
-                int requestCode = generateRequestCode();
-                REQUESTS.append(requestCode, new EmitterWrapper<>(cls, e));
-                if (Build.VERSION.SDK_INT >= 16) {
-                    startable.startActivityForResult(intent, requestCode, options);
+                EmitterWrapper<T> wrapper = new EmitterWrapper<>(cls, e);
+                if (intent.resolveActivity(startable.getPackageManager()) == null) {
+                    wrapper.emitter.onError(new ActivityNotFoundException());
                 } else {
-                    startable.startActivityForResult(intent, requestCode);
+                    int requestCode = generateRequestCode();
+                    REQUESTS.append(requestCode, wrapper);
+                    if (Build.VERSION.SDK_INT >= 16) {
+                        startable.startActivityForResult(intent, requestCode, options);
+                    } else {
+                        startable.startActivityForResult(intent, requestCode);
+                    }
                 }
             }
         });
@@ -161,16 +189,18 @@ public final class RxActivity {
     public static void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (REQUESTS.indexOfKey(requestCode) > -1) {
             EmitterWrapper wrapper = REQUESTS.get(requestCode);
-            if (wrapper.cls == ActivityResult.class) {
-                wrapper.emitter.onNext(new ActivityResult(requestCode, resultCode, data));
-            } else {
-                if (resultCode == Activity.RESULT_OK) {
-                    wrapper.emitter.onNext(data);
+            if (!wrapper.emitter.isDisposed()) {
+                if (wrapper.cls == ActivityResult.class) {
+                    wrapper.emitter.onNext(new ActivityResult(requestCode, resultCode, data));
                 } else {
-                    wrapper.emitter.onError(new ActivityCanceledException(requestCode, data));
+                    if (resultCode == Activity.RESULT_OK) {
+                        wrapper.emitter.onNext(data);
+                    } else {
+                        wrapper.emitter.onError(new ActivityCanceledException());
+                    }
                 }
+                wrapper.emitter.onComplete();
             }
-            wrapper.emitter.onComplete();
             REQUESTS.remove(requestCode);
         }
     }

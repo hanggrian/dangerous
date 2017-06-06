@@ -29,12 +29,12 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setSupportActionBar(toolbar);
 
-        /*RxActivity.startForResult(this, new Intent(this, ExampleActivity.class))
+        /*RxActivity.startForOK(this, new Intent(this, ExampleActivity.class))
                 .subscribe(data -> {
                     Toasts.showShort(this, data.getStringExtra("TEST"));
                 });*/
 
-        RxActivity.startForAny(this, new Intent(this, ExampleActivity.class))
+        RxActivity.startForResult(this, new Intent(this, ExampleActivity.class))
                 .subscribe(activityResult -> {
                     Toasts.showShort(this, String.valueOf(activityResult.resultCode));
                     Toasts.showShort(this, activityResult.data.getStringExtra("TEST"));
