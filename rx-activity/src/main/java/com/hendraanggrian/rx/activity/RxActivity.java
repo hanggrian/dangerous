@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.util.Pair;
 import android.util.SparseArray;
 
 import java.lang.ref.WeakReference;
@@ -25,7 +26,7 @@ import io.reactivex.ObservableOnSubscribe;
  */
 public final class RxActivity {
 
-    @NonNull final static SparseArray<EmitterWrapper<?>> REQUESTS = new SparseArray<>();
+    @NonNull final static SparseArray<Pair<Class<?>, ObservableEmitter>> REQUESTS = new SparseArray<>();
     @Nullable static WeakReference<Random> RANDOM_REQUEST_CODE;
     private static final int MAX_REQUEST_CODE = 65535; // 16-bit int
 
@@ -121,15 +122,22 @@ public final class RxActivity {
             @NonNull
             @Override
             public PackageManager getPackageManager() {
-                if (Build.VERSION.SDK_INT >= 23)
+                if (Build.VERSION.SDK_INT >= 23) {
                     return fragment.getContext().getPackageManager();
-                else
+                } else if (Build.VERSION.SDK_INT >= 11) {
                     return fragment.getActivity().getPackageManager();
+                } else {
+                    throw new RuntimeException("Using RxActivity in Fragment requires API level 11 or higher. Use support Fragment or increase sdk min to 11.");
+                }
             }
 
             @Override
             public void startActivityForResult(@NonNull Intent intent, int requestCode) {
-                fragment.startActivityForResult(intent, requestCode);
+                if (Build.VERSION.SDK_INT >= 11) {
+                    fragment.startActivityForResult(intent, requestCode);
+                } else {
+                    throw new RuntimeException("Using RxActivity in Fragment requires API level 11 or higher. Use support Fragment or increase sdk min to 11.");
+                }
             }
 
             @TargetApi(16)
@@ -169,12 +177,11 @@ public final class RxActivity {
         return Observable.create(new ObservableOnSubscribe<T>() {
             @Override
             public void subscribe(@io.reactivex.annotations.NonNull ObservableEmitter<T> e) throws Exception {
-                EmitterWrapper<T> wrapper = new EmitterWrapper<>(cls, e);
                 if (intent.resolveActivity(startable.getPackageManager()) == null) {
-                    wrapper.emitter.onError(new ActivityNotFoundException());
+                    e.onError(new ActivityNotFoundException());
                 } else {
-                    int requestCode = generateRequestCode();
-                    REQUESTS.append(requestCode, wrapper);
+                    final int requestCode = generateRequestCode();
+                    REQUESTS.append(requestCode, new Pair<Class<?>, ObservableEmitter>(cls, e));
                     if (Build.VERSION.SDK_INT >= 16) {
                         startable.startActivityForResult(intent, requestCode, options);
                     } else {
@@ -188,18 +195,18 @@ public final class RxActivity {
     @SuppressWarnings("unchecked")
     public static void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (REQUESTS.indexOfKey(requestCode) > -1) {
-            EmitterWrapper wrapper = REQUESTS.get(requestCode);
-            if (!wrapper.emitter.isDisposed()) {
-                if (wrapper.cls == ActivityResult.class) {
-                    wrapper.emitter.onNext(new ActivityResult(requestCode, resultCode, data));
+            Pair<Class<?>, ObservableEmitter> pair = REQUESTS.get(requestCode);
+            if (!pair.second.isDisposed()) {
+                if (pair.first == ActivityResult.class) {
+                    pair.second.onNext(new ActivityResult(requestCode, resultCode, data));
                 } else {
                     if (resultCode == Activity.RESULT_OK) {
-                        wrapper.emitter.onNext(data);
+                        pair.second.onNext(data);
                     } else {
-                        wrapper.emitter.onError(new ActivityCanceledException());
+                        pair.second.onError(new ActivityCanceledException());
                     }
                 }
-                wrapper.emitter.onComplete();
+                pair.second.onComplete();
             }
             REQUESTS.remove(requestCode);
         }

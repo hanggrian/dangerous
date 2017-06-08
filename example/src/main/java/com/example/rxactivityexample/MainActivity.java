@@ -1,12 +1,8 @@
 package com.example.rxactivityexample;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
-
-import com.hendraanggrian.rx.activity.RxActivity;
-import com.hendraanggrian.support.utils.widget.Toasts;
 
 import butterknife.BindView;
 
@@ -28,16 +24,5 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setSupportActionBar(toolbar);
-
-        /*RxActivity.startForOK(this, new Intent(this, ExampleActivity.class))
-                .subscribe(data -> {
-                    Toasts.showShort(this, data.getStringExtra("TEST"));
-                });*/
-
-        RxActivity.startForResult(this, new Intent(this, ExampleActivity.class))
-                .subscribe(activityResult -> {
-                    Toasts.showShort(this, String.valueOf(activityResult.resultCode));
-                    Toasts.showShort(this, activityResult.data.getStringExtra("TEST"));
-                });
     }
 }

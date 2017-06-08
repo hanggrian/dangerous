@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 
 buildscript {
+    ext.rxpermission = '0.1.0'
     ext.materialdialogs = '0.9.4.5'
     ext.utils = '0.10'
     ext.butterknife = '8.6.0'
@@ -27,7 +28,7 @@ android {
     }
     buildTypes {
         debug {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -37,12 +38,17 @@ android {
     }
 }
 
+repositories {
+    maven { url 'https://dl.bintray.com/hendraanggrian/maven' }
+}
+
 dependencies {
     compile project(':rx-activity')
 
     compile "com.android.support:appcompat-v7:$versions.support"
     compile "com.android.support:design:$versions.support"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile "com.hendraanggrian:rx-permission:$rxpermission"
     compile "com.afollestad.material-dialogs:core:$materialdialogs"
     compile "com.hendraanggrian:support-utils:$utils"
 

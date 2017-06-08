@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
-// apply plugin: 'com.novoda.bintray-release'
-// apply from: 'https://raw.githubusercontent.com/HendraAnggrian/hendraanggrian.github.io/master/bintray.gradle'
+apply plugin: 'com.novoda.bintray-release'
+apply from: 'https://raw.githubusercontent.com/HendraAnggrian/hendraanggrian.github.io/master/bintray.gradle'
 
 android {
     compileSdkVersion versions.sdk.target
@@ -24,4 +24,13 @@ dependencies {
     }
 
     testCompile "junit:junit:$versions.junit"
+}
+
+publish {
+    userOrg = bintray.user
+    groupId = bintray.group
+    artifactId = bintray.artifact.rx_activity.id
+    publishVersion = versions.release
+    desc = bintray.artifact.rx_activity.desc
+    website = bintray.artifact.rx_activity.website
 }

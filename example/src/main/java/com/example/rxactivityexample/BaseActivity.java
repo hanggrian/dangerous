@@ -3,10 +3,12 @@ package com.example.rxactivityexample;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
 import com.hendraanggrian.bundler.Bundler;
 import com.hendraanggrian.rx.activity.RxActivity;
+import com.hendraanggrian.rx.permission.RxPermission;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -41,5 +43,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         RxActivity.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        RxPermission.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
