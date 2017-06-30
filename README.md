@@ -1,5 +1,7 @@
 RxActivity
 ==========
+![icon][icon]
+
 Reactive streams to start activity for result.
 
 ```java
@@ -81,3 +83,5 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+    
+[icon]: /example/res/mipmap-xxxhdpi/ic_launcher.png
