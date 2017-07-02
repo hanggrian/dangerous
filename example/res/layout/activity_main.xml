@@ -18,6 +18,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
@@ -32,27 +33,46 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Request permissions"/>
+                android:text="Start for ok"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
 
-            <Button
-                android:id="@+id/button1"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="See in Action"/>
+                android:text="Start activity that only emits Intent result if result code is Activity.RESULT_OK. Will throw ActivityCanceledException if the result code is Activity.RESULT_CANCELED, and ActivityNotFoundException if no activity can handle intent input."
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+            <Button
+                android:id="@+id/button1"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="Try it"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Intercept Observables with compose."/>
+                android:text="Start for result"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
 
-            <Button
-                android:id="@+id/button2"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="See in Action"/>
+                android:text="Start activity that emits ActivityResult, which is a tuple of request code, result code, and Intent result. Will only throw ActivityNotFoundException if no activity can handle intent input."
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+            <Button
+                android:id="@+id/button2"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="2dp"
+                android:text="Try it"/>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

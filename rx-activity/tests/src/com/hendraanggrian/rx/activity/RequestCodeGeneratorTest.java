@@ -37,7 +37,7 @@ public class RequestCodeGeneratorTest {
         for (int i = 0; i < ITERATION; i++) {
             int requestCode = RxActivity.generateRequestCode();
             assertEquals(set.add(requestCode), true);
-            RxActivity.REQUESTS.append(requestCode, null);
+            RxActivity.QUEUES.append(requestCode, null);
         }
         assertEquals(set.size(), ITERATION);
     }

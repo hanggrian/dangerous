@@ -18,7 +18,7 @@ allprojects {
             buildTools: '25.0.3',
 
             // main
-            support   : '25.3.1',
+            support   : '25.4.0',
             rxjava    : '2.1.0',
 
             // test
@@ -26,9 +26,10 @@ allprojects {
             espresso  : '2.2.2',
             junit     : '4.12',
 
-            release   : '0.1.0'
+            release   : '0.2'
     ]
     repositories {
+        maven { url "https://maven.google.com" }
         jcenter()
     }
     tasks.withType(Javadoc) {

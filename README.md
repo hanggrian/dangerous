@@ -58,11 +58,12 @@ Download
 --------
 ```gradle
 repositories {
+    maven { url "https://maven.google.com" }
     jcenter()
 }
 
 dependencies {
-    compile 'com.hendraanggrian:rx-activity:0.1.0'
+    compile 'com.hendraanggrian:rx-activity:0.2'
 }
 ```
 
