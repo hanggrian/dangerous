@@ -6,6 +6,8 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.hendraanggrian.rx.activity.RxActivity
+import com.hendraanggrian.rx.activity.startForOk
+import com.hendraanggrian.rx.activity.startForResult
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -18,11 +20,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
         val intent = Intent(this, NextActivity::class.java)
         button1.setOnClickListener {
-            RxActivity.startForOk(this, intent)
+            startForOk(intent)
                     .subscribeBy(
-                            onNext = { data ->
+                            onNext = { _ ->
                                 showSnackbar("onNext")
                             },
                             onError = { e ->
@@ -31,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                     )
         }
         button2.setOnClickListener {
-            RxActivity.startForResult(this, intent)
+            startForResult(intent)
                     .subscribeBy(
                             onNext = { result ->
                                 showSnackbar("onNext:\n" + result.toString())
@@ -48,12 +51,10 @@ class MainActivity : AppCompatActivity() {
         RxActivity.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun showSnackbar(text: String) {
-        Snackbar.make(scrollView, text, Snackbar.LENGTH_INDEFINITE)
-                .setAction(android.R.string.ok, {})
-                .let {
-                    (it.view.findViewById(android.support.design.R.id.snackbar_text) as TextView).maxLines = 5
-                    it.show()
-                }
-    }
+    private fun showSnackbar(text: String) = Snackbar.make(scrollView, text, Snackbar.LENGTH_INDEFINITE)
+            .setAction(android.R.string.ok, {})
+            .let {
+                (it.view.findViewById(android.support.design.R.id.snackbar_text) as TextView).maxLines = 5
+                it.show()
+            }
 }

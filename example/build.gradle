@@ -1,18 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
 
-buildscript {
-    ext.kotlin = '1.1.3'
-    ext.utils = '0.13'
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin"
-    }
-}
+ext.utils = '0.23'
 
 android {
     compileSdkVersion versions.sdk.target
@@ -20,7 +10,7 @@ android {
     defaultConfig {
         applicationId 'com.example.rxactivityexample'
         versionCode 1
-        versionName "1.0"
+        versionName '1.0'
         minSdkVersion versions.sdk.min
         targetSdkVersion versions.sdk.target
     }
@@ -44,8 +34,11 @@ android {
 
 dependencies {
     compile project(':rx-activity')
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin"
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin.stdlib"
+    compile "org.jetbrains.anko:anko-commons:$versions.kotlin.anko"
     compile "io.reactivex.rxjava2:rxkotlin:$versions.rxjava"
+
     compile "com.android.support:appcompat-v7:$versions.support"
     compile "com.android.support:design:$versions.support"
     compile "com.hendraanggrian:support-utils:$utils"

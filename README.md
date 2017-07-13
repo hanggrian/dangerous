@@ -63,7 +63,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.hendraanggrian:rx-activity:0.2'
+    compile 'com.hendraanggrian:rx-activity:0.3'
 }
 ```
 
