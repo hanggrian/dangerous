@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
+import com.hendraanggrian.kota.app.finishWithResult
 import kotlinx.android.synthetic.main.activity_next.*
 
 /**
@@ -32,12 +33,9 @@ class NextActivity : AppCompatActivity(), View.OnClickListener {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onClick(v: View) {
-        setResult(when (v) {
-            buttonOk -> RESULT_OK
-            buttonCanceled -> RESULT_CANCELED
-            else -> RESULT_CUSTOM
-        }, Intent())
-        finish()
-    }
+    override fun onClick(v: View) = finishWithResult(when (v) {
+        buttonOk -> RESULT_OK
+        buttonCanceled -> RESULT_CANCELED
+        else -> RESULT_CUSTOM
+    }, Intent())
 }
