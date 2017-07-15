@@ -35,7 +35,7 @@ object RxActivity {
     internal val QUEUES = SparseArray<ActivityResultEmitter<*>>()
 
     internal fun <T> createStarter(type: Int, startable: ActivityStartable, intent: Intent, options: Bundle?): Observable<T> = Observable.create { e ->
-        if (intent.resolveActivity(startable.packageManager) == null) {
+        if (intent.resolveActivity(startable.manager) == null) {
             e.onError(ActivityNotFoundException("No activity for this intent found."))
         } else {
             val requestCode = generateRequestCode()
@@ -54,14 +54,12 @@ object RxActivity {
             val e = QUEUES.get(requestCode) as ActivityResultEmitter<Any>
             if (!e.isDisposed) {
                 val result = ActivityResult(requestCode, resultCode, data)
-                if (e.type == ActivityResultEmitter.TYPE_RESULT) {
-                    e.onNext(result)
-                } else {
-                    if (resultCode == Activity.RESULT_OK) {
+                when (e.type) {
+                    ActivityResultEmitter.TYPE_RESULT -> e.onNext(result)
+                    ActivityResultEmitter.TYPE_OK -> if (resultCode == Activity.RESULT_OK)
                         e.onNext(result.data!!)
-                    } else {
+                    else
                         e.onError(ActivityCanceledException(result.toString()))
-                    }
                 }
                 e.onComplete()
             }
@@ -87,42 +85,42 @@ object RxActivity {
 }
 
 @JvmOverloads
-fun Activity.startForOk(intent: Intent, options: Bundle? = null): Observable<Intent> = RxActivity.createStarter(
+fun Activity.startActivityForResultOk(intent: Intent, options: Bundle? = null): Observable<Intent> = RxActivity.createStarter(
         ActivityResultEmitter.TYPE_OK,
         ActivityStartable.fromActivity(this),
         intent,
         options)
 
 @JvmOverloads
-fun Activity.startForResult(intent: Intent, options: Bundle? = null): Observable<ActivityResult> = RxActivity.createStarter(
+fun Activity.startActivityForResultBy(intent: Intent, options: Bundle? = null): Observable<ActivityResult> = RxActivity.createStarter(
         ActivityResultEmitter.TYPE_RESULT,
         ActivityStartable.fromActivity(this),
         intent,
         options)
 
 @JvmOverloads
-fun Fragment.startForOk(intent: Intent, options: Bundle? = null): Observable<Intent> = RxActivity.createStarter(
+fun Fragment.startActivityForResultOk(intent: Intent, options: Bundle? = null): Observable<Intent> = RxActivity.createStarter(
         ActivityResultEmitter.TYPE_OK,
         ActivityStartable.fromFragment(this),
         intent,
         options)
 
 @JvmOverloads
-fun Fragment.startForResult(intent: Intent, options: Bundle? = null): Observable<ActivityResult> = RxActivity.createStarter(
+fun Fragment.startActivityForResultBy(intent: Intent, options: Bundle? = null): Observable<ActivityResult> = RxActivity.createStarter(
         ActivityResultEmitter.TYPE_RESULT,
         ActivityStartable.fromFragment(this),
         intent,
         options)
 
 @JvmOverloads
-fun android.support.v4.app.Fragment.startForOk(intent: Intent, options: Bundle? = null): Observable<Intent> = RxActivity.createStarter(
+fun android.support.v4.app.Fragment.startActivityForResultOk(intent: Intent, options: Bundle? = null): Observable<Intent> = RxActivity.createStarter(
         ActivityResultEmitter.TYPE_OK,
         ActivityStartable.fromSupportFragment(this),
         intent,
         options)
 
 @JvmOverloads
-fun android.support.v4.app.Fragment.startForResult(intent: Intent, options: Bundle? = null): Observable<ActivityResult> = RxActivity.createStarter(
+fun android.support.v4.app.Fragment.startActivityForResultBy(intent: Intent, options: Bundle? = null): Observable<ActivityResult> = RxActivity.createStarter(
         ActivityResultEmitter.TYPE_RESULT,
         ActivityStartable.fromSupportFragment(this),
         intent,

@@ -6,8 +6,8 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.hendraanggrian.rx.activity.RxActivity
-import com.hendraanggrian.rx.activity.startForOk
-import com.hendraanggrian.rx.activity.startForResult
+import com.hendraanggrian.rx.activity.startActivityForResultBy
+import com.hendraanggrian.rx.activity.startActivityForResultOk
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         val intent = Intent(this, NextActivity::class.java)
         button1.setOnClickListener {
-            startForOk(intent)
+            startActivityForResultOk(intent)
                     .subscribeBy(
                             onNext = { _ ->
                                 showSnackbar("onNext")
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                     )
         }
         button2.setOnClickListener {
-            startForResult(intent)
+            startActivityForResultBy(intent)
                     .subscribeBy(
                             onNext = { result ->
                                 showSnackbar("onNext:\n" + result.toString())

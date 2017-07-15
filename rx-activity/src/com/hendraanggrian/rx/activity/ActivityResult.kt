@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 
 /**
- * Data class representing result of an activity started with RxActivity's startForResult(...).
+ * Data class representing result of an activity started with RxActivity's startActivityForResultBy(...).
 
  * @author Hendra Anggrian (hendraanggrian@gmail.com)
  */
