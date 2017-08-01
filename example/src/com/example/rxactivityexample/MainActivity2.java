@@ -33,10 +33,10 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        button1 = (Button) findViewById(R.id.button1);
-        button2 = (Button) findViewById(R.id.button2);
-        scrollView = (NestedScrollView) findViewById(R.id.scrollView);
+        toolbar = findViewById(R.id.toolbar);
+        button1 = findViewById(R.id.button1);
+        button2 = findViewById(R.id.button2);
+        scrollView = findViewById(R.id.scrollView);
         setSupportActionBar(toolbar);
 
         final Intent intent = new Intent(this, NextActivity.class);

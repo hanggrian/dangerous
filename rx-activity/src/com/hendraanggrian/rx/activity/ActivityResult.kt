@@ -10,9 +10,9 @@ import android.content.Intent
  */
 data class ActivityResult internal constructor(val requestCode: Int, val resultCode: Int, val data: Intent?) {
 
-    override fun toString() = String.format("ActivityResult[requestCode=%s, resultCode=%s]", requestCode, when (resultCode) {
+    override fun toString() = "ActivityResult[requestCode=$requestCode, resultCode=${when (resultCode) {
         Activity.RESULT_OK -> "RESULT_OK"
         Activity.RESULT_CANCELED -> "RESULT_CANCELED"
-        else -> resultCode
-    })
+        else -> resultCode.toString()
+    }}]"
 }

@@ -3,8 +3,8 @@ package com.hendraanggrian.rx.activity
 import android.annotation.TargetApi
 import android.app.Activity
 import android.app.Fragment
+import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
@@ -14,7 +14,7 @@ import android.support.annotation.RequiresApi
  */
 internal interface ActivityStartable {
 
-    val manager: PackageManager
+    val context: Context
 
     @TargetApi(16)
     @RequiresApi(16)
@@ -25,7 +25,7 @@ internal interface ActivityStartable {
     companion object {
 
         fun fromActivity(activity: Activity) = object : ActivityStartable {
-            override val manager = activity.packageManager
+            override val context = activity
 
             @TargetApi(16)
             @RequiresApi(16)
@@ -35,27 +35,21 @@ internal interface ActivityStartable {
         }
 
         fun fromFragment(fragment: Fragment) = object : ActivityStartable {
-            override val manager = if (Build.VERSION.SDK_INT >= 23) {
-                fragment.context.packageManager
-            } else if (Build.VERSION.SDK_INT >= 11) {
-                fragment.activity.packageManager
+            override val context = if (Build.VERSION.SDK_INT >= 23) {
+                fragment.context
             } else {
-                throw IllegalStateException("Using RxActivity in Fragment requires API level 11 or higher. Use support Fragment or increase sdk min to 11.")
+                fragment.activity
             }
 
             @TargetApi(16)
             @RequiresApi(16)
             override fun startActivityForResult(intent: Intent, requestCode: Int, options: Bundle?) = fragment.startActivityForResult(intent, requestCode, options)
 
-            override fun startActivityForResult(intent: Intent, requestCode: Int) = if (Build.VERSION.SDK_INT >= 11) {
-                fragment.startActivityForResult(intent, requestCode)
-            } else {
-                throw IllegalStateException("Using RxActivity in Fragment requires API level 11 or higher. Use support Fragment or increase sdk min to 11.")
-            }
+            override fun startActivityForResult(intent: Intent, requestCode: Int) = fragment.startActivityForResult(intent, requestCode)
         }
 
         fun fromSupportFragment(fragment: android.support.v4.app.Fragment) = object : ActivityStartable {
-            override val manager = fragment.context.packageManager
+            override val context = fragment.context
 
             @TargetApi(16)
             @RequiresApi(16)

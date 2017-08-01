@@ -9,13 +9,10 @@ android {
     defaultConfig {
         minSdkVersion versions.sdk.min
         targetSdkVersion versions.sdk.target
-        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
     sourceSets {
         main.manifest.srcFile 'AndroidManifest.xml'
         main.java.srcDirs 'src'
-        androidTest.setRoot('tests')
-        androidTest.java.srcDir 'tests/src'
     }
 }
 
@@ -23,16 +20,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin.stdlib"
     compile "io.reactivex.rxjava2:rxjava:$versions.rxjava"
     compile "com.android.support:support-fragment:$versions.support"
-    androidTestCompile("com.android.support.test:runner:$versions.runner") {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestCompile("com.android.support.test.espresso:espresso-core:$versions.espresso") {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestCompile("com.android.support.test.espresso:espresso-intents:$versions.espresso") {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    testCompile "junit:junit:$versions.junit"
+    compile "com.hendraanggrian:kota:$versions.kota"
 }
 
 publish {

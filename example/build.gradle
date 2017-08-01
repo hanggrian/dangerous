@@ -2,15 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-ext.kota = '0.1.3'
+ext.errorbar = '0.2.0'
 
 android {
     compileSdkVersion versions.sdk.target
     buildToolsVersion versions.buildTools
     defaultConfig {
-        applicationId 'com.example.rxactivityexample'
-        versionCode 1
-        versionName '1.0'
+        applicationId 'com.example.rxactivity'
+        versionName versions.release
         minSdkVersion versions.sdk.min
         targetSdkVersion versions.sdk.target
     }
@@ -36,10 +35,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin.stdlib"
     compile "org.jetbrains.anko:anko-commons:$versions.kotlin.anko"
 
-    compile "com.android.support:appcompat-v7:$versions.support"
-    compile "com.android.support:design:$versions.support"
-
     compile project(':rx-activity')
     compile "io.reactivex.rxjava2:rxkotlin:$versions.rxjava"
-    compile "com.hendraanggrian:kota:$kota"
+    compile "com.hendraanggrian:errorbar:$errorbar"
 }

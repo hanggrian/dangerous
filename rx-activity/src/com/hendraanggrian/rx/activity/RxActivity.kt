@@ -7,8 +7,8 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.SparseArray
+import com.hendraanggrian.kota.content.isNotAvailable
 import io.reactivex.Observable
-import java.lang.ref.WeakReference
 import java.util.*
 
 /**
@@ -26,7 +26,7 @@ object RxActivity {
      * below [RxActivity.MAX_REQUEST_CODE]
      * and not already queued in [RxActivity.QUEUES].
      */
-    internal var RANDOM_REQUEST_CODE: WeakReference<Random>? = null
+    internal var RANDOM: Random? = null
 
     /**
      * Collection of reactive emitters that will emits one-by-one on activity result.
@@ -35,10 +35,13 @@ object RxActivity {
     internal val QUEUES = SparseArray<ActivityResultEmitter<*>>()
 
     internal fun <T> createStarter(type: Int, startable: ActivityStartable, intent: Intent, options: Bundle?): Observable<T> = Observable.create { e ->
-        if (intent.resolveActivity(startable.manager) == null) {
+        if (intent.isNotAvailable(startable.context)) {
             e.onError(ActivityNotFoundException("No activity for this intent found."))
         } else {
-            val requestCode = generateRequestCode()
+            if (RANDOM == null) {
+                RANDOM = Random()
+            }
+            val requestCode = RANDOM!!.nextInt(MAX_REQUEST_CODE)
             QUEUES.append(requestCode, ActivityResultEmitter.getInstance(type, e))
             if (Build.VERSION.SDK_INT >= 16) {
                 startable.startActivityForResult(intent, requestCode, options)
@@ -65,22 +68,6 @@ object RxActivity {
             }
             QUEUES.remove(requestCode)
         }
-    }
-
-    internal fun generateRequestCode(): Int {
-        if (RANDOM_REQUEST_CODE == null) {
-            RANDOM_REQUEST_CODE = WeakReference(Random())
-        }
-        var random: Random? = RANDOM_REQUEST_CODE!!.get()
-        if (random == null) {
-            random = Random()
-            RANDOM_REQUEST_CODE = WeakReference<Random>(random)
-        }
-        val requestCode = random.nextInt(MAX_REQUEST_CODE)
-        if (QUEUES.indexOfKey(requestCode) < 0) {
-            return requestCode
-        }
-        return generateRequestCode()
     }
 }
 

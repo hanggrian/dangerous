@@ -13,8 +13,8 @@ internal interface ActivityResultEmitter<T> : ObservableEmitter<T> {
     val type: Int
 
     companion object {
-        const internal val TYPE_OK = 0
-        const internal val TYPE_RESULT = 1
+        internal const val TYPE_OK = 0
+        internal const val TYPE_RESULT = 1
 
         fun <T> getInstance(type: Int, e: ObservableEmitter<T>) = object : ActivityResultEmitter<T> {
             override val type = type
