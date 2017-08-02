@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.support.design.widget.errorbar
 import android.support.v7.app.AppCompatActivity
 import com.hendraanggrian.rx.activity.RxActivity
-import com.hendraanggrian.rx.activity.startActivityForResultBy
-import com.hendraanggrian.rx.activity.startActivityForResultOk
+import com.hendraanggrian.rx.activity.RxActivity.startActivityForResultBy
+import com.hendraanggrian.rx.activity.RxActivity.startActivityForResultOk
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_main.*
 
