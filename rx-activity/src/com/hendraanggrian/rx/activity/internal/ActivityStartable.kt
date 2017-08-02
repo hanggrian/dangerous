@@ -1,4 +1,4 @@
-package com.hendraanggrian.rx.activity
+package com.hendraanggrian.rx.activity.internal
 
 import android.annotation.TargetApi
 import android.app.Activity

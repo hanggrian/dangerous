@@ -2,9 +2,8 @@ package com.example.rxactivityexample
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Errorbar
+import android.support.design.widget.errorbar
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import com.hendraanggrian.rx.activity.RxActivity
 import com.hendraanggrian.rx.activity.startActivityForResultBy
 import com.hendraanggrian.rx.activity.startActivityForResultOk
@@ -25,14 +24,14 @@ class MainActivity : AppCompatActivity() {
         button1.setOnClickListener {
             startActivityForResultOk(intent)
                     .subscribeBy(
-                            onNext = { _ -> showErrorbar("onNext") },
-                            onError = { e -> showErrorbar("onError:\n" + e.message) })
+                            onNext = { _ -> errorbar(coordinatorLayout, "onNext", android.R.string.ok, {}) },
+                            onError = { e -> errorbar(coordinatorLayout, "onError: ${e.message}", android.R.string.ok, {}) })
         }
         button2.setOnClickListener {
             startActivityForResultBy(intent)
                     .subscribeBy(
-                            onNext = { result -> showErrorbar("onNext:\n" + result.toString()) },
-                            onError = { e -> showErrorbar("onError:\n" + e.message) })
+                            onNext = { result -> errorbar(coordinatorLayout, "onNext:\n$result", android.R.string.ok, {}) },
+                            onError = { e -> errorbar(coordinatorLayout, "onError: ${e.message}", android.R.string.ok, {}) })
         }
     }
 
@@ -40,9 +39,4 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         RxActivity.onActivityResult(requestCode, resultCode, data)
     }
-
-    private fun showErrorbar(text: String) = Errorbar.make(coordinatorLayout, text, Errorbar.LENGTH_INDEFINITE)
-            .setBackdropResource(R.drawable.errorbar_bg_cloud)
-            .setAction(android.R.string.ok, View.OnClickListener {})
-            .show()
 }

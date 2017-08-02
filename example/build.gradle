@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-ext.errorbar = '0.2.0'
+ext.errorbar = '0.3.0'
 
 android {
     compileSdkVersion versions.sdk.target

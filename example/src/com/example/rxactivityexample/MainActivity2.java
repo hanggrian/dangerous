@@ -12,8 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.hendraanggrian.rx.activity.ActivityResult;
+import com.hendraanggrian.rx.activity.RxActivities;
 import com.hendraanggrian.rx.activity.RxActivity;
-import com.hendraanggrian.rx.activity.RxActivityKt;
 
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -43,7 +43,7 @@ public class MainActivity2 extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RxActivityKt.startActivityForResultOk(MainActivity2.this, intent)
+                RxActivities.startActivityForResultOk(MainActivity2.this, intent)
                         .subscribe(new Observer<Intent>() {
                             @Override
                             public void onSubscribe(@NonNull Disposable d) {
@@ -68,7 +68,7 @@ public class MainActivity2 extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RxActivityKt.startActivityForResultBy(MainActivity2.this, intent)
+                RxActivities.startActivityForResultBy(MainActivity2.this, intent)
                         .subscribe(new Observer<ActivityResult>() {
                             @Override
                             public void onSubscribe(@NonNull Disposable d) {

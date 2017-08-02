@@ -1,4 +1,4 @@
-package com.hendraanggrian.rx.activity
+package com.hendraanggrian.rx.activity.internal
 
 import io.reactivex.ObservableEmitter
 import io.reactivex.annotations.NonNull

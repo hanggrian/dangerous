@@ -1,3 +1,5 @@
+@file:JvmName("ActivityResult")
+
 package com.hendraanggrian.rx.activity
 
 import android.app.Activity

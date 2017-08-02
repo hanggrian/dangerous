@@ -1,3 +1,5 @@
+@file:JvmName("ActivityCanceledException")
+
 package com.hendraanggrian.rx.activity
 
 /**
