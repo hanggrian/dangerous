@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.SparseArray
 import com.hendraanggrian.kota.content.isNotAvailable
+import com.hendraanggrian.kota.util.hasKey
 import io.reactivex.Observable
 import java.util.*
 
@@ -53,7 +54,7 @@ object RxActivity {
 
     @Suppress("UNCHECKED_CAST")
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (QUEUES.indexOfKey(requestCode) > -1) {
+        if (QUEUES.hasKey(requestCode)) {
             val e = QUEUES.get(requestCode) as ActivityResultEmitter<Any>
             if (!e.isDisposed) {
                 val result = ActivityResult(requestCode, resultCode, data)
