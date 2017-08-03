@@ -16,7 +16,7 @@ import com.hendraanggrian.rx.activity.BuildConfig.KEY_REQUEST_CODE
 import com.hendraanggrian.rx.activity.BuildConfig.KEY_RESULT_CODE
 import com.hendraanggrian.rx.activity.internal.ActivityStarter
 import com.hendraanggrian.rx.activity.internal.TaggableObservableEmitter
-import com.hendraanggrian.rx.activity.internal.toActivityStarter
+import com.hendraanggrian.rx.activity.internal.toStarter
 import com.hendraanggrian.rx.activity.internal.toTaggedEmitter
 import io.reactivex.Observable
 import java.lang.ref.WeakReference
@@ -99,37 +99,37 @@ fun onActivityResultBy(requestCode: Int, resultCode: Int, data: Intent?) {
 fun Activity.startActivityForOk(
         intent: Intent,
         options: Bundle? = null)
-        = toActivityStarter().toObservable(intent, options, true)
+        = toStarter().toObservable(intent, options, true)
 
 @JvmOverloads
 fun Activity.startActivityForAny(
         intent: Intent,
         options: Bundle? = null)
-        = toActivityStarter().toObservable(intent, options, false)
+        = toStarter().toObservable(intent, options, false)
 
 @JvmOverloads
 fun Fragment.startActivityForOk(
         intent: Intent,
         options: Bundle? = null)
-        = toActivityStarter().toObservable(intent, options, true)
+        = toStarter().toObservable(intent, options, true)
 
 @JvmOverloads
 fun Fragment.startActivityForAny(
         intent: Intent,
         options: Bundle? = null)
-        = toActivityStarter().toObservable(intent, options, false)
+        = toStarter().toObservable(intent, options, false)
 
 @JvmOverloads
 fun android.support.v4.app.Fragment.startActivityForOk(
         intent: Intent,
         options: Bundle? = null)
-        = toActivityStarter().toObservable(intent, options, true)
+        = toStarter().toObservable(intent, options, true)
 
 @JvmOverloads
 fun android.support.v4.app.Fragment.startActivityForAny(
         intent: Intent,
         options: Bundle? = null)
-        = toActivityStarter().toObservable(intent, options, false)
+        = toStarter().toObservable(intent, options, false)
 
 inline fun Intent.getRequestCode(): Int {
     checkIntent(this)
