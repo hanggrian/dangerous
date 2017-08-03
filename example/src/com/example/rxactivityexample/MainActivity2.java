@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.hendraanggrian.rx.activity.ActivityResult;
 import com.hendraanggrian.rx.activity.RxActivity;
 
 import io.reactivex.Observer;
@@ -42,7 +41,7 @@ public class MainActivity2 extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RxActivity.INSTANCE.startActivityForResultOk(MainActivity2.this, intent)
+                RxActivity.startActivityForOk(MainActivity2.this, intent)
                         .subscribe(new Observer<Intent>() {
                             @Override
                             public void onSubscribe(@NonNull Disposable d) {
@@ -67,14 +66,14 @@ public class MainActivity2 extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RxActivity.INSTANCE.startActivityForResultBy(MainActivity2.this, intent)
-                        .subscribe(new Observer<ActivityResult>() {
+                RxActivity.startActivityForAny(MainActivity2.this, intent)
+                        .subscribe(new Observer<Intent>() {
                             @Override
                             public void onSubscribe(@NonNull Disposable d) {
                             }
 
                             @Override
-                            public void onNext(@NonNull ActivityResult result) {
+                            public void onNext(@NonNull Intent result) {
                                 showSnackbar("onNext:\n" + result.toString());
                             }
 
@@ -94,7 +93,7 @@ public class MainActivity2 extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        RxActivity.INSTANCE.onActivityResult(requestCode, resultCode, data);
+        RxActivity.onActivityResultBy(requestCode, resultCode, data);
     }
 
     private void showSnackbar(String text) {

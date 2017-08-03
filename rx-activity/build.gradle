@@ -14,6 +14,10 @@ android {
         main.manifest.srcFile 'AndroidManifest.xml'
         main.java.srcDirs 'src'
     }
+    buildTypes.each {
+        it.buildConfigField 'String', 'KEY_REQUEST_CODE', '"com.hendraanggrian.rx.activity.RxActivity.KEY_REQUEST_CODE"'
+        it.buildConfigField 'String', 'KEY_RESULT_CODE', '"com.hendraanggrian.rx.activity.RxActivity.KEY_RESULT_CODE"'
+    }
 }
 
 dependencies {

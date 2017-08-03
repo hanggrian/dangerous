@@ -1,12 +1,11 @@
 package com.example.rxactivityexample
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.errorbar
 import android.support.v7.app.AppCompatActivity
-import com.hendraanggrian.rx.activity.RxActivity
-import com.hendraanggrian.rx.activity.RxActivity.startActivityForResultBy
-import com.hendraanggrian.rx.activity.RxActivity.startActivityForResultOk
+import com.hendraanggrian.rx.activity.*
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -22,21 +21,28 @@ class MainActivity : AppCompatActivity() {
 
         val intent = Intent(this, NextActivity::class.java)
         button1.setOnClickListener {
-            startActivityForResultOk(intent)
+            startActivityForOk(intent)
                     .subscribeBy(
                             onNext = { _ -> errorbar(coordinatorLayout, "onNext", android.R.string.ok, {}) },
                             onError = { e -> errorbar(coordinatorLayout, "onError: ${e.message}", android.R.string.ok, {}) })
         }
         button2.setOnClickListener {
-            startActivityForResultBy(intent)
+            startActivityForAny(intent)
                     .subscribeBy(
-                            onNext = { result -> errorbar(coordinatorLayout, "onNext:\n$result", android.R.string.ok, {}) },
+                            onNext = { result ->
+                                val print = "ActivityResult[requestCode=${result.getRequestCode()}, resultCode=${when (result.getResultCode()) {
+                                    Activity.RESULT_OK -> "RESULT_OK"
+                                    Activity.RESULT_CANCELED -> "RESULT_CANCELED"
+                                    else -> result.getResultCode().toString()
+                                }}]"
+                                errorbar(coordinatorLayout, "onNext:\n$print", android.R.string.ok, {})
+                            },
                             onError = { e -> errorbar(coordinatorLayout, "onError: ${e.message}", android.R.string.ok, {}) })
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        RxActivity.onActivityResult(requestCode, resultCode, data)
+        onActivityResultBy(requestCode, resultCode, data)
     }
 }
