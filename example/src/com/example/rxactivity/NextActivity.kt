@@ -1,4 +1,4 @@
-package com.example.rxactivityexample
+package com.example.rxactivity
 
 import android.content.Intent
 import android.os.Bundle

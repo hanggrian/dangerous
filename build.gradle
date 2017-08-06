@@ -14,9 +14,9 @@ buildscript {
             ],
             support   : '26.0.0',
             rxjava    : '2.1.0',
-            kota      : '0.5.0',
+            kota      : '0.5.2',
 
-            release   : '0.6'
+            release   : '0.7'
     ]
     repositories {
         jcenter()
@@ -42,4 +42,7 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-//$ ./gradlew bintrayUpload -PbintrayUser=hendraanggrian -PbintrayKey= -PdryRun=false
+/** QUICK LINT CHECK BEFORE UPLOAD
+ ./gradlew rx-activity:clean rx-activity:build
+ ./gradlew rx-activity:bintrayUpload -PdryRun=false -PbintrayUser=hendraanggrian -PbintrayKey=
+ */

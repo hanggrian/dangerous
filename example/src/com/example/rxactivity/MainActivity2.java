@@ -1,14 +1,13 @@
-package com.example.rxactivityexample;
+package com.example.rxactivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.hendraanggrian.rx.activity.RxActivity;
@@ -23,25 +22,20 @@ import io.reactivex.disposables.Disposable;
 public class MainActivity2 extends AppCompatActivity {
 
     private Toolbar toolbar;
-    private Button button1;
-    private Button button2;
-    private NestedScrollView scrollView;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
-        button1 = findViewById(R.id.button1);
-        button2 = findViewById(R.id.button2);
-        scrollView = findViewById(R.id.scrollView);
+        fab = findViewById(R.id.fab);
         setSupportActionBar(toolbar);
 
-        final Intent intent = new Intent(this, NextActivity.class);
-        button1.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RxActivity.startActivityForOk(MainActivity2.this, intent)
+                RxActivity.startActivityForResultAsObservable(MainActivity2.this, new Intent(MainActivity2.this, NextActivity.class))
                         .subscribe(new Observer<Intent>() {
                             @Override
                             public void onSubscribe(@NonNull Disposable d) {
@@ -63,41 +57,16 @@ public class MainActivity2 extends AppCompatActivity {
                         });
             }
         });
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RxActivity.startActivityForAny(MainActivity2.this, intent)
-                        .subscribe(new Observer<Intent>() {
-                            @Override
-                            public void onSubscribe(@NonNull Disposable d) {
-                            }
-
-                            @Override
-                            public void onNext(@NonNull Intent result) {
-                                showSnackbar("onNext:\n" + result.toString());
-                            }
-
-                            @Override
-                            public void onError(@NonNull Throwable e) {
-                                showSnackbar("onError:\n" + e.getMessage());
-                            }
-
-                            @Override
-                            public void onComplete() {
-                            }
-                        });
-            }
-        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        RxActivity.onActivityResultBy(requestCode, resultCode, data);
+        RxActivity.notifyRxActivity(requestCode, resultCode, data);
     }
 
     private void showSnackbar(String text) {
-        Snackbar snackbar = Snackbar.make(scrollView, text, Snackbar.LENGTH_INDEFINITE)
+        Snackbar snackbar = Snackbar.make(fab, text, Snackbar.LENGTH_INDEFINITE)
                 .setAction(android.R.string.ok, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
