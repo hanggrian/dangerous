@@ -9,7 +9,7 @@ import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.RequiresApi
-import com.hendraanggrian.kota.util.containsKey
+import com.hendraanggrian.kota.collection.containsKey
 import com.hendraanggrian.rx.activity.internal.ActivityResultEmitter
 import com.hendraanggrian.rx.activity.internal.QUEUES
 import com.hendraanggrian.rx.activity.internal.createActivityResultObservables

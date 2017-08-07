@@ -7,13 +7,13 @@ package com.hendraanggrian.rx.activity
  */
 open class ActivityResultException : Exception {
 
-    val resultCode: Int
+    val requestCode: Int
 
     constructor(resultCode: Int) {
-        this.resultCode = resultCode
+        this.requestCode = resultCode
     }
 
     constructor(resultCode: Int, name: String) : super(name) {
-        this.resultCode = resultCode
+        this.requestCode = resultCode
     }
 }

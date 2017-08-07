@@ -14,7 +14,7 @@ buildscript {
             ],
             support   : '26.0.0',
             rxjava    : '2.1.0',
-            kota      : '0.5.2',
+            kota      : '0.6.0',
 
             release   : '0.7'
     ]

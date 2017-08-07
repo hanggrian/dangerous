@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         fab.setOnClickListener {
-            startActivityForResultAsObservable(Intent(this, NextActivity::class.java), RESULT_OK)
+            startActivityForResultAsObservable(Intent(this, NextActivity::class.java))
                     .subscribeBy(
                             onNext = { _ -> errorbar(fab, "onNext", android.R.string.ok, {}) },
                             onError = { e -> errorbar(fab, "onError: ${e.message}", android.R.string.ok, {}) })

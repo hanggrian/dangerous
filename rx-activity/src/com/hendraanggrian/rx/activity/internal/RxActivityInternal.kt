@@ -5,7 +5,7 @@ package com.hendraanggrian.rx.activity.internal
 import android.content.Intent
 import android.support.annotation.RestrictTo
 import android.util.SparseArray
-import com.hendraanggrian.kota.util.containsKey
+import com.hendraanggrian.kota.collection.containsKey
 import io.reactivex.Observable
 import java.lang.ref.WeakReference
 import java.util.*
