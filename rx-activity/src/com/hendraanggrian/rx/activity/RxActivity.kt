@@ -3,6 +3,7 @@
 
 package com.hendraanggrian.rx.activity
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.app.Fragment
@@ -50,7 +51,7 @@ inline fun Activity.startActivityForResultAsObservable(intent: Intent, options: 
 @JvmOverloads
 inline fun Fragment.startActivityForResultAsObservable(intent: Intent, result: Int = Activity.RESULT_OK): Observable<Intent> {
     return createActivityResultObservables(result, { requestCode ->
-        startActivityForResult(intent, requestCode)
+        activity.startActivityForResult(intent, requestCode)
     })
 }
 
@@ -59,22 +60,23 @@ inline fun Fragment.startActivityForResultAsObservable(intent: Intent, result: I
 @JvmOverloads
 inline fun Fragment.startActivityForResultAsObservable(intent: Intent, options: Bundle?, result: Int = Activity.RESULT_OK): Observable<Intent> {
     return createActivityResultObservables(result, { requestCode ->
-        startActivityForResult(intent, requestCode, options)
+      activity.startActivityForResult(intent, requestCode, options)
     })
 }
 
 @JvmOverloads
 inline fun android.support.v4.app.Fragment.startActivityForResultAsObservable(intent: Intent, result: Int = Activity.RESULT_OK): Observable<Intent> {
     return createActivityResultObservables(result, { requestCode ->
-        startActivityForResult(intent, requestCode)
+      activity.startActivityForResult(intent, requestCode)
     })
 }
 
+@SuppressLint("RestrictedApi")
 @RequiresApi(16)
 @TargetApi(16)
 @JvmOverloads
 inline fun android.support.v4.app.Fragment.startActivityForResultAsObservable(intent: Intent, options: Bundle?, result: Int = Activity.RESULT_OK): Observable<Intent> {
     return createActivityResultObservables(result, { requestCode ->
-        startActivityForResult(intent, requestCode, options)
+      activity.startActivityForResult(intent, requestCode, options)
     })
 }
