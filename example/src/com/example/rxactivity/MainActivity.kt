@@ -18,11 +18,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        fab.setOnClickListener {
+
+      supportFragmentManager
+            .beginTransaction()
+            .add(R.id.fragmentContent, MainFragment())
+            .commit()
+
+        activityButton.setOnClickListener {
             startActivityForResultAsObservable(Intent(this, NextActivity::class.java))
                     .subscribeBy(
-                            onNext = { _ -> errorbar(fab, "onNext", android.R.string.ok, {}) },
-                            onError = { e -> errorbar(fab, "onError: ${e.message}", android.R.string.ok, {}) })
+                            onNext = { _ -> errorbar(activityButton, "onNext", android.R.string.ok, {}) },
+                            onError = { e -> errorbar(activityButton, "onError: ${e.message}", android.R.string.ok, {}) })
         }
     }
 
