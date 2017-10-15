@@ -5,9 +5,7 @@ import io.reactivex.*
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Cancellable
 
-/**
- * Ensure that Observable will only emits if result code match [resultCode].
- */
+/** Ensure that Observable will only emits if result code match [resultCode]. */
 internal interface ActivityResultEmitter {
 
     val resultCode: Int

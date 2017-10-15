@@ -23,8 +23,8 @@ inline fun Activity.startActivityForResultAsObservable(
 @RequiresApi(16)
 inline fun Activity.startActivityForResultAsObservable(
         intent: Intent,
-        options: Bundle?,
-        result: Int = Activity.RESULT_OK
+        result: Int = Activity.RESULT_OK,
+        options: Bundle?
 ): Observable<Intent> = ObservableActivityResultEmitter.create(result, { requestCode ->
     startActivityForResult(intent, requestCode, options)
 })
@@ -41,8 +41,8 @@ inline fun Fragment.startActivityForResultAsObservable(
 @RequiresApi(16)
 inline fun Fragment.startActivityForResultAsObservable(
         intent: Intent,
-        options: Bundle?,
-        result: Int = Activity.RESULT_OK
+        result: Int = Activity.RESULT_OK,
+        options: Bundle?
 ): Observable<Intent> = ObservableActivityResultEmitter.create(result, { requestCode ->
     startActivityForResult(intent, requestCode, options)
 })
@@ -59,8 +59,8 @@ inline fun android.support.v4.app.Fragment.startActivityForResultAsObservable(
 @RequiresApi(16)
 inline fun android.support.v4.app.Fragment.startActivityForResultAsObservable(
         intent: Intent,
-        options: Bundle?,
-        result: Int = Activity.RESULT_OK
+        result: Int = Activity.RESULT_OK,
+        options: Bundle?
 ): Observable<Intent> = ObservableActivityResultEmitter.create(result, { requestCode ->
     startActivityForResult(intent, requestCode, options)
 })

@@ -23,8 +23,8 @@ inline fun Activity.startActivityForResultAsSingle(
 @RequiresApi(16)
 inline fun Activity.startActivityForResultAsSingle(
         intent: Intent,
-        options: Bundle?,
-        result: Int = Activity.RESULT_OK
+        result: Int = Activity.RESULT_OK,
+        options: Bundle?
 ): Single<Intent> = SingleActivityResultEmitter.create(result, { requestCode ->
     startActivityForResult(intent, requestCode, options)
 })
@@ -41,8 +41,8 @@ inline fun Fragment.startActivityForResultAsSingle(
 @RequiresApi(16)
 inline fun Fragment.startActivityForResultAsSingle(
         intent: Intent,
-        options: Bundle?,
-        result: Int = Activity.RESULT_OK
+        result: Int = Activity.RESULT_OK,
+        options: Bundle?
 ): Single<Intent> = SingleActivityResultEmitter.create(result, { requestCode ->
     startActivityForResult(intent, requestCode, options)
 })
@@ -59,8 +59,8 @@ inline fun android.support.v4.app.Fragment.startActivityForResultAsSingle(
 @RequiresApi(16)
 inline fun android.support.v4.app.Fragment.startActivityForResultAsSingle(
         intent: Intent,
-        options: Bundle?,
-        result: Int = Activity.RESULT_OK
+        result: Int = Activity.RESULT_OK,
+        options: Bundle?
 ): Single<Intent> = SingleActivityResultEmitter.create(result, { requestCode ->
     startActivityForResult(intent, requestCode, options)
 })

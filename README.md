@@ -18,40 +18,11 @@ Usage
 `RxActivity` is usable in Activity, Fragment and support Fragment once `onActivityResult` is overriden.
 ```java
 @Override
-protected void onActivityResult(int mRequestCode, int resultCode, Intent data) {
-    super.onActivityResult(mRequestCode, resultCode, data);
-    RxActivity.onActivityResult(mRequestCode, resultCode, data);
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    RxActivity.onActivityResult(requestCode, resultCode, data);
 }
 ```
-
-#### Start activity for OK resultEmitter
-Start activity that only emits `Intent` resultEmitter if resultEmitter code is `Activity.RESULT_OK`.
-Will throw `ActivityCanceledException` if the resultEmitter code is `Activity.RESULT_CANCELED`,
-and `ActivityNotFoundException` if no activity can handle intent input.
-```java
-RxActivity.startForOk(activity, intent)
-    .subscribe(data -> {
-        // resultEmitter code is Activity.RESULT_OK
-        // proceed to handle activity resultEmitter
-    
-    }, throwable -> {
-        // resultEmitter code is Activity.RESULT_CANCELED
-    });
-```
-
-#### Start activity for any resultEmitter
-Start actvity that emits `ActivityResult`, which is a tuple of request code, resultEmitter code, and `Intent` resultEmitter.
-Will only throw `ActivityNotFoundException` if no activity can handle intent input.
-```java
-RxActivity.startForAny(activity, intent)
-    .subscribe(activityResult -> {
-        // 
-        int mRequestCode = activityResult.mRequestCode;
-        int resultCode = activityResult.resultCode;
-        Intent data = activityResult.data;
-        
-        // TODO: use fields
-    });
 ```
 
 Download

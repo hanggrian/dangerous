@@ -1,5 +1,3 @@
-@file:Suppress("UNUSED")
-
 package com.hendraanggrian.app
 
 open class ActivityResultException : Exception {

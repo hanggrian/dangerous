@@ -23,8 +23,8 @@ inline fun Activity.startActivityForResultAsCompletable(
 @RequiresApi(16)
 inline fun Activity.startActivityForResultAsCompletable(
         intent: Intent,
-        options: Bundle?,
-        result: Int = Activity.RESULT_OK
+        result: Int = Activity.RESULT_OK,
+        options: Bundle?
 ): Completable = CompletableActivityResultEmitter.create(result, { requestCode ->
     startActivityForResult(intent, requestCode, options)
 })
@@ -41,8 +41,8 @@ inline fun Fragment.startActivityForResultAsCompletable(
 @RequiresApi(16)
 inline fun Fragment.startActivityForResultAsCompletable(
         intent: Intent,
-        options: Bundle?,
-        result: Int = Activity.RESULT_OK
+        result: Int = Activity.RESULT_OK,
+        options: Bundle?
 ): Completable = CompletableActivityResultEmitter.create(result, { requestCode ->
     startActivityForResult(intent, requestCode, options)
 })
@@ -59,8 +59,8 @@ inline fun android.support.v4.app.Fragment.startActivityForResultAsCompletable(
 @RequiresApi(16)
 inline fun android.support.v4.app.Fragment.startActivityForResultAsCompletable(
         intent: Intent,
-        options: Bundle?,
-        result: Int = Activity.RESULT_OK
+        result: Int = Activity.RESULT_OK,
+        options: Bundle?
 ): Completable = CompletableActivityResultEmitter.create(result, { requestCode ->
     startActivityForResult(intent, requestCode, options)
 })
