@@ -5,12 +5,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
-import com.hendraanggrian.kota.app.finishWithResult
+import kota.contents.finishWithResult
 import kotlinx.android.synthetic.main.activity_next.*
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 class NextActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {

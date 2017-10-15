@@ -1,11 +1,8 @@
-package com.hendraanggrian.rx.activity.internal
+package com.hendraanggrian.app
 
 import android.content.Intent
 import io.reactivex.ObservableEmitter
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 interface ActivityResultEmitter : ObservableEmitter<Intent> {
 
     /**

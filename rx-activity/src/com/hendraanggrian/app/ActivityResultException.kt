@@ -1,10 +1,7 @@
 @file:Suppress("UNUSED")
 
-package com.hendraanggrian.rx.activity
+package com.hendraanggrian.app
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 open class ActivityResultException : Exception {
 
     val requestCode: Int

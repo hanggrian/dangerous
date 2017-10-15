@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+ext.kota = '0.9'
 ext.errorbar = '0.3.0'
 
 android {
@@ -32,10 +33,16 @@ android {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin.stdlib"
-    compile "org.jetbrains.anko:anko-commons:$versions.kotlin.anko"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
 
-    compile project(':rx-activity')
-    compile "io.reactivex.rxjava2:rxkotlin:$versions.rxjava"
-    compile "com.hendraanggrian:errorbar:$errorbar"
+    implementation "com.android.support:appcompat-v7:$versions.support"
+    implementation "com.android.support:design:$versions.support"
+
+    implementation project(':rx-activity')
+    implementation "io.reactivex.rxjava2:rxkotlin:$versions.rxjava"
+
+    implementation "com.hendraanggrian:kota:$kota"
+    implementation("com.hendraanggrian:errorbar:$errorbar") {
+        exclude group: 'com.android.support'
+    }
 }

@@ -10,32 +10,31 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import com.hendraanggrian.rx.activity.RxActivity;
+import com.hendraanggrian.app.RxActivity;
 
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)s
- */
+import static com.hendraanggrian.app.RxActivitiesKt.startActivityForResultAsObservable;
+
 public class MainActivity2 extends AppCompatActivity {
 
     private Toolbar toolbar;
-    private FloatingActionButton fab;
+    private FloatingActionButton button;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
-        fab = findViewById(R.id.fab);
+        button = findViewById(R.id.button);
         setSupportActionBar(toolbar);
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RxActivity.startActivityForResultAsObservable(MainActivity2.this, new Intent(MainActivity2.this, NextActivity.class))
+                startActivityForResultAsObservable(MainActivity2.this, new Intent(MainActivity2.this, NextActivity.class))
                         .subscribe(new Observer<Intent>() {
                             @Override
                             public void onSubscribe(@NonNull Disposable d) {
@@ -62,11 +61,11 @@ public class MainActivity2 extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        RxActivity.notifyRxActivity(requestCode, resultCode, data);
+        RxActivity.INSTANCE.onActivityResult(requestCode, resultCode, data);
     }
 
     private void showSnackbar(String text) {
-        Snackbar snackbar = Snackbar.make(fab, text, Snackbar.LENGTH_INDEFINITE)
+        Snackbar snackbar = Snackbar.make(button, text, Snackbar.LENGTH_INDEFINITE)
                 .setAction(android.R.string.ok, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

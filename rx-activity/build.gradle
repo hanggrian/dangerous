@@ -11,16 +11,18 @@ android {
         targetSdkVersion versions.sdk.target
     }
     sourceSets {
-        main.manifest.srcFile 'AndroidManifest.xml'
-        main.java.srcDirs 'src'
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs 'src'
+        }
     }
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin.stdlib"
-    compile "io.reactivex.rxjava2:rxjava:$versions.rxjava"
-    compile "com.android.support:support-fragment:$versions.support"
-    compile "com.hendraanggrian:kota:$versions.kota"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+    provided "io.reactivex.rxjava2:rxjava:$versions.rxjava"
+    provided "com.android.support:support-v4:$versions.support"
+    provided "com.hendraanggrian:kota-support-v4:$versions.kota"
 }
 
 publish {

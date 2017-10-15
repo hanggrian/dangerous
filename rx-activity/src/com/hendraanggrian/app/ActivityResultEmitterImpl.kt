@@ -1,16 +1,13 @@
-package com.hendraanggrian.rx.activity.internal
+package com.hendraanggrian.app
 
 import android.content.Intent
 import io.reactivex.ObservableEmitter
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Cancellable
 
-/**
- * @author Hendra Anggrian (hendraanggrian@gmail.com)
- */
 class ActivityResultEmitterImpl(
         override val resultCode: Int,
-        val e: ObservableEmitter<Intent>
+        private val e: ObservableEmitter<Intent>
 ) : ActivityResultEmitter {
 
     override fun onNext(value: Intent) = e.onNext(value)
