@@ -4,13 +4,10 @@ Reactive streams to start activity for resultEmitter.
 
 ```java
 startForResultAsObservable(activity, new Intent(Intent.ACTION_GET_CONTENT).setType("image/*"))
-    .subscribe(resultEmitter -> {
-        if (resultEmitter.resultCode == Activity.RESULT_OK) {
-            Intent data = resultEmitter.data;
-            Uri uri = data.getData();
-            imageView.setImageUri(uri);
-        }
-    });
+    .subscribe(data -> {
+        Uri uri = data.getData();
+        imageView.setImageUri(uri);
+    });
 ```
 
 Usage
@@ -22,7 +19,6 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     RxActivity.onActivityResult(requestCode, resultCode, data);
 }
-```
 ```
 
 Download
