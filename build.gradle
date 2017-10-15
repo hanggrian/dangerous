@@ -1,6 +1,6 @@
 buildscript {
     ext.versions = [
-            release   : '0.7',
+            release   : '0.8',
             // android
             sdk       : [
                     min   : 14,
@@ -10,8 +10,7 @@ buildscript {
             // main
             kotlin    : '1.1.51',
             support   : '26.1.0',
-            rxjava    : '2.1.0',
-            kota      : '0.9'
+            rxjava    : '2.1.5'
     ]
     repositories {
         google()

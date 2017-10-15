@@ -2,8 +2,6 @@ package com.hendraanggrian.app
 
 import android.content.Intent
 import android.support.v4.util.SparseArrayCompat
-import kota.collections.containsKey
-import kota.collections.supportSparseArrayOf
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -13,7 +11,7 @@ object RxActivity {
     private var RANDOM: WeakReference<Random?> = WeakReference(null)
 
     /** Collection of reactive emitters that will emits one-by-one on activity result. Once emitted, emitter is cease to exist from this collection. */
-    private val QUEUES: SparseArrayCompat<ActivityResultEmitter> = supportSparseArrayOf()
+    private val EMITTERS: SparseArrayCompat<ActivityResultEmitter> = SparseArrayCompat()
 
     /**
      * Attempt to get Random instance from WeakReference.
@@ -31,35 +29,32 @@ object RxActivity {
             do {
                 // 16-bit int, as required by FragmentActivity precondition
                 requestCode = random.nextInt(65535) // 16-bit int
-            } while (QUEUES.containsKey(requestCode))
+            } while (EMITTERS.indexOfKey(requestCode) > -1)
             return requestCode
         }
 
-    internal fun append(requestCode: Int, resultEmitter: ActivityResultEmitter) = QUEUES.append(requestCode, resultEmitter)
+    internal fun append(requestCode: Int, resultEmitter: ActivityResultEmitter) = EMITTERS.append(requestCode, resultEmitter)
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val emitter = QUEUES.get(requestCode) ?: return
+        val emitter = EMITTERS.get(requestCode) ?: return
+        EMITTERS.remove(requestCode)
         when (emitter) {
             is ObservableActivityResultEmitter -> {
-                if (!emitter.isDisposed) {
-                    if (emitter.resultCode == resultCode) {
-                        emitter.onNext(data!!)
-                    } else {
-                        emitter.onError(ActivityResultException(requestCode, "Activity with request code $requestCode fails expected result code check."))
-                    }
-                    emitter.onComplete()
-                }
+                if (emitter.isDisposed) return
+                if (emitter.resultCode != resultCode) emitter.onError(ActivityResultException(requestCode, "Activity with request code $requestCode fails expected result code check."))
+                else emitter.onNext(data!!)
+                emitter.onComplete()
             }
             is SingleActivityResultEmitter -> {
-                if (!emitter.isDisposed) {
-                    if (emitter.resultCode == resultCode) {
-                        emitter.onSuccess(data!!)
-                    } else {
-                        emitter.onError(ActivityResultException(requestCode, "Activity with request code $requestCode fails expected result code check."))
-                    }
-                }
+                if (emitter.isDisposed) return
+                if (emitter.resultCode != resultCode) emitter.onError(ActivityResultException(requestCode, "Activity with request code $requestCode fails expected result code check."))
+                else emitter.onSuccess(data!!)
+            }
+            is CompletableActivityResultEmitter -> {
+                if (emitter.isDisposed) return
+                if (emitter.resultCode != resultCode) emitter.onError(ActivityResultException(requestCode, "Activity with request code $requestCode fails expected result code check."))
+                emitter.onComplete()
             }
         }
-        QUEUES.remove(requestCode)
     }
 }

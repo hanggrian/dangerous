@@ -3,7 +3,7 @@ RxActivity
 Reactive streams to start activity for resultEmitter.
 
 ```java
-RxActivity.startForResult(activity, new Intent(Intent.ACTION_GET_CONTENT).setType("image/*"))
+startForResultAsObservable(activity, new Intent(Intent.ACTION_GET_CONTENT).setType("image/*"))
     .subscribe(resultEmitter -> {
         if (resultEmitter.resultCode == Activity.RESULT_OK) {
             Intent data = resultEmitter.data;
@@ -58,12 +58,13 @@ Download
 --------
 ```gradle
 repositories {
-    maven { url 'https://maven.google.com' }
+    google()
     jcenter()
 }
 
 dependencies {
-    compile 'com.hendraanggrian:rx-activity:0.5'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
+    implementation 'com.hendraanggrian:rx-activity:0.8'
 }
 ```
 

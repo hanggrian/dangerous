@@ -4,8 +4,6 @@
 
 package com.hendraanggrian.app
 
-import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.app.Activity
 import android.app.Fragment
 import android.content.Intent
@@ -21,9 +19,8 @@ inline fun Activity.startActivityForResultAsSingle(
     startActivityForResult(intent, requestCode)
 })
 
-@RequiresApi(16)
-@TargetApi(16)
 @JvmOverloads
+@RequiresApi(16)
 inline fun Activity.startActivityForResultAsSingle(
         intent: Intent,
         options: Bundle?,
@@ -37,18 +34,17 @@ inline fun Fragment.startActivityForResultAsSingle(
         intent: Intent,
         result: Int = Activity.RESULT_OK
 ): Single<Intent> = SingleActivityResultEmitter.create(result, { requestCode ->
-    activity.startActivityForResult(intent, requestCode)
+    startActivityForResult(intent, requestCode)
 })
 
-@RequiresApi(16)
-@TargetApi(16)
 @JvmOverloads
+@RequiresApi(16)
 inline fun Fragment.startActivityForResultAsSingle(
         intent: Intent,
         options: Bundle?,
         result: Int = Activity.RESULT_OK
 ): Single<Intent> = SingleActivityResultEmitter.create(result, { requestCode ->
-    activity.startActivityForResult(intent, requestCode, options)
+    startActivityForResult(intent, requestCode, options)
 })
 
 @JvmOverloads
@@ -56,17 +52,15 @@ inline fun android.support.v4.app.Fragment.startActivityForResultAsSingle(
         intent: Intent,
         result: Int = Activity.RESULT_OK
 ): Single<Intent> = SingleActivityResultEmitter.create(result, { requestCode ->
-    activity.startActivityForResult(intent, requestCode)
+    startActivityForResult(intent, requestCode)
 })
 
-@SuppressLint("RestrictedApi")
-@RequiresApi(16)
-@TargetApi(16)
 @JvmOverloads
+@RequiresApi(16)
 inline fun android.support.v4.app.Fragment.startActivityForResultAsSingle(
         intent: Intent,
         options: Bundle?,
         result: Int = Activity.RESULT_OK
 ): Single<Intent> = SingleActivityResultEmitter.create(result, { requestCode ->
-    activity.startActivityForResult(intent, requestCode, options)
+    startActivityForResult(intent, requestCode, options)
 })

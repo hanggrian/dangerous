@@ -18,9 +18,9 @@ class NextActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_next)
         setSupportActionBar(toolbar)
-        buttonOk.setOnClickListener(this)
-        buttonCanceled.setOnClickListener(this)
-        buttonCustom.setOnClickListener(this)
+        okButton.setOnClickListener(this)
+        canceledButton.setOnClickListener(this)
+        customButton.setOnClickListener(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -31,8 +31,8 @@ class NextActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) = finishWithResult(when (v) {
-        buttonOk -> RESULT_OK
-        buttonCanceled -> RESULT_CANCELED
+        okButton -> RESULT_OK
+        canceledButton -> RESULT_CANCELED
         else -> RESULT_CUSTOM
     }, Intent())
 }

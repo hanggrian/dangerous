@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">rx-activity</string>
+    <string-array name="type">
+        <item>Observable</item>
+        <item>Single</item>
+        <item>Completable</item>
+    </string-array>
 </resources>

@@ -1,10 +1,8 @@
 <resources>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorAccent">#b7178c</item>
-        <item name="errorbarStyle">@style/CustomErrorbarTheme</item>
-    </style>
+        <item name="colorControlNormal">?colorAccent</item>
 
-    <style name="CustomErrorbarTheme" parent="Widget.Design.Errorbar">
-        <item name="backdrop">@drawable/errorbar_bg_cloud</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 </resources>

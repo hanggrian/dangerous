@@ -9,58 +9,58 @@ import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.RequiresApi
-import io.reactivex.Observable
+import io.reactivex.Completable
 
 @JvmOverloads
-inline fun Activity.startActivityForResultAsObservable(
+inline fun Activity.startActivityForResultAsCompletable(
         intent: Intent,
         result: Int = Activity.RESULT_OK
-): Observable<Intent> = ObservableActivityResultEmitter.create(result, { requestCode ->
+): Completable = CompletableActivityResultEmitter.create(result, { requestCode ->
     startActivityForResult(intent, requestCode)
 })
 
 @JvmOverloads
 @RequiresApi(16)
-inline fun Activity.startActivityForResultAsObservable(
+inline fun Activity.startActivityForResultAsCompletable(
         intent: Intent,
         options: Bundle?,
         result: Int = Activity.RESULT_OK
-): Observable<Intent> = ObservableActivityResultEmitter.create(result, { requestCode ->
+): Completable = CompletableActivityResultEmitter.create(result, { requestCode ->
     startActivityForResult(intent, requestCode, options)
 })
 
 @JvmOverloads
-inline fun Fragment.startActivityForResultAsObservable(
+inline fun Fragment.startActivityForResultAsCompletable(
         intent: Intent,
         result: Int = Activity.RESULT_OK
-): Observable<Intent> = ObservableActivityResultEmitter.create(result, { requestCode ->
+): Completable = CompletableActivityResultEmitter.create(result, { requestCode ->
     startActivityForResult(intent, requestCode)
 })
 
 @JvmOverloads
 @RequiresApi(16)
-inline fun Fragment.startActivityForResultAsObservable(
+inline fun Fragment.startActivityForResultAsCompletable(
         intent: Intent,
         options: Bundle?,
         result: Int = Activity.RESULT_OK
-): Observable<Intent> = ObservableActivityResultEmitter.create(result, { requestCode ->
+): Completable = CompletableActivityResultEmitter.create(result, { requestCode ->
     startActivityForResult(intent, requestCode, options)
 })
 
 @JvmOverloads
-inline fun android.support.v4.app.Fragment.startActivityForResultAsObservable(
+inline fun android.support.v4.app.Fragment.startActivityForResultAsCompletable(
         intent: Intent,
         result: Int = Activity.RESULT_OK
-): Observable<Intent> = ObservableActivityResultEmitter.create(result, { requestCode ->
+): Completable = CompletableActivityResultEmitter.create(result, { requestCode ->
     startActivityForResult(intent, requestCode)
 })
 
 @JvmOverloads
 @RequiresApi(16)
-inline fun android.support.v4.app.Fragment.startActivityForResultAsObservable(
+inline fun android.support.v4.app.Fragment.startActivityForResultAsCompletable(
         intent: Intent,
         options: Bundle?,
         result: Int = Activity.RESULT_OK
-): Observable<Intent> = ObservableActivityResultEmitter.create(result, { requestCode ->
+): Completable = CompletableActivityResultEmitter.create(result, { requestCode ->
     startActivityForResult(intent, requestCode, options)
 })

@@ -20,9 +20,8 @@ android {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+    provided "com.android.support:support-fragment:$versions.support"
     provided "io.reactivex.rxjava2:rxjava:$versions.rxjava"
-    provided "com.android.support:support-v4:$versions.support"
-    provided "com.hendraanggrian:kota-support-v4:$versions.kota"
 }
 
 publish {
