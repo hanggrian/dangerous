@@ -33,20 +33,20 @@
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ok result"/>
+            android:text="Ok resultEmitter"/>
 
         <Button
             android:id="@+id/buttonCanceled"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Canceled result"/>
+            android:text="Canceled resultEmitter"/>
 
         <Button
             android:id="@+id/buttonCustom"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Custom result"/>
+            android:text="Custom resultEmitter"/>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

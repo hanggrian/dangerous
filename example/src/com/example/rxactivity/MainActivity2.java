@@ -30,32 +30,29 @@ public class MainActivity2 extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         button = findViewById(R.id.button);
         setSupportActionBar(toolbar);
+    }
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResultAsObservable(MainActivity2.this, new Intent(MainActivity2.this, NextActivity.class))
-                        .subscribe(new Observer<Intent>() {
-                            @Override
-                            public void onSubscribe(@NonNull Disposable d) {
-                            }
+    public void onClick(View view) {
+        startActivityForResultAsObservable(MainActivity2.this, new Intent(MainActivity2.this, NextActivity.class))
+                .subscribe(new Observer<Intent>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                    }
 
-                            @Override
-                            public void onNext(@NonNull Intent intent) {
-                                showSnackbar("onNext");
-                            }
+                    @Override
+                    public void onNext(@NonNull Intent intent) {
+                        showSnackbar("onNext");
+                    }
 
-                            @Override
-                            public void onError(@NonNull Throwable e) {
-                                showSnackbar("onError:\n" + e.getMessage());
-                            }
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        showSnackbar("onError:\n" + e.getMessage());
+                    }
 
-                            @Override
-                            public void onComplete() {
-                            }
-                        });
-            }
-        });
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
     @Override

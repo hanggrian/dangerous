@@ -6,11 +6,13 @@ open class ActivityResultException : Exception {
 
     val requestCode: Int
 
-    constructor(resultCode: Int) {
-        this.requestCode = resultCode
+    @JvmOverloads
+    constructor(requestCode: Int = 0) {
+        this.requestCode = requestCode
     }
 
-    constructor(resultCode: Int, name: String) : super(name) {
-        this.requestCode = resultCode
+    @JvmOverloads
+    constructor(requestCode: Int = 0, message: String) : super(message) {
+        this.requestCode = requestCode
     }
 }
