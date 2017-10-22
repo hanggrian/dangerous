@@ -5,10 +5,13 @@ import io.reactivex.*
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Cancellable
 
-/** Ensure that Observable will only emits if result code match [resultCode]. */
 internal interface ActivityResultEmitter {
 
+    /** Ensure that emitter will only emits if result code match [resultCode]. */
     val resultCode: Int
+
+    /** Shall be shadowed by RxJava's emitters. */
+    fun isDisposed(): Boolean
 }
 
 @PublishedApi

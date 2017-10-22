@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
-import kota.contents.finishWithResult
+import kota.finishWithResult
 import kotlinx.android.synthetic.main.activity_next.*
 
 class NextActivity : AppCompatActivity(), View.OnClickListener {
@@ -24,9 +24,7 @@ class NextActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            onBackPressed()
-        }
+        if (item.itemId == android.R.id.home) finish()
         return super.onOptionsItemSelected(item)
     }
 

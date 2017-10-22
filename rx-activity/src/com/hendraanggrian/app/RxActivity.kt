@@ -1,6 +1,7 @@
 package com.hendraanggrian.app
 
 import android.content.Intent
+import android.support.v4.app.FragmentActivity
 import android.support.v4.util.SparseArrayCompat
 import java.lang.ref.WeakReference
 import java.util.*
@@ -28,31 +29,29 @@ object RxActivity {
             var requestCode: Int
             do {
                 // 16-bit int, as required by FragmentActivity precondition
-                requestCode = random.nextInt(65535) // 16-bit int
+                requestCode = random.nextInt(65535)
             } while (EMITTERS.indexOfKey(requestCode) > -1)
             return requestCode
         }
 
-    internal fun append(requestCode: Int, resultEmitter: ActivityResultEmitter) = EMITTERS.append(requestCode, resultEmitter)
+    internal fun append(requestCode: Int, emitter: ActivityResultEmitter) = EMITTERS.append(requestCode, emitter)
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val emitter = EMITTERS.get(requestCode) ?: return
         EMITTERS.remove(requestCode)
+        if (emitter.isDisposed()) return
         when (emitter) {
             is ObservableActivityResultEmitter -> {
-                if (emitter.isDisposed) return
-                if (emitter.resultCode != resultCode) emitter.onError(ActivityResultException(requestCode, "Activity with request code $requestCode fails expected result code check."))
+                if (emitter.resultCode != resultCode) emitter.onError(ActivityResultException(requestCode, resultCode, data))
                 else emitter.onNext(data!!)
                 emitter.onComplete()
             }
             is SingleActivityResultEmitter -> {
-                if (emitter.isDisposed) return
-                if (emitter.resultCode != resultCode) emitter.onError(ActivityResultException(requestCode, "Activity with request code $requestCode fails expected result code check."))
+                if (emitter.resultCode != resultCode) emitter.onError(ActivityResultException(requestCode, resultCode, data))
                 else emitter.onSuccess(data!!)
             }
             is CompletableActivityResultEmitter -> {
-                if (emitter.isDisposed) return
-                if (emitter.resultCode != resultCode) emitter.onError(ActivityResultException(requestCode, "Activity with request code $requestCode fails expected result code check."))
+                if (emitter.resultCode != resultCode) emitter.onError(ActivityResultException(requestCode, resultCode, data))
                 emitter.onComplete()
             }
         }
