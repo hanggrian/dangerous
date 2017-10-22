@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 ext.rxkotlin = '2.1.0'
-ext.kota = '0.15'
+ext.kota = '0.16'
 
 android {
     compileSdkVersion versions.sdk.target
@@ -44,6 +44,5 @@ dependencies {
     implementation "com.android.support:design:$versions.support"
 
     implementation "com.hendraanggrian:kota-appcompat-v7:$kota"
-    implementation "com.hendraanggrian:kota-design:$kota"
     implementation "com.hendraanggrian:kota-preference-v7:$kota"
 }

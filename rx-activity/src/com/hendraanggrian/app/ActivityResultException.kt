@@ -14,7 +14,7 @@ open class ActivityResultException : Exception {
 
     constructor(message: String, cause: Throwable) : super(message, cause)
 
-    internal constructor(requestCode: Int, resultCode: Int, data: Intent?) : this("Activity with request code $requestCode fails expected result code check.") {
+    internal constructor(requestCode: Int, resultCode: Int, data: Intent?) : this("Returned Activity fails expected result code check, cast this Throwable to ActivityResultException for more information.") {
         mRequestCode = requestCode
         mResultCode = resultCode
         mData = data
