@@ -9,11 +9,6 @@
 
     <android.support.v7.preference.PreferenceCategory android:title="Start">
         <android.support.v7.preference.Preference
-            android:icon="@drawable/ic_activity_light"
-            android:key="activityPreference"
-            android:summary="Start Activity from this activity"
-            android:title="Activity" />
-        <android.support.v7.preference.Preference
             android:icon="@drawable/ic_fragment_light"
             android:key="fragmentPreference"
             android:summary="Start Activity from this fragment"
