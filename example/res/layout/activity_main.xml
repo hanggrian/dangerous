@@ -37,7 +37,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 android:background="?selectableItemBackground"
-                android:onClick="onClick"
                 app:navigationIcon="@drawable/ic_activity_light"
                 app:subtitle="Start Activity from this activity"
                 app:subtitleTextAppearance="@style/TextAppearance.AppCompat.Small"

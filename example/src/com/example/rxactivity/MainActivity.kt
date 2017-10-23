@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if (supportFragmentManager.findNullable<Fragment>(TAG_RETAINED_FRAGMENT) == null) {
             supportFragmentManager.addNow(R.id.container, Content(), TAG_RETAINED_FRAGMENT)
         }
+        toolbar2.setOnClickListener(this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -38,18 +39,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         RxActivity.onActivityResult(requestCode, resultCode, data)
     }
 
-    override fun onClick(v: View?) {
-        when (sharedPreferences.getString("typePreference")) {
-            "Observable" -> startActivityForResultAsObservable(Intent(this, NextActivity::class.java))
+    override fun onClick(v: View) {
+        val type = sharedPreferences.getString("typePreference", "Observable")
+        when (type) {
+            "Observable" -> startActivityForResultAsObservable(Intent(this, NextActivity::class.java).putExtra("type", type))
                     .subscribeBy(
                             onNext = { _ -> onResultOK() },
                             onError = { e -> onResultError(e) },
                             onComplete = { onResultComplete() })
-            "Single" -> startActivityForResultAsSingle(Intent(this, NextActivity::class.java))
+            "Single" -> startActivityForResultAsSingle(Intent(this, NextActivity::class.java).putExtra("type", type))
                     .subscribeBy(
                             onSuccess = { _ -> onResultOK() },
                             onError = { e -> onResultError(e) })
-            "Completable" -> startActivityForResultAsCompletable(Intent(this, NextActivity::class.java))
+            "Completable" -> startActivityForResultAsCompletable(Intent(this, NextActivity::class.java).putExtra("type", type))
                     .subscribeBy(
                             onComplete = { onResultComplete() },
                             onError = { e -> onResultError(e) })
@@ -81,17 +83,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             fragmentPreference.setOnPreferenceClickListener {
-                when (typePreference.value) {
-                    "Observable" -> startActivityForResultAsObservable(Intent(context, NextActivity::class.java))
+                val type = typePreference.value ?: "Observable"
+                when (type) {
+                    "Observable" -> startActivityForResultAsObservable(Intent(context, NextActivity::class.java).putExtra("type", type))
                             .subscribeBy(
                                     onNext = { _ -> onResultOK() },
                                     onError = { e -> onResultError(e) },
                                     onComplete = { onResultComplete() })
-                    "Single" -> startActivityForResultAsSingle(Intent(context, NextActivity::class.java))
+                    "Single" -> startActivityForResultAsSingle(Intent(context, NextActivity::class.java).putExtra("type", type))
                             .subscribeBy(
                                     onSuccess = { _ -> onResultOK() },
                                     onError = { e -> onResultError(e) })
-                    "Completable" -> startActivityForResultAsCompletable(Intent(context, NextActivity::class.java))
+                    "Completable" -> startActivityForResultAsCompletable(Intent(context, NextActivity::class.java).putExtra("type", type))
                             .subscribeBy(
                                     onComplete = { onResultComplete() },
                                     onError = { e -> onResultError(e) })

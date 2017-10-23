@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
+import com.hendraanggrian.bundler.BindExtra
+import com.hendraanggrian.bundler.Bundler
 import kota.finishWithResult
 import kotlinx.android.synthetic.main.activity_next.*
 
@@ -14,10 +16,16 @@ class NextActivity : AppCompatActivity(), View.OnClickListener {
         const val RESULT_CUSTOM = 9152
     }
 
+    @BindExtra lateinit var type: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_next)
         setSupportActionBar(toolbar)
+
+        Bundler.bindExtras(this)
+        supportActionBar!!.title = "startActivityAs$type"
+
         okButton.setOnClickListener(this)
         canceledButton.setOnClickListener(this)
         customButton.setOnClickListener(this)

@@ -1,9 +1,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 ext.rxkotlin = '2.1.0'
 ext.kota = '0.16'
+ext.bundler = '0.5.0'
 
 android {
     compileSdkVersion versions.sdk.target
@@ -45,4 +47,7 @@ dependencies {
 
     implementation "com.hendraanggrian:kota-appcompat-v7:$kota"
     implementation "com.hendraanggrian:kota-preference-v7:$kota"
+
+    implementation "com.hendraanggrian:bundler:$bundler"
+    kapt "com.hendraanggrian:bundler-compiler:$bundler"
 }
