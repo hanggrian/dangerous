@@ -1,5 +1,6 @@
 package com.example.rxactivity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,10 +9,7 @@ import android.support.v7.preference.ListPreference
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
 import android.view.View
-import com.hendraanggrian.app.RxActivity
-import com.hendraanggrian.app.startActivityForResultAsCompletable
-import com.hendraanggrian.app.startActivityForResultAsObservable
-import com.hendraanggrian.app.startActivityForResultAsSingle
+import com.hendraanggrian.app.*
 import io.reactivex.rxkotlin.subscribeBy
 import kota.*
 import kota.dialogs.OkButton
@@ -27,6 +25,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        debug("$this onCreate")
         setSupportActionBar(toolbar)
         if (supportFragmentManager.findNullable<Fragment>(TAG_RETAINED_FRAGMENT) == null) {
             supportFragmentManager.addNow(R.id.container, Content(), TAG_RETAINED_FRAGMENT)
@@ -34,13 +33,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         toolbar2.setOnClickListener(this)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        debug("$this onCreate")
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        RxActivity.onActivityResult(requestCode, resultCode, data)
+        onActivityResult2(requestCode, resultCode, data)
+        //RxActivity.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onClick(v: View) {
-        val type = sharedPreferences.getString("typePreference", "Observable")
+        startActivityForResult2(Intent(this, NextActivity::class.java).putExtra("type", "TEST"), Activity.RESULT_OK, { _, _, _ ->
+            onResultOK()
+            debug("$this onNext")
+        }) { _, _, _ ->
+        }
+        /*val type = sharedPreferences.getString("typePreference", "Observable")
         when (type) {
             "Observable" -> startActivityForResultAsObservable(Intent(this, NextActivity::class.java).putExtra("type", type))
                     .subscribeBy(
@@ -55,7 +65,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     .subscribeBy(
                             onComplete = { onResultComplete() },
                             onError = { e -> onResultError(e) })
-        }
+        }*/
     }
 
     private fun onResultOK() = supportAlert("Result", "onNext", OkButton)
