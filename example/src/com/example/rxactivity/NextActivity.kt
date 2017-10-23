@@ -16,7 +16,7 @@ class NextActivity : AppCompatActivity(), View.OnClickListener {
         const val RESULT_CUSTOM = 9152
     }
 
-    @BindExtra lateinit var type: String
+    @BindExtra lateinit var from: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +24,7 @@ class NextActivity : AppCompatActivity(), View.OnClickListener {
         setSupportActionBar(toolbar)
 
         Bundler.bindExtras(this)
-        supportActionBar!!.title = "startActivityAs$type"
+        supportActionBar!!.title = "from $from"
 
         okButton.setOnClickListener(this)
         canceledButton.setOnClickListener(this)

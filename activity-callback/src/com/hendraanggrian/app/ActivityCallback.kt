@@ -11,7 +11,7 @@ import java.util.*
 private var RANDOM: WeakReference<Random?> = WeakReference(null)
 
 /** Collection of reactive emitters that will emits one-by-one on activity result. Once emitted, emitter is cease to exist from this collection. */
-private val STARTERS: SparseArrayCompat<ActivityStarter<out Any>> = SparseArrayCompat()
+private val STARTERS: SparseArrayCompat<Any.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit> = SparseArrayCompat()
 
 /**
  * Attempt to get Random instance from WeakReference.
@@ -35,20 +35,17 @@ internal val nextRequestCode: Int
     }
 
 @PublishedApi
-internal fun append(requestCode: Int, starter: ActivityStarter<out Any>) = STARTERS.append(requestCode, starter)
+internal fun <T> append(requestCode: Int, block: T.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit) =
+        STARTERS.append(requestCode, (block as Any.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit))
 
-fun Activity.onActivityResult2(requestCode: Int, resultCode: Int, data: Intent?) {
-    val starter = STARTERS.get(requestCode) ?: return
+fun <T : Activity> T.onActivityResult2(requestCode: Int, resultCode: Int, data: Intent?) {
+    val block = STARTERS.get(requestCode) ?: return
     STARTERS.remove(requestCode)
-    starter as ActivityStarter<Activity>
-    if (starter.resultCode != resultCode) starter.fallback(this, requestCode, resultCode, data)
-    else starter.block(this, requestCode, resultCode, data)
+    block(this, requestCode, resultCode, data)
 }
 
-fun Fragment.onActivityResult2(requestCode: Int, resultCode: Int, data: Intent?) {
-    val starter = STARTERS.get(requestCode) ?: return
+fun <T : Fragment> T.onActivityResult2(requestCode: Int, resultCode: Int, data: Intent?) {
+    val block = STARTERS.get(requestCode) ?: return
     STARTERS.remove(requestCode)
-    starter as ActivityStarter<Fragment>
-    if (starter.resultCode != resultCode) starter.fallback(this, requestCode, resultCode, data)
-    else starter.block(this, requestCode, resultCode, data)
+    block(this, requestCode, resultCode, data)
 }
