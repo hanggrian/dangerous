@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/activity-callback/activity-callback.iml" filepath="$PROJECT_DIR$/activity-callback/activity-callback.iml" />
       <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
       <module fileurl="file://$PROJECT_DIR$/rx-activity.iml" filepath="$PROJECT_DIR$/rx-activity.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rx-activity/rx-activity-rx-activity.iml" filepath="$PROJECT_DIR$/rx-activity/rx-activity-rx-activity.iml" />
       <module fileurl="file://$PROJECT_DIR$/activity-callback/rx-activity2.iml" filepath="$PROJECT_DIR$/activity-callback/rx-activity2.iml" />
       <module fileurl="file://$PROJECT_DIR$/rxactivity.iml" filepath="$PROJECT_DIR$/rxactivity.iml" />
       <module fileurl="file://$PROJECT_DIR$/rxactivity/rxactivity-rxactivity.iml" filepath="$PROJECT_DIR$/rxactivity/rxactivity-rxactivity.iml" />

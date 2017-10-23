@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-ext.rxkotlin = '2.1.0'
 ext.kota = '0.16'
 ext.bundler = '0.5.0'
 
@@ -17,10 +16,12 @@ android {
         targetSdkVersion versions.sdk.target
     }
     sourceSets {
-        main.manifest.srcFile 'AndroidManifest.xml'
-        main.java.srcDirs 'src'
-        main.res.srcDirs 'res'
-        main.resources.srcDir 'src'
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs 'src'
+            res.srcDirs 'res'
+            resources.srcDir 'src'
+        }
     }
     buildTypes {
         debug {
@@ -36,6 +37,7 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+    implementation project(':activity-callback')
 
     implementation "com.android.support:preference-v14:$versions.support"
     implementation "com.android.support:appcompat-v7:$versions.support"
@@ -46,6 +48,4 @@ dependencies {
 
     implementation "com.hendraanggrian:bundler:$bundler"
     kapt "com.hendraanggrian:bundler-compiler:$bundler"
-
-    implementation project(':activity-callback')
 }

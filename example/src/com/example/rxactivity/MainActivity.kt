@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         startActivityForResult2(Intent(this, NextActivity::class.java).putExtra("from", "ACTIVITY")) { requestCode, resultCode, _ ->
             debug("$this Callback")
             supportAlert("Callback", "requestCode = $requestCode\nresultCode = $resultCode", OkButton)
+            textView.text = "got result..."
             if (resultCode == Activity.RESULT_OK) {
                 supportActionBar!!.title = "damn you all to hell"
             }

@@ -1,10 +1,10 @@
-@file:Suppress("NOTHING_TO_INLINE")
+@file:Suppress("NOTHING_TO_INLINE", "UNCHECKED_CAST")
 
 package com.hendraanggrian.app
 
 import android.app.Activity
+import android.app.Fragment
 import android.content.Intent
-import android.support.v4.app.Fragment
 import android.support.v4.util.SparseArrayCompat
 import java.lang.ref.WeakReference
 import java.util.*
@@ -38,18 +38,17 @@ internal val nextRequestCode: Int
     }
 
 @PublishedApi
-@Suppress("UNCHECKED_CAST")
 internal fun <T> queue(requestCode: Int, block: T.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit) =
         CALLBACKS.append(requestCode, (block as Any.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit))
 
-inline fun <T : Activity> T.onActivityResult2(requestCode: Int, resultCode: Int, data: Intent?) {
+inline fun <T> T.onActivityResultInternal(requestCode: Int, resultCode: Int, data: Intent?) {
     val callback = CALLBACKS.get(requestCode) ?: return
     CALLBACKS.remove(requestCode)
-    callback(this, requestCode, resultCode, data)
+    (callback as T.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit).invoke(this, requestCode, resultCode, data)
 }
 
-inline fun <T : Fragment> T.onActivityResult2(requestCode: Int, resultCode: Int, data: Intent?) {
-    val callback = CALLBACKS.get(requestCode) ?: return
-    CALLBACKS.remove(requestCode)
-    callback(this, requestCode, resultCode, data)
-}
+inline fun <T : Activity> T.onActivityResult2(requestCode: Int, resultCode: Int, data: Intent?) = onActivityResultInternal(requestCode, resultCode, data)
+
+inline fun <T : Fragment> T.onActivityResult2(requestCode: Int, resultCode: Int, data: Intent?) = onActivityResultInternal(requestCode, resultCode, data)
+
+inline fun <T : android.support.v4.app.Fragment> T.onActivityResult2(requestCode: Int, resultCode: Int, data: Intent?) = onActivityResultInternal(requestCode, resultCode, data)

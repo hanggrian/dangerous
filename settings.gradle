@@ -1,4 +1,2 @@
-include ':rx-activity'
 include ':activity-callback'
-
 include ':example'
