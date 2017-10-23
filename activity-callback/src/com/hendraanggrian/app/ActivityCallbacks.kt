@@ -41,7 +41,8 @@ internal val nextRequestCode: Int
 internal fun <T> queue(requestCode: Int, block: T.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit) =
         CALLBACKS.append(requestCode, (block as Any.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit))
 
-inline fun <T> T.onActivityResultInternal(requestCode: Int, resultCode: Int, data: Intent?) {
+@PublishedApi
+internal inline fun <T> T.onActivityResultInternal(requestCode: Int, resultCode: Int, data: Intent?) {
     val callback = CALLBACKS.get(requestCode) ?: return
     CALLBACKS.remove(requestCode)
     (callback as T.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit).invoke(this, requestCode, resultCode, data)
