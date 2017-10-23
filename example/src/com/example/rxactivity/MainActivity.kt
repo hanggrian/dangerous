@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         startActivityForResult2(Intent(this, NextActivity::class.java).putExtra("type", "TEST"), Activity.RESULT_OK, { _, _, _ ->
             onResultOK()
+            supportActionBar!!.title = "damn you all to hell"
             debug("$this onNext")
         }) { _, _, _ ->
         }

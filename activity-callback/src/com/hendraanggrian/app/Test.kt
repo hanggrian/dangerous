@@ -4,17 +4,17 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v4.app.Fragment
 
-fun Activity.startActivityForResult2(
+fun <T : Activity> T.startActivityForResult2(
         intent: Intent,
         result: Int = Activity.RESULT_OK,
-        block: Activity.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit,
-        fallback: Activity.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit
+        block: T.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit,
+        fallback: T.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit
 ) {
     val requestCode = nextRequestCode
-    append(requestCode, object : ActivityStarter<Activity> {
+    append(requestCode, object : ActivityStarter<T> {
         override val resultCode: Int get() = result
-        override val block: Activity.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit get() = block
-        override val fallback: Activity.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit get() = fallback
+        override val block: T.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit get() = block
+        override val fallback: T.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit get() = fallback
     })
     startActivityForResult(intent, requestCode)
 }
