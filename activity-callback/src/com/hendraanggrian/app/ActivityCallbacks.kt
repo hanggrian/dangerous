@@ -1,3 +1,5 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 package com.hendraanggrian.app
 
 import android.app.Activity
@@ -11,7 +13,8 @@ import java.util.*
 private var RANDOM: WeakReference<Random?> = WeakReference(null)
 
 /** Collection of reactive emitters that will emits one-by-one on activity result. Once emitted, emitter is cease to exist from this collection. */
-private val STARTERS: SparseArrayCompat<Any.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit> = SparseArrayCompat()
+@PublishedApi
+internal val CALLBACKS: SparseArrayCompat<Any.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit> = SparseArrayCompat()
 
 /**
  * Attempt to get Random instance from WeakReference.
@@ -30,22 +33,23 @@ internal val nextRequestCode: Int
         do {
             // 16-bit int, as required by FragmentActivity precondition
             requestCode = random.nextInt(65535)
-        } while (STARTERS.indexOfKey(requestCode) > -1)
+        } while (CALLBACKS.indexOfKey(requestCode) > -1)
         return requestCode
     }
 
 @PublishedApi
-internal fun <T> append(requestCode: Int, block: T.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit) =
-        STARTERS.append(requestCode, (block as Any.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit))
+@Suppress("UNCHECKED_CAST")
+internal fun <T> queue(requestCode: Int, block: T.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit) =
+        CALLBACKS.append(requestCode, (block as Any.(requestCode: Int, resultCode: Int, data: Intent?) -> Unit))
 
-fun <T : Activity> T.onActivityResult2(requestCode: Int, resultCode: Int, data: Intent?) {
-    val block = STARTERS.get(requestCode) ?: return
-    STARTERS.remove(requestCode)
-    block(this, requestCode, resultCode, data)
+inline fun <T : Activity> T.onActivityResult2(requestCode: Int, resultCode: Int, data: Intent?) {
+    val callback = CALLBACKS.get(requestCode) ?: return
+    CALLBACKS.remove(requestCode)
+    callback(this, requestCode, resultCode, data)
 }
 
-fun <T : Fragment> T.onActivityResult2(requestCode: Int, resultCode: Int, data: Intent?) {
-    val block = STARTERS.get(requestCode) ?: return
-    STARTERS.remove(requestCode)
-    block(this, requestCode, resultCode, data)
+inline fun <T : Fragment> T.onActivityResult2(requestCode: Int, resultCode: Int, data: Intent?) {
+    val callback = CALLBACKS.get(requestCode) ?: return
+    CALLBACKS.remove(requestCode)
+    callback(this, requestCode, resultCode, data)
 }

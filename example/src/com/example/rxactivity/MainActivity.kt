@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        debug("$this onCreate")
+        debug("$this onDestroy")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -46,13 +46,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        startActivityForResult2(Intent(this, NextActivity::class.java).putExtra("from", "ACTIVITY")) { _, resultCode, _ ->
+        startActivityForResult2(Intent(this, NextActivity::class.java).putExtra("from", "ACTIVITY")) { requestCode, resultCode, _ ->
+            debug("$this Callback")
+            supportAlert("Callback", "requestCode = $requestCode\nresultCode = $resultCode", OkButton)
             if (resultCode == Activity.RESULT_OK) {
-                debug("$this onNext")
-                supportAlert("Result", "onNext", OkButton)
                 supportActionBar!!.title = "damn you all to hell"
-            } else {
-                supportAlert("Result", "onError", OkButton)
             }
         }
     }
@@ -66,12 +64,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             addPreferencesFromResource(R.xml.activity_main)
             find<Preference>("fragmentPreference").setOnPreferenceClickListener {
-                startActivityForResult2(Intent(context, NextActivity::class.java).putExtra("from", "FRAGMENT")) { _, resultCode, _ ->
-                    if (resultCode == Activity.RESULT_OK) {
-                        supportAlert("Result", "onNext", OkButton)
-                    } else {
-                        supportAlert("Result", "onError", OkButton)
-                    }
+                startActivityForResult2(Intent(context, NextActivity::class.java).putExtra("from", "FRAGMENT")) { requestCode, resultCode, _ ->
+                    debug("$this Callback")
+                    supportAlert("Callback", "requestCode = $requestCode\nresultCode = $resultCode", OkButton)
                 }
                 false
             }
