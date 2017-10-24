@@ -6,8 +6,9 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
-import com.hendraanggrian.app.onActivityResult2
-import com.hendraanggrian.app.startActivityForResult2
+import com.hendraanggrian.app.notifyOnActivityResult
+import com.hendraanggrian.app.startActivityForOkResult
+import com.hendraanggrian.app.startActivityForResult
 import kota.addNow
 import kota.debug
 import kota.dialogs.OkButton
@@ -31,10 +32,9 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.addNow(R.id.container, Content(), TAG_RETAINED_FRAGMENT)
         }
         toolbar2.setOnClickListener {
-            startActivityForResult2(Intent(this, NextActivity::class.java).putExtra("from", "ACTIVITY")) { requestCode, resultCode, _ ->
-                debug("$this Callback")
-                supportAlert("Callback", "requestCode = $requestCode\nresultCode = $resultCode", OkButton)
-                textView.text = "got result..."
+            startActivityForOkResult(Intent(this, NextActivity::class.java).putExtra("from", "activity")) { _ ->
+                debug("$this callback")
+                textView.text = "ok result"
             }
         }
     }
@@ -46,7 +46,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        onActivityResult2(requestCode, resultCode, data)
+        debug("$this onActivityResult")
+        notifyOnActivityResult(requestCode, resultCode, data)
     }
 
     class Content : PreferenceFragmentCompat() {
@@ -58,16 +59,13 @@ class MainActivity : AppCompatActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             addPreferencesFromResource(R.xml.activity_main)
             find<Preference>("fragmentPreference").setOnPreferenceClickListener {
-                startActivityForResult2(Intent(context, NextActivity::class.java).putExtra("from", "FRAGMENT")) { requestCode, resultCode, _ ->
-                    supportAlert("Callback", "requestCode = $requestCode\nresultCode = $resultCode", OkButton)
+                startActivityForResult(Intent(context, NextActivity::class.java).putExtra("from", "fragment")) { resultCode, _ ->
+                    supportAlert("Result code", resultCode.toString(), OkButton)
                 }
                 false
             }
         }
 
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-            super.onActivityResult(requestCode, resultCode, data)
-            onActivityResult2(requestCode, resultCode, data)
-        }
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) = notifyOnActivityResult(requestCode, resultCode, data)
     }
 }

@@ -10,12 +10,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.hendraanggrian.app.ActivityCallbacks;
+
 import kota.dialogs.OkButton;
 import kotlin.Unit;
-import kotlin.jvm.functions.Function4;
+import kotlin.jvm.functions.Function2;
+import kotlin.jvm.functions.Function3;
 
-import static com.hendraanggrian.app.ActivityCallbacksKt.onActivityResult2;
-import static com.hendraanggrian.app.StartActivityForResult2Kt.startActivityForResult2;
+import static com.hendraanggrian.app.ActivityCallbacks.notifyOnActivityResult;
 import static java.lang.String.format;
 import static kota.FragmentManagersV4Kt.addNow;
 import static kota.LogsKt.debug;
@@ -46,12 +48,11 @@ public class MainActivity2 extends AppCompatActivity {
         toolbar2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult2(MainActivity2.this, new Intent(MainActivity2.this, NextActivity2.class).putExtra("from", "ACTIVITY"), new Function4<MainActivity2, Integer, Integer, Intent, Unit>() {
+                ActivityCallbacks.startActivityForOkResult(MainActivity2.this, new Intent(MainActivity2.this, NextActivity2.class).putExtra("from", "activity"), new Function2<MainActivity2, Intent, Unit>() {
                     @Override
-                    public Unit invoke(MainActivity2 activity, Integer requestCode, Integer resultCode, Intent data) {
-                        debug(activity, format("%s onDestroy", activity));
-                        supportAlert(activity, "Callback", format("requestCode = %s, resultCode = %s", requestCode, resultCode), OkButton.Companion);
-                        activity.textView.setText("got result...");
+                    public Unit invoke(MainActivity2 activity, Intent data) {
+                        debug(activity, format("%s callback", activity));
+                        activity.textView.setText("ok result");
                         return null;
                     }
                 });
@@ -68,11 +69,10 @@ public class MainActivity2 extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        onActivityResult2(this, requestCode, resultCode, data);
+        notifyOnActivityResult(this, requestCode, resultCode, data);
     }
 
     public static class Content extends PreferenceFragmentCompat {
-
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -85,10 +85,10 @@ public class MainActivity2 extends AppCompatActivity {
             findPreference("fragmentPreference").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    startActivityForResult2(Content.this, new Intent(getContext(), NextActivity2.class).putExtra("from", "FRAGMENT"), new Function4<Content, Integer, Integer, Intent, Unit>() {
+                    ActivityCallbacks.startActivityForResult(Content.this, new Intent(getContext(), NextActivity2.class).putExtra("from", "fragment"), new Function3<Content, Integer, Intent, Unit>() {
                         @Override
-                        public Unit invoke(Content fragment, Integer requestCode, Integer resultCode, Intent intent) {
-                            supportAlert(fragment, "Callback", format("requestCode = %s, resultCode = %s", requestCode, resultCode), OkButton.Companion);
+                        public Unit invoke(Content fragment, Integer resultCode, Intent data) {
+                            supportAlert(fragment, "Result code", resultCode.toString(), OkButton.Companion);
                             return null;
                         }
                     });
@@ -99,8 +99,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-            onActivityResult2(this, requestCode, resultCode, data);
+            notifyOnActivityResult(this, requestCode, resultCode, data);
         }
     }
 }
