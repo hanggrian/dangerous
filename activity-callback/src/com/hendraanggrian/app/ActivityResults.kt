@@ -1,5 +1,5 @@
 @file:JvmMultifileClass
-@file:JvmName("ActivityCallbacks")
+@file:JvmName("ActivityResultsKt")
 @file:Suppress("NOTHING_TO_INLINE", "UNCHECKED_CAST")
 
 package com.hendraanggrian.app
@@ -12,7 +12,7 @@ import java.lang.ref.WeakReference
 import java.util.*
 
 /** Weak reference of Random to generate random number. */
-private var RANDOM: WeakReference<Random?>? = null
+private var RANDOM: WeakReference<Random>? = null
 
 /**
  * Queued callbacks that will be invoked one-by-one on activity result.
@@ -42,21 +42,21 @@ internal fun generateRequestCode(): Int {
 }
 
 @PublishedApi
-internal fun <T> append(requestCode: Int, callback: T.(Int, Intent?) -> Unit) =
+internal fun <T> appendCallback(requestCode: Int, callback: T.(Int, Intent?) -> Unit) =
         CALLBACKS.append(requestCode, (callback as Any.(Int, Intent?) -> Unit))
 
 @PublishedApi
-internal inline fun <T> T.onActivityResultInternal(requestCode: Int, resultCode: Int, data: Intent?) {
+internal inline fun <T> T.triggerCallback(requestCode: Int, resultCode: Int, data: Intent?) {
     val callback = CALLBACKS.get(requestCode) ?: return
     CALLBACKS.remove(requestCode)
     (callback as T.(Int, Intent?) -> Unit).invoke(this, resultCode, data)
 }
 
-inline fun <T : Activity> T.notifyOnActivityResult(requestCode: Int, resultCode: Int, data: Intent?) =
-        onActivityResultInternal(requestCode, resultCode, data)
+inline fun <T : Activity> T.redirectOnActivityResult(requestCode: Int, resultCode: Int, data: Intent?) =
+        triggerCallback(requestCode, resultCode, data)
 
-inline fun <T : Fragment> T.notifyOnActivityResult(requestCode: Int, resultCode: Int, data: Intent?) =
-        onActivityResultInternal(requestCode, resultCode, data)
+inline fun <T : Fragment> T.redirectOnActivityResult(requestCode: Int, resultCode: Int, data: Intent?) =
+        triggerCallback(requestCode, resultCode, data)
 
-inline fun <T : android.support.v4.app.Fragment> T.notifyOnActivityResult(requestCode: Int, resultCode: Int, data: Intent?) =
-        onActivityResultInternal(requestCode, resultCode, data)
+inline fun <T : android.support.v4.app.Fragment> T.redirectOnActivityResult(requestCode: Int, resultCode: Int, data: Intent?) =
+        triggerCallback(requestCode, resultCode, data)

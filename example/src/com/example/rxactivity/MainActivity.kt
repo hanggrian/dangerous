@@ -6,8 +6,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
-import com.hendraanggrian.app.notifyOnActivityResult
-import com.hendraanggrian.app.startActivityForOkResult
+import com.hendraanggrian.app.redirectOnActivityResult
 import com.hendraanggrian.app.startActivityForResult
 import kota.addNow
 import kota.debug
@@ -31,8 +30,12 @@ class MainActivity : AppCompatActivity() {
         if (supportFragmentManager.findNullable<Fragment>(TAG_RETAINED_FRAGMENT) == null) {
             supportFragmentManager.addNow(R.id.container, Content(), TAG_RETAINED_FRAGMENT)
         }
+        fragmentManager.beginTransaction()
+                .add(android.app.Fragment(), "asdasd")
+                .commitAllowingStateLoss()
+        fragmentManager.executePendingTransactions()
         toolbar2.setOnClickListener {
-            startActivityForOkResult(Intent(this, NextActivity::class.java).putExtra("from", "activity")) { _ ->
+            startActivityForResult(Intent(this, NextActivity::class.java).putExtra("from", "activity")) { _, _ ->
                 debug("$this callback")
                 textView.text = "ok result"
             }
@@ -41,13 +44,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        refWatcher.watch(this)
         debug("$this onDestroy")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        redirectOnActivityResult(requestCode, resultCode, data)
         debug("$this onActivityResult")
-        notifyOnActivityResult(requestCode, resultCode, data)
     }
 
     class Content : PreferenceFragmentCompat() {
@@ -66,6 +70,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) = notifyOnActivityResult(requestCode, resultCode, data)
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+            redirectOnActivityResult(requestCode, resultCode, data)
+        }
     }
 }

@@ -1,5 +1,5 @@
 @file:JvmMultifileClass
-@file:JvmName("ActivityCallbacks")
+@file:JvmName("ActivityResultsKt")
 @file:Suppress("NOTHING_TO_INLINE", "UNUSED")
 
 package com.hendraanggrian.app
@@ -12,7 +12,7 @@ import android.os.Bundle
 import android.support.annotation.RequiresApi
 
 /**
- * Start an activity for result from activity with random request code.
+ * Start an activity for result with random request code.
  *
  * @param intent The intent to start.
  * @param callback Activity result callback.
@@ -26,16 +26,16 @@ inline fun <T : Activity> T.startActivityForResult(
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) {
     val requestCode = generateRequestCode()
-    append(requestCode, callback)
+    appendCallback(requestCode, callback)
     startActivityForResult(intent, requestCode)
 }
 
 /**
- * Start an activity for result from activity with random request code, with options.
+ * Start an activity for result with random request code.
  *
  * @param intent The intent to start.
- * @param callback Activity result callback.
  * @param options Additional options for how the activity should be started.
+ * @param callback Activity result callback.
  *
  * @throws ActivityNotFoundException if no activity is found that can handle the [intent].
  *
@@ -48,12 +48,12 @@ inline fun <T : Activity> T.startActivityForResult(
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) {
     val requestCode = generateRequestCode()
-    append(requestCode, callback)
+    appendCallback(requestCode, callback)
     startActivityForResult(intent, requestCode, options)
 }
 
 /**
- * Start an activity for result from fragment with random request code.
+ * Start an activity for result with random request code.
  *
  * @param intent The intent to start.
  * @param callback Activity result callback.
@@ -67,16 +67,16 @@ inline fun <T : Fragment> T.startActivityForResult(
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) {
     val requestCode = generateRequestCode()
-    append(requestCode, callback)
+    appendCallback(requestCode, callback)
     startActivityForResult(intent, requestCode)
 }
 
 /**
- * Start an activity for result from fragment with random request code, with options.
+ * Start an activity for result with random request code.
  *
  * @param intent The intent to start.
- * @param callback Activity result callback.
  * @param options Additional options for how the activity should be started.
+ * @param callback Activity result callback.
  *
  * @throws ActivityNotFoundException if no activity is found that can handle the [intent].
  *
@@ -85,16 +85,16 @@ inline fun <T : Fragment> T.startActivityForResult(
 @RequiresApi(16)
 inline fun <T : Fragment> T.startActivityForResult(
         intent: Intent,
-        options: Bundle?,
+        options: Bundle,
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) {
     val requestCode = generateRequestCode()
-    append(requestCode, callback)
+    appendCallback(requestCode, callback)
     startActivityForResult(intent, requestCode, options)
 }
 
 /**
- * Start an activity for result from support fragment with random request code.
+ * Start an activity for result with random request code.
  *
  * @param intent The intent to start.
  * @param callback Activity result callback.
@@ -108,16 +108,16 @@ inline fun <T : android.support.v4.app.Fragment> T.startActivityForResult(
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) {
     val requestCode = generateRequestCode()
-    append(requestCode, callback)
+    appendCallback(requestCode, callback)
     startActivityForResult(intent, requestCode)
 }
 
 /**
- * Start an activity for result from support fragment with random request code, with options.
+ * Start an activity for result with random request code.
  *
  * @param intent The intent to start.
- * @param callback Activity result callback.
  * @param options Additional options for how the activity should be started.
+ * @param callback Activity result callback.
  *
  * @throws ActivityNotFoundException if no activity is found that can handle the [intent].
  *
@@ -126,10 +126,10 @@ inline fun <T : android.support.v4.app.Fragment> T.startActivityForResult(
 @RequiresApi(16)
 inline fun <T : android.support.v4.app.Fragment> T.startActivityForResult(
         intent: Intent,
-        options: Bundle?,
+        options: Bundle,
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) {
     val requestCode = generateRequestCode()
-    append(requestCode, callback)
+    appendCallback(requestCode, callback)
     startActivityForResult(intent, requestCode, options)
 }

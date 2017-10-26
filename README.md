@@ -1,24 +1,24 @@
-RxActivity
-==========
+Activity Result
+===============
 Reactive streams to start activity for result.
 
-```java
-startForResultAsObservable(activity, new Intent(Intent.ACTION_GET_CONTENT).setType("image/*"))
-    .subscribe(data -> {
-        Uri uri = data.getData();
-        imageView.setImageUri(uri);
-    });
+```kotlin
+startActivityForResult(Intent(Intent.ACTION_GET_CONTENT).setType("image/*")) { resultCode, data ->
+    if (resultCode == Activity.RESULT_OK) {
+        Uri uri = data.getData()
+        imageView.setImageUri(uri)
+    }
+}
 ```
 
 Usage
 -----
 `RxActivity` is usable in Activity, Fragment and support Fragment once `onActivityResult` is overriden.
 
-```java
-@Override
-protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    RxActivity.onActivityResult(requestCode, resultCode, data);
+```kotlin
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    notifyOnActivityResult(requestCode, resultCode, data)
 }
 ```
 
@@ -31,7 +31,6 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
     implementation 'com.hendraanggrian:rx-activity:0.9'
 }
 ```

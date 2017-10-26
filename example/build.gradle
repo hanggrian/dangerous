@@ -5,6 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 ext.kota = '0.16'
 ext.bundler = '0.5.0'
+ext.leakcanary = '1.5.4'
 
 android {
     compileSdkVersion versions.sdk.target
@@ -48,4 +49,7 @@ dependencies {
 
     implementation "com.hendraanggrian:bundler:$bundler"
     kapt "com.hendraanggrian:bundler-compiler:$bundler"
+
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary"
 }

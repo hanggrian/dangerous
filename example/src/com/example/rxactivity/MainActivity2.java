@@ -10,14 +10,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import com.hendraanggrian.app.ActivityCallbacks;
+import com.hendraanggrian.app.ActivityResultsKt;
 
 import kota.dialogs.OkButton;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
 import kotlin.jvm.functions.Function3;
 
-import static com.hendraanggrian.app.ActivityCallbacks.notifyOnActivityResult;
+import static com.example.rxactivity.AppKt.getRefWatcher;
+import static com.hendraanggrian.app.ActivityResultsKt.startActivityForOkResult;
+import static com.hendraanggrian.app.ActivityResultsKt.redirectOnActivityResult;
 import static java.lang.String.format;
 import static kota.FragmentManagersV4Kt.addNow;
 import static kota.LogsKt.debug;
@@ -48,7 +50,7 @@ public class MainActivity2 extends AppCompatActivity {
         toolbar2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityCallbacks.startActivityForOkResult(MainActivity2.this, new Intent(MainActivity2.this, NextActivity2.class).putExtra("from", "activity"), new Function2<MainActivity2, Intent, Unit>() {
+                startActivityForOkResult(MainActivity2.this, new Intent(MainActivity2.this, NextActivity2.class).putExtra("from", "activity"), new Function2<MainActivity2, Intent, Unit>() {
                     @Override
                     public Unit invoke(MainActivity2 activity, Intent data) {
                         debug(activity, format("%s callback", activity));
@@ -63,13 +65,14 @@ public class MainActivity2 extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        getRefWatcher(this).watch(this);
         debug(this, format("%s onDestroy", this));
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        notifyOnActivityResult(this, requestCode, resultCode, data);
+        redirectOnActivityResult(this, requestCode, resultCode, data);
     }
 
     public static class Content extends PreferenceFragmentCompat {
@@ -85,7 +88,7 @@ public class MainActivity2 extends AppCompatActivity {
             findPreference("fragmentPreference").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    ActivityCallbacks.startActivityForResult(Content.this, new Intent(getContext(), NextActivity2.class).putExtra("from", "fragment"), new Function3<Content, Integer, Intent, Unit>() {
+                    ActivityResultsKt.startActivityForResult(Content.this, new Intent(getContext(), NextActivity2.class).putExtra("from", "fragment"), new Function3<Content, Integer, Intent, Unit>() {
                         @Override
                         public Unit invoke(Content fragment, Integer resultCode, Intent data) {
                             supportAlert(fragment, "Result code", resultCode.toString(), OkButton.Companion);
@@ -99,7 +102,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
-            notifyOnActivityResult(this, requestCode, resultCode, data);
+            redirectOnActivityResult(this, requestCode, resultCode, data);
         }
     }
 }
