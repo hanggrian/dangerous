@@ -1,2 +1,4 @@
-include ':activity-callback'
+include ':lane'
+
+include ':cameraview:library'
 include ':example'

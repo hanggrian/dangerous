@@ -16,10 +16,19 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0-rc2'
+        classpath 'com.android.tools.build:gradle:3.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
         classpath 'com.novoda:bintray-release:0.5.0'
     }
+}
+
+/** cameraview's config */
+ext {
+    buildToolsVersion = versions.buildTools
+    compileSdkVersion = versions.sdk.target
+    minSdkVersion = versions.sdk.min
+    targetSdkVersion = versions.sdk.target
+    supportLibraryVersion = versions.support
 }
 
 allprojects {

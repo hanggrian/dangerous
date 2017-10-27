@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/activity-callback/activity-callback.iml" filepath="$PROJECT_DIR$/activity-callback/activity-callback.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cameraview/cameraview.iml" filepath="$PROJECT_DIR$/cameraview/cameraview.iml" />
       <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lane/activity-callback.iml" filepath="$PROJECT_DIR$/lane/activity-callback.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cameraview/library/library.iml" filepath="$PROJECT_DIR$/cameraview/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/rx-activity.iml" filepath="$PROJECT_DIR$/rx-activity.iml" />
       <module fileurl="file://$PROJECT_DIR$/activity-callback/rx-activity2.iml" filepath="$PROJECT_DIR$/activity-callback/rx-activity2.iml" />
       <module fileurl="file://$PROJECT_DIR$/rxactivity.iml" filepath="$PROJECT_DIR$/rxactivity.iml" />

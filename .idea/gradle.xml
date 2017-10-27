@@ -8,8 +8,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/activity-callback" />
+            <option value="$PROJECT_DIR$/cameraview" />
+            <option value="$PROJECT_DIR$/cameraview/library" />
             <option value="$PROJECT_DIR$/example" />
+            <option value="$PROJECT_DIR$/lane" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
