@@ -5,6 +5,7 @@
 package com.hendraanggrian.lane
 
 import android.app.Activity
+import android.app.Activity.*
 import android.app.Fragment
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -26,7 +27,7 @@ inline fun <T : Activity> T.startActivityForCanceledResult(
         intent: Intent,
         noinline callback: T.(data: Intent?) -> Unit
 ) = startActivityForResult(intent, { resultCode, data ->
-    if (resultCode == Activity.RESULT_CANCELED) callback(data)
+    if (resultCode == RESULT_CANCELED) callback(data)
 })
 
 /**
@@ -47,7 +48,7 @@ inline fun <T : Activity> T.startActivityForCanceledResult(
         options: Bundle,
         noinline callback: T.(data: Intent?) -> Unit
 ) = startActivityForResult(intent, options, { resultCode, data ->
-    if (resultCode == Activity.RESULT_CANCELED) callback(data)
+    if (resultCode == RESULT_CANCELED) callback(data)
 })
 
 /**
@@ -65,7 +66,7 @@ inline fun <T : Fragment> T.startActivityForCanceledResult(
         intent: Intent,
         noinline callback: T.(data: Intent?) -> Unit
 ) = startActivityForResult(intent, { resultCode, data ->
-    if (resultCode == Activity.RESULT_CANCELED) callback(data)
+    if (resultCode == RESULT_CANCELED) callback(data)
 })
 
 /**
@@ -86,7 +87,7 @@ inline fun <T : Fragment> T.startActivityForCanceledResult(
         options: Bundle,
         noinline callback: T.(data: Intent?) -> Unit
 ) = startActivityForResult(intent, options, { resultCode, data ->
-    if (resultCode == Activity.RESULT_CANCELED) callback(data)
+    if (resultCode == RESULT_CANCELED) callback(data)
 })
 
 /**
@@ -104,7 +105,7 @@ inline fun <T : android.support.v4.app.Fragment> T.startActivityForCanceledResul
         intent: Intent,
         noinline callback: T.(data: Intent?) -> Unit
 ) = startActivityForResult(intent, { resultCode, data ->
-    if (resultCode == Activity.RESULT_CANCELED) callback(data)
+    if (resultCode == RESULT_CANCELED) callback(data)
 })
 
 /**
@@ -125,5 +126,5 @@ inline fun <T : android.support.v4.app.Fragment> T.startActivityForCanceledResul
         options: Bundle,
         noinline callback: T.(data: Intent?) -> Unit
 ) = startActivityForResult(intent, options, { resultCode, data ->
-    if (resultCode == Activity.RESULT_CANCELED) callback(data)
+    if (resultCode == RESULT_CANCELED) callback(data)
 })

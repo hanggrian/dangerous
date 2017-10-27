@@ -7,23 +7,23 @@ package com.hendraanggrian.lane
 import android.app.Activity
 import android.app.Fragment
 
-inline fun <T : Activity> T.requestPermissionsGranted(
+inline fun <T : Activity> T.requestPermissionsDenied(
         vararg permissions: String,
         noinline callback: T.() -> Unit
 ) = requestPermissions(*permissions) { granted ->
-    if (granted) callback()
+    if (!granted) callback()
 }
 
-inline fun <T : Fragment> T.requestPermissionsGranted(
+inline fun <T : Fragment> T.requestPermissionsDenied(
         vararg permissions: String,
         noinline callback: T.() -> Unit
 ) = requestPermissions(*permissions) { granted ->
-    if (granted) callback()
+    if (!granted) callback()
 }
 
-inline fun <T : android.support.v4.app.Fragment> T.requestPermissionsGranted(
+inline fun <T : android.support.v4.app.Fragment> T.requestPermissionsDenied(
         vararg permissions: String,
         noinline callback: T.() -> Unit
 ) = requestPermissions(*permissions) { granted ->
-    if (granted) callback()
+    if (!granted) callback()
 }

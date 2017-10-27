@@ -5,6 +5,7 @@
 package com.hendraanggrian.lane
 
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.app.Fragment
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -26,7 +27,7 @@ inline fun <T : Activity> T.startActivityForOkResult(
         intent: Intent,
         noinline callback: T.(data: Intent?) -> Unit
 ) = startActivityForResult(intent, { resultCode, data ->
-    if (resultCode == Activity.RESULT_OK) callback(data)
+    if (resultCode == RESULT_OK) callback(data)
 })
 
 /**
@@ -47,7 +48,7 @@ inline fun <T : Activity> T.startActivityForOkResult(
         options: Bundle,
         noinline callback: T.(data: Intent?) -> Unit
 ) = startActivityForResult(intent, options, { resultCode, data ->
-    if (resultCode == Activity.RESULT_OK) callback(data)
+    if (resultCode == RESULT_OK) callback(data)
 })
 
 /**
@@ -65,7 +66,7 @@ inline fun <T : Fragment> T.startActivityForOkResult(
         intent: Intent,
         noinline callback: T.(data: Intent?) -> Unit
 ) = startActivityForResult(intent, { resultCode, data ->
-    if (resultCode == Activity.RESULT_OK) callback(data)
+    if (resultCode == RESULT_OK) callback(data)
 })
 
 /**
@@ -86,7 +87,7 @@ inline fun <T : Fragment> T.startActivityForOkResult(
         options: Bundle,
         noinline callback: T.(data: Intent?) -> Unit
 ) = startActivityForResult(intent, options, { resultCode, data ->
-    if (resultCode == Activity.RESULT_OK) callback(data)
+    if (resultCode == RESULT_OK) callback(data)
 })
 
 /**
@@ -104,7 +105,7 @@ inline fun <T : android.support.v4.app.Fragment> T.startActivityForOkResult(
         intent: Intent,
         noinline callback: T.(data: Intent?) -> Unit
 ) = startActivityForResult(intent, { resultCode, data ->
-    if (resultCode == Activity.RESULT_OK) callback(data)
+    if (resultCode == RESULT_OK) callback(data)
 })
 
 /**
@@ -125,5 +126,5 @@ inline fun <T : android.support.v4.app.Fragment> T.startActivityForOkResult(
         options: Bundle,
         noinline callback: T.(data: Intent?) -> Unit
 ) = startActivityForResult(intent, options, { resultCode, data ->
-    if (resultCode == Activity.RESULT_OK) callback(data)
+    if (resultCode == RESULT_OK) callback(data)
 })

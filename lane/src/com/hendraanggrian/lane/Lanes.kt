@@ -35,7 +35,7 @@ private fun generateRequestCode(bound: Int): Int {
     var requestCode: Int
     do {
         requestCode = random.nextInt(bound)
-    } while (CALLBACKS.indexOfKey(requestCode) > -1)
+    } while (CALLBACKS.containsKey(requestCode))
     return requestCode
 }
 

@@ -35,7 +35,7 @@ class CameraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
         setSupportActionBar(toolbar)
-        supportActionBar?.title = ""
+        supportActionBar!!.title = ""
         cameraView.addCallback(object : CameraView.Callback() {
             override fun onPictureTaken(cameraView: CameraView, data: ByteArray) {
                 requestPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE) { granted ->
@@ -48,7 +48,7 @@ class CameraActivity : AppCompatActivity() {
                                     stream.write(bytes)
                                     stream.flush()
                                     stream.close()
-                                    startActivity(Intent(this@CameraActivity, ImageActivity::class.java)
+                                    startActivity(Intent(this, ImageActivity::class.java)
                                             .putExtras(Bundler.wrapExtras(ImageActivity::class.java, file, null)))
                                 }, { e ->
                                     runOnUiThread {
@@ -65,7 +65,7 @@ class CameraActivity : AppCompatActivity() {
         imageButtonCapture.setOnClickListener { cameraView.takePicture() }
         imageButtonGallery.setOnClickListener {
             startActivityForOkResult(Intent(Intent.ACTION_GET_CONTENT).setType("image/*")) { data ->
-                val intent = Intent(this@CameraActivity, ImageActivity::class.java)
+                val intent = Intent(this, ImageActivity::class.java)
                 intent.putExtras(Bundler.wrapExtras(ImageActivity::class.java, null, data!!.data))
                 startActivity(intent)
             }

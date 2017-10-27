@@ -1,6 +1,6 @@
 buildscript {
     ext.versions = [
-            release   : '0.9',
+            release   : '0.1',
             // android
             sdk       : [
                     min   : 14,
@@ -22,7 +22,7 @@ buildscript {
     }
 }
 
-/** cameraview's config */
+/** submodule cameraview config */
 ext {
     buildToolsVersion = versions.buildTools
     compileSdkVersion = versions.sdk.target
@@ -46,6 +46,6 @@ task clean(type: Delete) {
 }
 
 /** QUICK LINT CHECK BEFORE UPLOAD
- ./gradlew :rx-activity:clean :rx-activity:build
- ./gradlew :rx-activity:bintrayUpload -PdryRun=false -PbintrayUser=hendraanggrian -PbintrayKey=
+ ./gradlew :lane:clean :lane:build
+ ./gradlew :lane:bintrayUpload -PdryRun=false -PbintrayUser=hendraanggrian -PbintrayKey=
  */
