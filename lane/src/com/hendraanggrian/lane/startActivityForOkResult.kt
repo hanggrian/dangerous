@@ -13,8 +13,7 @@ import android.os.Bundle
 import android.support.annotation.RequiresApi
 
 /**
- * Start an activity for result with random request code,
- * ignoring result that is not [Activity.RESULT_OK].
+ * Same as [startActivityForResult] but will only trigger [callback] if result is [Activity.RESULT_OK].
  *
  * @param intent The intent to start.
  * @param callback Activity result callback.
@@ -23,7 +22,7 @@ import android.support.annotation.RequiresApi
  *
  * @see Activity.startActivityForResult
  */
-inline fun <T : Activity> T.startActivityForOkResult(
+inline fun <reified T : Activity> T.startActivityForOkResult(
         intent: Intent,
         noinline callback: T.(data: Intent?) -> Unit
 ) = startActivityForResult(intent, { resultCode, data ->
@@ -31,8 +30,7 @@ inline fun <T : Activity> T.startActivityForOkResult(
 })
 
 /**
- * Start an activity for result with random request code,
- * ignoring result that is not [Activity.RESULT_OK].
+ * Same as [startActivityForResult] but will only trigger [callback] if result is [Activity.RESULT_OK].
  *
  * @param intent The intent to start.
  * @param options Additional options for how the activity should be started.
@@ -43,7 +41,7 @@ inline fun <T : Activity> T.startActivityForOkResult(
  * @see Activity.startActivityForResult
  */
 @RequiresApi(16)
-inline fun <T : Activity> T.startActivityForOkResult(
+inline fun <reified T : Activity> T.startActivityForOkResult(
         intent: Intent,
         options: Bundle,
         noinline callback: T.(data: Intent?) -> Unit
@@ -52,8 +50,7 @@ inline fun <T : Activity> T.startActivityForOkResult(
 })
 
 /**
- * Start an activity for result with random request code,
- * ignoring result that is not [Activity.RESULT_OK].
+ * Same as [startActivityForResult] but will only trigger [callback] if result is [Activity.RESULT_OK].
  *
  * @param intent The intent to start.
  * @param callback Activity result callback.
@@ -62,7 +59,7 @@ inline fun <T : Activity> T.startActivityForOkResult(
  *
  * @see Fragment.startActivityForResult
  */
-inline fun <T : Fragment> T.startActivityForOkResult(
+inline fun <reified T : Fragment> T.startActivityForOkResult(
         intent: Intent,
         noinline callback: T.(data: Intent?) -> Unit
 ) = startActivityForResult(intent, { resultCode, data ->
@@ -70,8 +67,7 @@ inline fun <T : Fragment> T.startActivityForOkResult(
 })
 
 /**
- * Start an activity for result with random request code,
- * ignoring result that is not [Activity.RESULT_OK].
+ * Same as [startActivityForResult] but will only trigger [callback] if result is [Activity.RESULT_OK].
  *
  * @param intent The intent to start.
  * @param options Additional options for how the activity should be started.
@@ -82,7 +78,7 @@ inline fun <T : Fragment> T.startActivityForOkResult(
  * @see android.support.v4.app.Fragment.startActivityForResult
  */
 @RequiresApi(16)
-inline fun <T : Fragment> T.startActivityForOkResult(
+inline fun <reified T : Fragment> T.startActivityForOkResult(
         intent: Intent,
         options: Bundle,
         noinline callback: T.(data: Intent?) -> Unit
@@ -91,8 +87,7 @@ inline fun <T : Fragment> T.startActivityForOkResult(
 })
 
 /**
- * Start an activity for result with random request code,
- * ignoring result that is not [Activity.RESULT_OK].
+ * Same as [startActivityForResult] but will only trigger [callback] if result is [Activity.RESULT_OK].
  *
  * @param intent The intent to start.
  * @param callback Activity result callback.
@@ -101,7 +96,7 @@ inline fun <T : Fragment> T.startActivityForOkResult(
  *
  * @see android.support.v4.app.Fragment.startActivityForResult
  */
-inline fun <T : android.support.v4.app.Fragment> T.startActivityForOkResult(
+inline fun <reified T : android.support.v4.app.Fragment> T.startActivityForOkResult(
         intent: Intent,
         noinline callback: T.(data: Intent?) -> Unit
 ) = startActivityForResult(intent, { resultCode, data ->
@@ -109,8 +104,7 @@ inline fun <T : android.support.v4.app.Fragment> T.startActivityForOkResult(
 })
 
 /**
- * Start an activity for result with random request code,
- * ignoring result that is not [Activity.RESULT_OK].
+ * Same as [startActivityForResult] but will only trigger [callback] if result is [Activity.RESULT_OK].
  *
  * @param intent The intent to start.
  * @param options Additional options for how the activity should be started.
@@ -121,7 +115,7 @@ inline fun <T : android.support.v4.app.Fragment> T.startActivityForOkResult(
  * @see android.support.v4.app.Fragment.startActivityForResult
  */
 @RequiresApi(16)
-inline fun <T : android.support.v4.app.Fragment> T.startActivityForOkResult(
+inline fun <reified T : android.support.v4.app.Fragment> T.startActivityForOkResult(
         intent: Intent,
         options: Bundle,
         noinline callback: T.(data: Intent?) -> Unit

@@ -56,47 +56,53 @@ internal fun <T> appendPermissionCallback(callback: T.(Boolean) -> Unit): Int {
 }
 
 @PublishedApi
-internal inline fun getCallback(requestCode: Int): Any? {
+internal fun <T> getCallback(requestCode: Int): T? {
     val callback = CALLBACKS.get(requestCode) ?: return null
     CALLBACKS.remove(requestCode)
-    return callback
+    return callback as T
 }
 
-inline fun <T : Activity> T.onActivityResult2(
+/** Redirect [Activity.onActivityResult] so that it may be triggered on [startActivityForResult]. */
+inline fun <reified T : Activity> T.onActivityResult2(
         requestCode: Int,
         resultCode: Int,
         data: Intent?
-) = (getCallback(requestCode) as T.(Int, Intent?) -> Unit).invoke(this, resultCode, data)
+) = getCallback<T.(Int, Intent?) -> Unit>(requestCode)?.invoke(this, resultCode, data)
 
-inline fun <T : Fragment> T.onActivityResult2(
+/** Redirect [Fragment.onActivityResult] so that it may be triggered on [startActivityForResult]. */
+inline fun <reified T : Fragment> T.onActivityResult2(
         requestCode: Int,
         resultCode: Int,
         data: Intent?
-) = (getCallback(requestCode) as T.(Int, Intent?) -> Unit).invoke(this, resultCode, data)
+) = getCallback<T.(Int, Intent?) -> Unit>(requestCode)?.invoke(this, resultCode, data)
 
-inline fun <T : android.support.v4.app.Fragment> T.onActivityResult2(
+/** Redirect [android.support.v4.app.Fragment.onActivityResult] so that it may be triggered on [startActivityForResult]. */
+inline fun <reified T : android.support.v4.app.Fragment> T.onActivityResult2(
         requestCode: Int,
         resultCode: Int,
         data: Intent?
-) = (getCallback(requestCode) as T.(Int, Intent?) -> Unit).invoke(this, resultCode, data)
+) = getCallback<T.(Int, Intent?) -> Unit>(requestCode)?.invoke(this, resultCode, data)
 
-inline fun <T : Activity> T.onRequestPermissionsResult2(
+/** Redirect [Activity.onRequestPermissionsResult] so that it may be triggered on [requestPermissions]. */
+inline fun <reified T : Activity> T.onRequestPermissionsResult2(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
-) = (getCallback(requestCode) as T.(Boolean) -> Unit).invoke(this, grantResults
+) = getCallback<T.(Boolean) -> Unit>(requestCode)?.invoke(this, grantResults
         .all { it == PackageManager.PERMISSION_GRANTED })
 
-inline fun <T : Fragment> T.onRequestPermissionsResult2(
+/** Redirect [Fragment.onRequestPermissionsResult] so that it may be triggered on [requestPermissions]. */
+inline fun <reified T : Fragment> T.onRequestPermissionsResult2(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
-) = (getCallback(requestCode) as T.(Boolean) -> Unit).invoke(this, grantResults
+) = getCallback<T.(Boolean) -> Unit>(requestCode)?.invoke(this, grantResults
         .all { it == PackageManager.PERMISSION_GRANTED })
 
-inline fun <T : android.support.v4.app.Fragment> T.onRequestPermissionsResult2(
+/** Redirect [android.support.v4.app.Fragment.onRequestPermissionsResult] so that it may be triggered on [requestPermissions]. */
+inline fun <reified T : android.support.v4.app.Fragment> T.onRequestPermissionsResult2(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
-) = (getCallback(requestCode) as T.(Boolean) -> Unit).invoke(this, grantResults
+) = getCallback<T.(Boolean) -> Unit>(requestCode)?.invoke(this, grantResults
         .all { it == PackageManager.PERMISSION_GRANTED })

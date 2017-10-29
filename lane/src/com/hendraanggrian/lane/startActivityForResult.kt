@@ -12,7 +12,8 @@ import android.os.Bundle
 import android.support.annotation.RequiresApi
 
 /**
- * Start an activity for result with random request code.
+ * Start an activity for result with auto-generated request code.
+ * The result will then have to be handled in [callback] instead of [Activity.onActivityResult].
  *
  * @param intent The intent to start.
  * @param callback Activity result callback.
@@ -21,13 +22,14 @@ import android.support.annotation.RequiresApi
  *
  * @see Activity.startActivityForResult
  */
-inline fun <T : Activity> T.startActivityForResult(
+inline fun <reified T : Activity> T.startActivityForResult(
         intent: Intent,
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, appendActivityCallback(callback))
 
 /**
- * Start an activity for result with random request code.
+ * Start an activity for result with auto-generated request code.
+ * The result will then have to be handled in [callback] instead of [Activity.onActivityResult].
  *
  * @param intent The intent to start.
  * @param options Additional options for how the activity should be started.
@@ -38,14 +40,15 @@ inline fun <T : Activity> T.startActivityForResult(
  * @see Activity.startActivityForResult
  */
 @RequiresApi(16)
-inline fun <T : Activity> T.startActivityForResult(
+inline fun <reified T : Activity> T.startActivityForResult(
         intent: Intent,
         options: Bundle,
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, appendActivityCallback(callback), options)
 
 /**
- * Start an activity for result with random request code.
+ * Start an activity for result with auto-generated request code.
+ * The result will then have to be handled in [callback] instead of [Fragment.onActivityResult].
  *
  * @param intent The intent to start.
  * @param callback Activity result callback.
@@ -54,13 +57,14 @@ inline fun <T : Activity> T.startActivityForResult(
  *
  * @see Fragment.startActivityForResult
  */
-inline fun <T : Fragment> T.startActivityForResult(
+inline fun <reified T : Fragment> T.startActivityForResult(
         intent: Intent,
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, appendActivityCallback(callback))
 
 /**
- * Start an activity for result with random request code.
+ * Start an activity for result with auto-generated request code.
+ * The result will then have to be handled in [callback] instead of [Fragment.onActivityResult].
  *
  * @param intent The intent to start.
  * @param options Additional options for how the activity should be started.
@@ -71,14 +75,15 @@ inline fun <T : Fragment> T.startActivityForResult(
  * @see Fragment.startActivityForResult
  */
 @RequiresApi(16)
-inline fun <T : Fragment> T.startActivityForResult(
+inline fun <reified T : Fragment> T.startActivityForResult(
         intent: Intent,
         options: Bundle,
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, appendActivityCallback(callback), options)
 
 /**
- * Start an activity for result with random request code.
+ * Start an activity for result with auto-generated request code.
+ * The result will then have to be handled in [callback] instead of [android.support.v4.app.Fragment.onActivityResult].
  *
  * @param intent The intent to start.
  * @param callback Activity result callback.
@@ -87,13 +92,14 @@ inline fun <T : Fragment> T.startActivityForResult(
  *
  * @see android.support.v4.app.Fragment.startActivityForResult
  */
-inline fun <T : android.support.v4.app.Fragment> T.startActivityForResult(
+inline fun <reified T : android.support.v4.app.Fragment> T.startActivityForResult(
         intent: Intent,
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, appendActivityCallback(callback))
 
 /**
- * Start an activity for result with random request code.
+ * Start an activity for result with auto-generated request code.
+ * The result will then have to be handled in [callback] instead of [android.support.v4.app.Fragment.onActivityResult].
  *
  * @param intent The intent to start.
  * @param options Additional options for how the activity should be started.
@@ -104,7 +110,7 @@ inline fun <T : android.support.v4.app.Fragment> T.startActivityForResult(
  * @see android.support.v4.app.Fragment.startActivityForResult
  */
 @RequiresApi(16)
-inline fun <T : android.support.v4.app.Fragment> T.startActivityForResult(
+inline fun <reified T : android.support.v4.app.Fragment> T.startActivityForResult(
         intent: Intent,
         options: Bundle,
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit

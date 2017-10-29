@@ -51,9 +51,7 @@ class CameraActivity : AppCompatActivity() {
                                     startActivity(Intent(this, ImageActivity::class.java)
                                             .putExtras(Bundler.wrapExtras(ImageActivity::class.java, file, null)))
                                 }, { e ->
-                                    runOnUiThread {
-                                        toast(e.message!!)
-                                    }
+                                    runOnUiThread { toast(e.message!!) }
                                 })
                     } else {
                         toast("Storage permission denied!")
