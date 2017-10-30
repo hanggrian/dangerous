@@ -8,6 +8,8 @@
       <module fileurl="file://$PROJECT_DIR$/lane.iml" filepath="$PROJECT_DIR$/lane.iml" />
       <module fileurl="file://$PROJECT_DIR$/lane/lane-lane.iml" filepath="$PROJECT_DIR$/lane/lane-lane.iml" />
       <module fileurl="file://$PROJECT_DIR$/cameraview/library/library.iml" filepath="$PROJECT_DIR$/cameraview/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/result.iml" filepath="$PROJECT_DIR$/result.iml" />
+      <module fileurl="file://$PROJECT_DIR$/result/result-result.iml" filepath="$PROJECT_DIR$/result/result-result.iml" />
       <module fileurl="file://$PROJECT_DIR$/rx-activity.iml" filepath="$PROJECT_DIR$/rx-activity.iml" />
       <module fileurl="file://$PROJECT_DIR$/activity-callback/rx-activity2.iml" filepath="$PROJECT_DIR$/activity-callback/rx-activity2.iml" />
       <module fileurl="file://$PROJECT_DIR$/rxactivity.iml" filepath="$PROJECT_DIR$/rxactivity.iml" />

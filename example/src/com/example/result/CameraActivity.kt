@@ -1,4 +1,4 @@
-package com.example.lane
+package com.example.result
 
 import android.Manifest
 import android.content.Intent
@@ -9,10 +9,10 @@ import android.view.MenuItem
 import com.google.android.cameraview.CameraView
 import com.google.android.cameraview.CameraView.*
 import com.hendraanggrian.bundler.Bundler
-import com.hendraanggrian.lane.onActivityResult2
-import com.hendraanggrian.lane.onRequestPermissionsResult2
-import com.hendraanggrian.lane.requestPermissions
-import com.hendraanggrian.lane.startActivityForOkResult
+import com.hendraanggrian.result.onActivityResult2
+import com.hendraanggrian.result.onRequestPermissionsResult2
+import com.hendraanggrian.result.requestPermissions
+import com.hendraanggrian.result.startActivityForOkResult
 import com.hendraanggrian.preferencer.Preferencer
 import com.hendraanggrian.preferencer.Saver
 import com.hendraanggrian.preferencer.annotations.BindPreference

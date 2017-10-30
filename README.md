@@ -1,6 +1,6 @@
-Lane
-====
-Kotlin-focused library to simplify getting result from an Activity and requesting permissions.
+result
+======
+Kotlin-focused library to simplify the process of handling result from an Activity and requesting permissions.
  * Direct activity and permission result. Traditionally, code must be split into `onActivityResult` and `onRequestPermissionsResult`.
  * Never have to deal with request code again, they are auto-generated.
 
@@ -48,7 +48,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.hendraanggrian:lane:0.1'
+    compile 'com.hendraanggrian:result:0.1'
 }
 ```
 

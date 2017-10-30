@@ -1,4 +1,4 @@
-package com.example.lane
+package com.example.result
 
 import android.net.Uri
 import android.os.Bundle

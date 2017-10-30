@@ -1,8 +1,8 @@
 @file:JvmMultifileClass
-@file:JvmName("LanesKt")
+@file:JvmName("PermissionsResultKt")
 @file:Suppress("NOTHING_TO_INLINE", "UNUSED")
 
-package com.hendraanggrian.lane
+package com.hendraanggrian.result
 
 import android.app.Activity
 import android.app.Fragment
@@ -22,7 +22,7 @@ inline fun <reified T : Activity> T.requestPermissions(
         vararg permissions: String,
         noinline callback: T.(Boolean) -> Unit
 ) = if (SDK_INT < M || isSelfPermissionsGranted(*permissions)) callback.invoke(this, true)
-else requestPermissions(permissions, appendPermissionCallback(callback))
+else requestPermissions(permissions, Result.appendPermissionCallback(callback))
 
 /**
  * Request permissions with auto-generated request code.
@@ -37,7 +37,7 @@ inline fun <reified T : Fragment> T.requestPermissions(
         vararg permissions: String,
         noinline callback: T.(Boolean) -> Unit
 ) = if (SDK_INT < M || activity.isSelfPermissionsGranted(*permissions)) callback.invoke(this, true)
-else requestPermissions(permissions, appendPermissionCallback(callback))
+else requestPermissions(permissions, Result.appendPermissionCallback(callback))
 
 /**
  * Request permissions with auto-generated request code.
@@ -52,4 +52,4 @@ inline fun <reified T : android.support.v4.app.Fragment> T.requestPermissions(
         vararg permissions: String,
         noinline callback: T.(Boolean) -> Unit
 ) = if (SDK_INT < M || context.isSelfPermissionsGranted(*permissions)) callback.invoke(this, true)
-else requestPermissions(permissions, appendPermissionCallback(callback))
+else requestPermissions(permissions, Result.appendPermissionCallback(callback))

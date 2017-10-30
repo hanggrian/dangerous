@@ -11,7 +11,7 @@
             <option value="$PROJECT_DIR$/cameraview" />
             <option value="$PROJECT_DIR$/cameraview/library" />
             <option value="$PROJECT_DIR$/example" />
-            <option value="$PROJECT_DIR$/lane" />
+            <option value="$PROJECT_DIR$/result" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

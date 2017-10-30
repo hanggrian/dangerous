@@ -26,8 +26,8 @@ dependencies {
 publish {
     userOrg = bintray.user
     groupId = bintray.group
-    artifactId = bintray.artifact.lane.id
+    artifactId = bintray.artifact.result.id
     publishVersion = versions.release
-    desc = bintray.artifact.lane.desc
-    website = bintray.artifact.lane.website
+    desc = bintray.artifact.result.desc
+    website = bintray.artifact.result.website
 }

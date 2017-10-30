@@ -46,7 +46,7 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
-    implementation project(':lane')
+    implementation project(':result')
     implementation project(':cameraview:library')
 
     implementation "com.android.support:preference-v14:$versions.support"

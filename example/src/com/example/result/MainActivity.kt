@@ -1,4 +1,4 @@
-package com.example.lane
+package com.example.result
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
-import com.hendraanggrian.lane.onActivityResult2
-import com.hendraanggrian.lane.startActivityForResult
+import com.hendraanggrian.result.onActivityResult2
+import com.hendraanggrian.result.startActivityForResult
 import kota.addNow
 import kota.debug
 import kota.dialogs.OkButton

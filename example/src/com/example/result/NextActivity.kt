@@ -1,4 +1,4 @@
-package com.example.lane
+package com.example.result
 
 import android.content.Intent
 import android.os.Bundle

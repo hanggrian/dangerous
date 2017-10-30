@@ -1,4 +1,4 @@
-package com.example.lane
+package com.example.result
 
 import android.app.Application
 import android.content.Context

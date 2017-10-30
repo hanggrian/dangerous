@@ -1,8 +1,8 @@
 @file:JvmMultifileClass
-@file:JvmName("LanesKt")
+@file:JvmName("ActivityResultKt")
 @file:Suppress("NOTHING_TO_INLINE", "UNUSED")
 
-package com.hendraanggrian.lane
+package com.hendraanggrian.result
 
 import android.app.Activity
 import android.app.Fragment
@@ -25,7 +25,7 @@ import android.support.annotation.RequiresApi
 inline fun <reified T : Activity> T.startActivityForResult(
         intent: Intent,
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
-) = startActivityForResult(intent, appendActivityCallback(callback))
+) = startActivityForResult(intent, Result.appendActivityCallback(callback))
 
 /**
  * Start an activity for result with auto-generated request code.
@@ -44,7 +44,7 @@ inline fun <reified T : Activity> T.startActivityForResult(
         intent: Intent,
         options: Bundle,
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
-) = startActivityForResult(intent, appendActivityCallback(callback), options)
+) = startActivityForResult(intent, Result.appendActivityCallback(callback), options)
 
 /**
  * Start an activity for result with auto-generated request code.
@@ -60,7 +60,7 @@ inline fun <reified T : Activity> T.startActivityForResult(
 inline fun <reified T : Fragment> T.startActivityForResult(
         intent: Intent,
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
-) = startActivityForResult(intent, appendActivityCallback(callback))
+) = startActivityForResult(intent, Result.appendActivityCallback(callback))
 
 /**
  * Start an activity for result with auto-generated request code.
@@ -79,7 +79,7 @@ inline fun <reified T : Fragment> T.startActivityForResult(
         intent: Intent,
         options: Bundle,
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
-) = startActivityForResult(intent, appendActivityCallback(callback), options)
+) = startActivityForResult(intent, Result.appendActivityCallback(callback), options)
 
 /**
  * Start an activity for result with auto-generated request code.
@@ -95,7 +95,7 @@ inline fun <reified T : Fragment> T.startActivityForResult(
 inline fun <reified T : android.support.v4.app.Fragment> T.startActivityForResult(
         intent: Intent,
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
-) = startActivityForResult(intent, appendActivityCallback(callback))
+) = startActivityForResult(intent, Result.appendActivityCallback(callback))
 
 /**
  * Start an activity for result with auto-generated request code.
@@ -114,4 +114,4 @@ inline fun <reified T : android.support.v4.app.Fragment> T.startActivityForResul
         intent: Intent,
         options: Bundle,
         noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
-) = startActivityForResult(intent, appendActivityCallback(callback), options)
+) = startActivityForResult(intent, Result.appendActivityCallback(callback), options)

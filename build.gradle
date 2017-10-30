@@ -46,6 +46,6 @@ task clean(type: Delete) {
 }
 
 /** QUICK LINT CHECK BEFORE UPLOAD
- ./gradlew :lane:clean :lane:build
- ./gradlew :lane:bintrayUpload -PdryRun=false -PbintrayUser=hendraanggrian -PbintrayKey=
+ ./gradlew :result:clean :result:build
+ ./gradlew :result:bintrayUpload -PdryRun=false -PbintrayUser=hendraanggrian -PbintrayKey=
  */

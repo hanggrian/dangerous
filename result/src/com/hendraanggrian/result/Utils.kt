@@ -1,6 +1,6 @@
 @file:Suppress("NOTHING_TO_INLINE")
 
-package com.hendraanggrian.lane
+package com.hendraanggrian.result
 
 import android.content.Context
 import android.content.pm.PackageManager
