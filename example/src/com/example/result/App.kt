@@ -14,7 +14,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         Bundler.setDebug(BuildConfig.DEBUG)
-        Preferencer.setDebug(BuildConfig.DEBUG)
+        Preferencer.isDebug = BuildConfig.DEBUG
 
         if (!LeakCanary.isInAnalyzerProcess(this)) {
             mRefWatcher = LeakCanary.install(this)

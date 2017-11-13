@@ -1,34 +1,22 @@
 buildscript {
-    ext.versions = [
-            release   : '0.1',
-            // android
-            sdk       : [
-                    min   : 14,
-                    target: 26,
-            ],
-            buildTools: '26.0.2',
-            // main
-            kotlin    : '1.1.51',
-            support   : '26.1.0'
-    ]
     repositories {
         google()
         jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
-        classpath 'com.novoda:bintray-release:0.5.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin"
+        classpath 'com.novoda:bintray-release:0.7.0'
     }
 }
 
 /** submodule cameraview config */
 ext {
-    buildToolsVersion = versions.buildTools
-    compileSdkVersion = versions.sdk.target
-    minSdkVersion = versions.sdk.min
-    targetSdkVersion = versions.sdk.target
-    supportLibraryVersion = versions.support
+    buildToolsVersion = build_tools
+    compileSdkVersion = sdk_target.toInteger()
+    minSdkVersion = sdk_min.toInteger()
+    targetSdkVersion = sdk_target.toInteger()
+    supportLibraryVersion = support
 }
 
 allprojects {

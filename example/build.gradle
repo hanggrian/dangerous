@@ -3,22 +3,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-ext.rxjava2 = '2.1.6'
-ext.photoview = '2.0.0'
-ext.process = '2.0.0'
-ext.leakcanary = '1.5.4'
-ext.kota = '0.16'
-ext.preferencer = '0.7.3'
-ext.bundler = '0.5.0'
-
 android {
-    compileSdkVersion versions.sdk.target
-    buildToolsVersion versions.buildTools
+    compileSdkVersion sdk_target.toInteger()
+    buildToolsVersion build_tools
     defaultConfig {
-        applicationId 'com.example.lane'
-        versionName versions.release
-        minSdkVersion versions.sdk.min
-        targetSdkVersion versions.sdk.target
+        applicationId 'com.example.result'
+        versionName bintray_release
+        minSdkVersion sdk_min.toInteger()
+        targetSdkVersion sdk_target.toInteger()
     }
     sourceSets {
         main {
@@ -45,13 +37,13 @@ repositories {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin"
     implementation project(':result')
     implementation project(':cameraview:library')
 
-    implementation "com.android.support:preference-v14:$versions.support"
-    implementation "com.android.support:appcompat-v7:$versions.support"
-    implementation "com.android.support:design:$versions.support"
+    implementation "com.android.support:preference-v14:$support"
+    implementation "com.android.support:appcompat-v7:$support"
+    implementation "com.android.support:design:$support"
 
     implementation "io.reactivex.rxjava2:rxjava:$rxjava2"
     implementation "com.github.chrisbanes:PhotoView:$photoview"
