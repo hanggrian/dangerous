@@ -7,6 +7,7 @@ plugins {
     `android-library`
     kotlin("android")
     dokka
+    `git-publish`
     `bintray-release`
 }
 
@@ -76,10 +77,16 @@ tasks {
         args("--android", "-F", "src/**/*.kt")
     }
 
-    withType<DokkaTask> {
+    val dokka by getting(DokkaTask::class) {
         outputDirectory = "$buildDir/docs"
         doFirst { file(outputDirectory).deleteRecursively() }
     }
+    gitPublish {
+        repoUri = RELEASE_WEBSITE
+        branch = "gh-pages"
+        contents.from(dokka.outputDirectory)
+    }
+    get("gitPublishCopy").dependsOn(dokka)
 }
 
 publish {

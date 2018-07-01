@@ -1,13 +1,12 @@
 package com.example.result
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
-import com.hendraanggrian.bundler.BindExtra
+import com.example.dispatcher.R
 import com.hendraanggrian.bundler.Bundler
-import kota.finishWithResult
+import com.hendraanggrian.bundler.Extra
 import kotlinx.android.synthetic.main.activity_next.*
 
 class NextActivity : AppCompatActivity(), View.OnClickListener {
@@ -16,7 +15,7 @@ class NextActivity : AppCompatActivity(), View.OnClickListener {
         const val RESULT_CUSTOM = 9152
     }
 
-    @BindExtra lateinit var from: String
+    @Extra lateinit var from: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +35,12 @@ class NextActivity : AppCompatActivity(), View.OnClickListener {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onClick(v: View) = finishWithResult(when (v) {
-        okButton -> RESULT_OK
-        canceledButton -> RESULT_CANCELED
-        else -> RESULT_CUSTOM
-    }, Intent())
+    override fun onClick(v: View) {
+        setResult(when (v) {
+            okButton -> RESULT_OK
+            canceledButton -> RESULT_CANCELED
+            else -> RESULT_CUSTOM
+        })
+        finish()
+    }
 }

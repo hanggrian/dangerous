@@ -2,21 +2,17 @@ package com.example.result
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
-import com.hendraanggrian.result.onActivityResult2
-import com.hendraanggrian.result.startActivityForResult
-import kota.addNow
-import kota.debug
-import kota.dialogs.OkButton
-import kota.dialogs.supportAlert
-import kota.find
-import kota.findNullable
+import com.example.dispatcher.R
+import com.hendraanggrian.dispatcher.Dispatcher
+import com.hendraanggrian.dispatcher.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.debug
+import org.jetbrains.anko.toast
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AnkoLogger {
 
     companion object {
         const val TAG_RETAINED_FRAGMENT = "RetainedFragment"
@@ -27,15 +23,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         debug("$this onCreate")
         setSupportActionBar(toolbar)
-        if (supportFragmentManager.findNullable<Fragment>(TAG_RETAINED_FRAGMENT) == null) {
-            supportFragmentManager.addNow(R.id.container, Content(), TAG_RETAINED_FRAGMENT)
+        if (supportFragmentManager.findFragmentByTag(TAG_RETAINED_FRAGMENT) == null) {
+            supportFragmentManager.beginTransaction()
+                .add(R.id.container, Content(), TAG_RETAINED_FRAGMENT)
+                .commitNow()
         }
         fragmentManager.beginTransaction()
-                .add(android.app.Fragment(), "asdasd")
-                .commitAllowingStateLoss()
+            .add(android.app.Fragment(), "asdasd")
+            .commitAllowingStateLoss()
         fragmentManager.executePendingTransactions()
         toolbar2.setOnClickListener {
-            startActivityForResult(Intent(this, NextActivity::class.java).putExtra("from", "activity")) { _, _ ->
+            startActivity(Intent(this, NextActivity::class.java).putExtra("from", "activity")) { _, _ ->
                 debug("$this callback")
                 textView.text = "ok result"
             }
@@ -50,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        onActivityResult2(requestCode, resultCode, data)
+        Dispatcher.onActivityResult(this, requestCode, resultCode, data)
         debug("$this onActivityResult")
     }
 
@@ -62,16 +60,16 @@ class MainActivity : AppCompatActivity() {
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             addPreferencesFromResource(R.xml.activity_main)
-            find<Preference>("fragmentPreference").setOnPreferenceClickListener {
-                startActivityForResult(Intent(context, NextActivity::class.java).putExtra("from", "fragment")) { resultCode, _ ->
-                    supportAlert("Result code", resultCode.toString(), OkButton)
+            findPreference("fragmentPreference").setOnPreferenceClickListener {
+                startActivity(Intent(context, NextActivity::class.java).putExtra("from", "fragment")) { resultCode, _ ->
+                    context!!.toast("Result code $resultCode")
                 }
                 false
             }
         }
 
         override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-            onActivityResult2(requestCode, resultCode, data)
+            Dispatcher.onActivityResult(this, requestCode, resultCode, data)
         }
     }
 }

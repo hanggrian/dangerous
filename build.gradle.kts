@@ -13,13 +13,11 @@ buildscript {
 }
 
 // submodule cameraview config
-ext {
-    val buildToolsVersion = BUILD_TOOLS
-    val compileSdkVersion = SDK_TARGET
-    val minSdkVersion = SDK_MIN
-    val targetSdkVersion = SDK_TARGET
-    val supportLibraryVersion = VERSION_SUPPORT
-}
+ext["buildToolsVersion"] = BUILD_TOOLS
+ext["compileSdkVersion"] = SDK_TARGET
+ext["minSdkVersion"] = SDK_MIN
+ext["targetSdkVersion"] = SDK_TARGET
+ext["supportLibraryVersion"] = VERSION_SUPPORT
 
 allprojects {
     repositories {

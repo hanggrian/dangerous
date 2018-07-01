@@ -2,6 +2,7 @@ package com.example.result
 
 import android.app.Application
 import android.content.Context
+import com.example.dispatcher.BuildConfig
 import com.hendraanggrian.bundler.Bundler
 import com.hendraanggrian.preferencer.Preferencer
 import com.squareup.leakcanary.LeakCanary
@@ -9,12 +10,13 @@ import com.squareup.leakcanary.RefWatcher
 
 class App : Application() {
 
+    @PublishedApi
     internal lateinit var mRefWatcher: RefWatcher
 
     override fun onCreate() {
         super.onCreate()
         Bundler.setDebug(BuildConfig.DEBUG)
-        Preferencer.isDebug = BuildConfig.DEBUG
+        Preferencer.setDebug(BuildConfig.DEBUG)
 
         if (!LeakCanary.isInAnalyzerProcess(this)) {
             mRefWatcher = LeakCanary.install(this)
@@ -22,4 +24,4 @@ class App : Application() {
     }
 }
 
-val Context.refWatcher: RefWatcher get() = (applicationContext as App).mRefWatcher
+inline val Context.refWatcher: RefWatcher get() = (applicationContext as App).mRefWatcher

@@ -53,6 +53,8 @@ dependencies {
     implementation(support("appcompat-v7", VERSION_SUPPORT))
     implementation(support("design", VERSION_SUPPORT))
 
+    implementation(anko("commons"))
+
     implementation(rxJava2("rxjava"))
     implementation(photoView())
     implementation(processPhoenix())

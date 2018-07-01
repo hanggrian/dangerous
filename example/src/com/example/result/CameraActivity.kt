@@ -6,28 +6,32 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.example.dispatcher.R
 import com.google.android.cameraview.CameraView
-import com.google.android.cameraview.CameraView.*
+import com.google.android.cameraview.CameraView.FACING_BACK
+import com.google.android.cameraview.CameraView.FACING_FRONT
+import com.google.android.cameraview.CameraView.FLASH_AUTO
+import com.google.android.cameraview.CameraView.FLASH_OFF
+import com.google.android.cameraview.CameraView.FLASH_ON
 import com.hendraanggrian.bundler.Bundler
-import com.hendraanggrian.result.onActivityResult2
-import com.hendraanggrian.result.onRequestPermissionsResult2
-import com.hendraanggrian.result.requestPermissions
-import com.hendraanggrian.result.startActivityForOkResult
+import com.hendraanggrian.dispatcher.Dispatcher
+import com.hendraanggrian.dispatcher.requestPermissions
+import com.hendraanggrian.dispatcher.startActivity
+import com.hendraanggrian.preferencer.Preference
 import com.hendraanggrian.preferencer.Preferencer
 import com.hendraanggrian.preferencer.Saver
-import com.hendraanggrian.preferencer.annotations.BindPreference
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
-import kota.toast
 import kotlinx.android.synthetic.main.activity_camera.*
+import org.jetbrains.anko.toast
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
 
 class CameraActivity : AppCompatActivity() {
 
-    @BindPreference("camera_flash") @JvmField @CameraView.Flash var prefFlash = FLASH_AUTO
-    @BindPreference("camera_facing") @JvmField @CameraView.Facing var prefFacing = FACING_BACK
+    @Preference @JvmField @CameraView.Flash var prefFlash = FLASH_AUTO
+    @Preference @JvmField @CameraView.Facing var prefFacing = FACING_BACK
 
     private lateinit var saver: Saver
 
@@ -41,18 +45,18 @@ class CameraActivity : AppCompatActivity() {
                 requestPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE) { granted ->
                     if (granted) {
                         Observable.just(data)
-                                .observeOn(Schedulers.io())
-                                .subscribe({ bytes ->
-                                    val file = File(getExternalFilesDir(null), "image.jpg")
-                                    val stream = BufferedOutputStream(FileOutputStream(file))
-                                    stream.write(bytes)
-                                    stream.flush()
-                                    stream.close()
-                                    startActivity(Intent(this, ImageActivity::class.java)
-                                            .putExtras(Bundler.wrapExtras(ImageActivity::class.java, file, null)))
-                                }, { e ->
-                                    runOnUiThread { toast(e.message!!) }
-                                })
+                            .observeOn(Schedulers.io())
+                            .subscribe({ bytes ->
+                                val file = File(getExternalFilesDir(null), "image.jpg")
+                                val stream = BufferedOutputStream(FileOutputStream(file))
+                                stream.write(bytes)
+                                stream.flush()
+                                stream.close()
+                                startActivity(Intent(this, ImageActivity::class.java)
+                                    .putExtras(Bundler.extrasOf(ImageActivity::class.java, file, null)))
+                            }, { e ->
+                                runOnUiThread { toast(e.message!!) }
+                            })
                     } else {
                         toast("Storage permission denied!")
                     }
@@ -62,9 +66,9 @@ class CameraActivity : AppCompatActivity() {
         imageButtonClose.setOnClickListener { finish() }
         imageButtonCapture.setOnClickListener { cameraView.takePicture() }
         imageButtonGallery.setOnClickListener {
-            startActivityForOkResult(Intent(Intent.ACTION_GET_CONTENT).setType("image/*")) { data ->
+            startActivity(RESULT_OK, Intent(Intent.ACTION_GET_CONTENT).setType("image/*")) { data ->
                 val intent = Intent(this, ImageActivity::class.java)
-                intent.putExtras(Bundler.wrapExtras(ImageActivity::class.java, null, data!!.data))
+                intent.putExtras(Bundler.extrasOf(ImageActivity::class.java, null, data!!.data))
                 startActivity(intent)
             }
         }
@@ -112,7 +116,7 @@ class CameraActivity : AppCompatActivity() {
             }
             updateFacingItem(item)
         }
-        saver.saveAll()
+        saver.save()
         return super.onOptionsItemSelected(item)
     }
 
@@ -135,12 +139,12 @@ class CameraActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        onActivityResult2(requestCode, resultCode, data)
+        Dispatcher.onActivityResult(this, requestCode, resultCode, data)
         if (!cameraView.isCameraOpened) cameraView.start()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        onRequestPermissionsResult2(requestCode, permissions, grantResults)
+        Dispatcher.onRequestPermissionsResult(this, requestCode, grantResults)
     }
 }

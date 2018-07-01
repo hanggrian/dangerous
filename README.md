@@ -1,15 +1,32 @@
-result
-======
+Dispatcher
+==========
+[![Download](https://api.bintray.com/packages/hendraanggrian/dispatcher/dispatcher/images/download.svg) ](https://bintray.com/hendraanggrian/dispatcher/dispatcher/_latestVersion)
+[![Build Status](https://travis-ci.org/hendraanggrian/dispatcher.svg)](https://travis-ci.org/hendraanggrian/dispatcher)
+[![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
+
 Kotlin-focused library to simplify the process of handling result from an Activity and requesting permissions.
  * Direct activity and permission result. Traditionally, code must be split into `onActivityResult` and `onRequestPermissionsResult`.
  * Never have to deal with request code again, they are auto-generated.
+
+Download
+--------
+```gradle
+repositories {
+    google()
+    jcenter()
+}
+
+dependencies {
+    compile 'com.hendraanggrian.dispatcher:dispatcher:0.1'
+}
+```
 
 Usage
 -----
 Start activity for result from Activity, Fragment, or support Fragment.
 
 ```kotlin
-startActivityForResult(Intent(Intent.ACTION_GET_CONTENT).setType("image/*")) { resultCode, data ->
+startActivity(Intent(Intent.ACTION_GET_CONTENT).setType("image/*")) { resultCode, data ->
     if (resultCode == Activity.RESULT_OK) {
         val uri = data.getData()
         imageView.setImageUri(uri)   
@@ -19,7 +36,7 @@ startActivityForResult(Intent(Intent.ACTION_GET_CONTENT).setType("image/*")) { r
 
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    onActivityResult2(requestCode, resultCode, data)
+    Dispatcher.onActivityResult(this, requestCode, resultCode, data)
 }
 ```
 
@@ -35,20 +52,7 @@ requestPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNA
 
 override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    onRequestPermissionsResult2(requestCode, permissions, grantResults)
-}
-```
-
-Download
---------
-```gradle
-repositories {
-    google()
-    jcenter()
-}
-
-dependencies {
-    compile 'com.hendraanggrian:result:0.1'
+    Dispatcher.onRequestPermissionsResult(this, requestCode, grantResults)
 }
 ```
 
