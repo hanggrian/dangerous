@@ -23,11 +23,11 @@ import android.support.annotation.RequiresApi
  * @see Activity.startActivityForResult
  */
 inline fun <reified T : Activity> T.startActivityForOkResult(
-        intent: Intent,
-        noinline callback: T.(data: Intent?) -> Unit
-) = startActivityForResult(intent, { resultCode, data ->
+    intent: Intent,
+    noinline callback: T.(data: Intent?) -> Unit
+) = startActivityForResult(intent) { resultCode, data ->
     if (resultCode == RESULT_OK) callback(data)
-})
+}
 
 /**
  * Same as [startActivityForResult] but will only trigger [callback] if result is [Activity.RESULT_OK].
@@ -42,12 +42,12 @@ inline fun <reified T : Activity> T.startActivityForOkResult(
  */
 @RequiresApi(16)
 inline fun <reified T : Activity> T.startActivityForOkResult(
-        intent: Intent,
-        options: Bundle,
-        noinline callback: T.(data: Intent?) -> Unit
-) = startActivityForResult(intent, options, { resultCode, data ->
+    intent: Intent,
+    options: Bundle,
+    noinline callback: T.(data: Intent?) -> Unit
+) = startActivityForResult(intent, options) { resultCode, data ->
     if (resultCode == RESULT_OK) callback(data)
-})
+}
 
 /**
  * Same as [startActivityForResult] but will only trigger [callback] if result is [Activity.RESULT_OK].
@@ -60,11 +60,11 @@ inline fun <reified T : Activity> T.startActivityForOkResult(
  * @see Fragment.startActivityForResult
  */
 inline fun <reified T : Fragment> T.startActivityForOkResult(
-        intent: Intent,
-        noinline callback: T.(data: Intent?) -> Unit
-) = startActivityForResult(intent, { resultCode, data ->
+    intent: Intent,
+    noinline callback: T.(data: Intent?) -> Unit
+) = startActivityForResult(intent) { resultCode, data ->
     if (resultCode == RESULT_OK) callback(data)
-})
+}
 
 /**
  * Same as [startActivityForResult] but will only trigger [callback] if result is [Activity.RESULT_OK].
@@ -79,12 +79,12 @@ inline fun <reified T : Fragment> T.startActivityForOkResult(
  */
 @RequiresApi(16)
 inline fun <reified T : Fragment> T.startActivityForOkResult(
-        intent: Intent,
-        options: Bundle,
-        noinline callback: T.(data: Intent?) -> Unit
-) = startActivityForResult(intent, options, { resultCode, data ->
+    intent: Intent,
+    options: Bundle,
+    noinline callback: T.(data: Intent?) -> Unit
+) = startActivityForResult(intent, options) { resultCode, data ->
     if (resultCode == RESULT_OK) callback(data)
-})
+}
 
 /**
  * Same as [startActivityForResult] but will only trigger [callback] if result is [Activity.RESULT_OK].
@@ -97,11 +97,11 @@ inline fun <reified T : Fragment> T.startActivityForOkResult(
  * @see android.support.v4.app.Fragment.startActivityForResult
  */
 inline fun <reified T : android.support.v4.app.Fragment> T.startActivityForOkResult(
-        intent: Intent,
-        noinline callback: T.(data: Intent?) -> Unit
-) = startActivityForResult(intent, { resultCode, data ->
+    intent: Intent,
+    noinline callback: T.(data: Intent?) -> Unit
+) = startActivityForResult(intent) { resultCode, data ->
     if (resultCode == RESULT_OK) callback(data)
-})
+}
 
 /**
  * Same as [startActivityForResult] but will only trigger [callback] if result is [Activity.RESULT_OK].
@@ -116,9 +116,9 @@ inline fun <reified T : android.support.v4.app.Fragment> T.startActivityForOkRes
  */
 @RequiresApi(16)
 inline fun <reified T : android.support.v4.app.Fragment> T.startActivityForOkResult(
-        intent: Intent,
-        options: Bundle,
-        noinline callback: T.(data: Intent?) -> Unit
-) = startActivityForResult(intent, options, { resultCode, data ->
+    intent: Intent,
+    options: Bundle,
+    noinline callback: T.(data: Intent?) -> Unit
+) = startActivityForResult(intent, options) { resultCode, data ->
     if (resultCode == RESULT_OK) callback(data)
-})
+}

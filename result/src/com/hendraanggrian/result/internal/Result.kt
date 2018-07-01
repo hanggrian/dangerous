@@ -1,9 +1,9 @@
-package com.hendraanggrian.result
+package com.hendraanggrian.result.internal
 
 import android.content.Intent
 import android.support.v4.util.SparseArrayCompat
 import java.lang.ref.WeakReference
-import java.util.*
+import java.util.Random
 
 @PublishedApi
 internal object Result {

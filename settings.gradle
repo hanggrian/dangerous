@@ -1,4 +1,0 @@
-include ':result'
-
-include ':cameraview:library'
-include ':example'

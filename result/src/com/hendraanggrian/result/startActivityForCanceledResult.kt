@@ -23,11 +23,11 @@ import android.support.annotation.RequiresApi
  * @see Activity.startActivityForResult
  */
 inline fun <reified T : Activity> T.startActivityForCanceledResult(
-        intent: Intent,
-        noinline callback: T.(data: Intent?) -> Unit
-) = startActivityForResult(intent, { resultCode, data ->
+    intent: Intent,
+    noinline callback: T.(data: Intent?) -> Unit
+) = startActivityForResult(intent) { resultCode, data ->
     if (resultCode == RESULT_CANCELED) callback(data)
-})
+}
 
 /**
  * Same as [startActivityForResult] but will only trigger [callback] if result is [Activity.RESULT_CANCELED].
@@ -42,12 +42,12 @@ inline fun <reified T : Activity> T.startActivityForCanceledResult(
  */
 @RequiresApi(16)
 inline fun <reified T : Activity> T.startActivityForCanceledResult(
-        intent: Intent,
-        options: Bundle,
-        noinline callback: T.(data: Intent?) -> Unit
-) = startActivityForResult(intent, options, { resultCode, data ->
+    intent: Intent,
+    options: Bundle,
+    noinline callback: T.(data: Intent?) -> Unit
+) = startActivityForResult(intent, options) { resultCode, data ->
     if (resultCode == RESULT_CANCELED) callback(data)
-})
+}
 
 /**
  * Same as [startActivityForResult] but will only trigger [callback] if result is [Activity.RESULT_CANCELED].
@@ -60,11 +60,11 @@ inline fun <reified T : Activity> T.startActivityForCanceledResult(
  * @see Fragment.startActivityForResult
  */
 inline fun <reified T : Fragment> T.startActivityForCanceledResult(
-        intent: Intent,
-        noinline callback: T.(data: Intent?) -> Unit
-) = startActivityForResult(intent, { resultCode, data ->
+    intent: Intent,
+    noinline callback: T.(data: Intent?) -> Unit
+) = startActivityForResult(intent) { resultCode, data ->
     if (resultCode == RESULT_CANCELED) callback(data)
-})
+}
 
 /**
  * Same as [startActivityForResult] but will only trigger [callback] if result is [Activity.RESULT_CANCELED].
@@ -79,12 +79,12 @@ inline fun <reified T : Fragment> T.startActivityForCanceledResult(
  */
 @RequiresApi(16)
 inline fun <reified T : Fragment> T.startActivityForCanceledResult(
-        intent: Intent,
-        options: Bundle,
-        noinline callback: T.(data: Intent?) -> Unit
-) = startActivityForResult(intent, options, { resultCode, data ->
+    intent: Intent,
+    options: Bundle,
+    noinline callback: T.(data: Intent?) -> Unit
+) = startActivityForResult(intent, options) { resultCode, data ->
     if (resultCode == RESULT_CANCELED) callback(data)
-})
+}
 
 /**
  * Same as [startActivityForResult] but will only trigger [callback] if result is [Activity.RESULT_CANCELED].
@@ -97,11 +97,11 @@ inline fun <reified T : Fragment> T.startActivityForCanceledResult(
  * @see android.support.v4.app.Fragment.startActivityForResult
  */
 inline fun <reified T : android.support.v4.app.Fragment> T.startActivityForCanceledResult(
-        intent: Intent,
-        noinline callback: T.(data: Intent?) -> Unit
-) = startActivityForResult(intent, { resultCode, data ->
+    intent: Intent,
+    noinline callback: T.(data: Intent?) -> Unit
+) = startActivityForResult(intent) { resultCode, data ->
     if (resultCode == RESULT_CANCELED) callback(data)
-})
+}
 
 /**
  * Same as [startActivityForResult] but will only trigger [callback] if result is [Activity.RESULT_CANCELED].
@@ -116,9 +116,9 @@ inline fun <reified T : android.support.v4.app.Fragment> T.startActivityForCance
  */
 @RequiresApi(16)
 inline fun <reified T : android.support.v4.app.Fragment> T.startActivityForCanceledResult(
-        intent: Intent,
-        options: Bundle,
-        noinline callback: T.(data: Intent?) -> Unit
-) = startActivityForResult(intent, options, { resultCode, data ->
+    intent: Intent,
+    options: Bundle,
+    noinline callback: T.(data: Intent?) -> Unit
+) = startActivityForResult(intent, options) { resultCode, data ->
     if (resultCode == RESULT_CANCELED) callback(data)
-})
+}

@@ -8,6 +8,8 @@ import android.app.Activity
 import android.app.Fragment
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.M
+import com.hendraanggrian.result.internal.Result
+import com.hendraanggrian.result.internal.isSelfPermissionsGranted
 
 /**
  * Request permissions with auto-generated request code.
@@ -19,8 +21,8 @@ import android.os.Build.VERSION_CODES.M
  * @see Activity.requestPermissions
  */
 inline fun <reified T : Activity> T.requestPermissions(
-        vararg permissions: String,
-        noinline callback: T.(Boolean) -> Unit
+    vararg permissions: String,
+    noinline callback: T.(Boolean) -> Unit
 ) = if (SDK_INT < M || isSelfPermissionsGranted(*permissions)) callback.invoke(this, true)
 else requestPermissions(permissions, Result.appendPermissionCallback(callback))
 
@@ -34,8 +36,8 @@ else requestPermissions(permissions, Result.appendPermissionCallback(callback))
  * @see Fragment.requestPermissions
  */
 inline fun <reified T : Fragment> T.requestPermissions(
-        vararg permissions: String,
-        noinline callback: T.(Boolean) -> Unit
+    vararg permissions: String,
+    noinline callback: T.(Boolean) -> Unit
 ) = if (SDK_INT < M || activity.isSelfPermissionsGranted(*permissions)) callback.invoke(this, true)
 else requestPermissions(permissions, Result.appendPermissionCallback(callback))
 
@@ -49,7 +51,7 @@ else requestPermissions(permissions, Result.appendPermissionCallback(callback))
  * @see android.support.v4.app.Fragment.requestPermissions
  */
 inline fun <reified T : android.support.v4.app.Fragment> T.requestPermissions(
-        vararg permissions: String,
-        noinline callback: T.(Boolean) -> Unit
-) = if (SDK_INT < M || context.isSelfPermissionsGranted(*permissions)) callback.invoke(this, true)
+    vararg permissions: String,
+    noinline callback: T.(Boolean) -> Unit
+) = if (SDK_INT < M || context!!.isSelfPermissionsGranted(*permissions)) callback.invoke(this, true)
 else requestPermissions(permissions, Result.appendPermissionCallback(callback))

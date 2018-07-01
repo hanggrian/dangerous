@@ -16,8 +16,8 @@ import android.app.Fragment
  * @see Activity.requestPermissions
  */
 inline fun <reified T : Activity> T.requestPermissionsDenied(
-        vararg permissions: String,
-        noinline callback: T.() -> Unit
+    vararg permissions: String,
+    noinline callback: T.() -> Unit
 ) = requestPermissions(*permissions) { granted ->
     if (!granted) callback()
 }
@@ -31,8 +31,8 @@ inline fun <reified T : Activity> T.requestPermissionsDenied(
  * @see Fragment.requestPermissions
  */
 inline fun <reified T : Fragment> T.requestPermissionsDenied(
-        vararg permissions: String,
-        noinline callback: T.() -> Unit
+    vararg permissions: String,
+    noinline callback: T.() -> Unit
 ) = requestPermissions(*permissions) { granted ->
     if (!granted) callback()
 }
@@ -46,8 +46,8 @@ inline fun <reified T : Fragment> T.requestPermissionsDenied(
  * @see android.support.v4.app.Fragment.requestPermissions
  */
 inline fun <reified T : android.support.v4.app.Fragment> T.requestPermissionsDenied(
-        vararg permissions: String,
-        noinline callback: T.() -> Unit
+    vararg permissions: String,
+    noinline callback: T.() -> Unit
 ) = requestPermissions(*permissions) { granted ->
     if (!granted) callback()
 }

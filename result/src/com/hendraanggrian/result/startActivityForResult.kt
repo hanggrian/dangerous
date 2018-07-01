@@ -10,6 +10,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.RequiresApi
+import com.hendraanggrian.result.internal.Result
 
 /**
  * Start an activity for result with auto-generated request code.
@@ -23,8 +24,8 @@ import android.support.annotation.RequiresApi
  * @see Activity.startActivityForResult
  */
 inline fun <reified T : Activity> T.startActivityForResult(
-        intent: Intent,
-        noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
+    intent: Intent,
+    noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, Result.appendActivityCallback(callback))
 
 /**
@@ -41,9 +42,9 @@ inline fun <reified T : Activity> T.startActivityForResult(
  */
 @RequiresApi(16)
 inline fun <reified T : Activity> T.startActivityForResult(
-        intent: Intent,
-        options: Bundle,
-        noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
+    intent: Intent,
+    options: Bundle,
+    noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, Result.appendActivityCallback(callback), options)
 
 /**
@@ -58,8 +59,8 @@ inline fun <reified T : Activity> T.startActivityForResult(
  * @see Fragment.startActivityForResult
  */
 inline fun <reified T : Fragment> T.startActivityForResult(
-        intent: Intent,
-        noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
+    intent: Intent,
+    noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, Result.appendActivityCallback(callback))
 
 /**
@@ -76,9 +77,9 @@ inline fun <reified T : Fragment> T.startActivityForResult(
  */
 @RequiresApi(16)
 inline fun <reified T : Fragment> T.startActivityForResult(
-        intent: Intent,
-        options: Bundle,
-        noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
+    intent: Intent,
+    options: Bundle,
+    noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, Result.appendActivityCallback(callback), options)
 
 /**
@@ -93,8 +94,8 @@ inline fun <reified T : Fragment> T.startActivityForResult(
  * @see android.support.v4.app.Fragment.startActivityForResult
  */
 inline fun <reified T : android.support.v4.app.Fragment> T.startActivityForResult(
-        intent: Intent,
-        noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
+    intent: Intent,
+    noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, Result.appendActivityCallback(callback))
 
 /**
@@ -111,7 +112,7 @@ inline fun <reified T : android.support.v4.app.Fragment> T.startActivityForResul
  */
 @RequiresApi(16)
 inline fun <reified T : android.support.v4.app.Fragment> T.startActivityForResult(
-        intent: Intent,
-        options: Bundle,
-        noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
+    intent: Intent,
+    options: Bundle,
+    noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, Result.appendActivityCallback(callback), options)
