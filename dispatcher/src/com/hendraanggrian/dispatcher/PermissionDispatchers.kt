@@ -1,6 +1,6 @@
 @file:JvmMultifileClass
 @file:JvmName("DispatchersKt")
-@file:Suppress("NOTHING_TO_INLINE", "UNUSED")
+@file:Suppress("DEPRECATION", "NOTHING_TO_INLINE", "UNUSED")
 
 package com.hendraanggrian.dispatcher
 
@@ -58,7 +58,7 @@ fun <T : Fragment> T.requestPermissions(
  *
  * @see android.support.v4.app.Fragment.requestPermissions
  */
-fun <T : android.support.v4.app.Fragment> T.requestPermissions(
+fun <T : androidx.fragment.app.Fragment> T.requestPermissions(
     vararg permissions: String,
     callback: T.(Boolean) -> Unit
 ) = when {

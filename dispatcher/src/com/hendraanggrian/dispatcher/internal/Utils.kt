@@ -4,11 +4,11 @@ package com.hendraanggrian.dispatcher.internal
 
 import android.content.Context
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.support.v4.content.PermissionChecker.checkSelfPermission
-import android.support.v4.util.SparseArrayCompat
-
-internal inline fun <E> SparseArrayCompat<E>.containsKey(key: Int): Boolean = indexOfKey(key) > -1
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.core.content.PermissionChecker
 
 @PublishedApi
+@RequiresApi(Build.VERSION_CODES.M)
 internal inline fun Context.isAllGranted(vararg permissions: String): Boolean = permissions
-    .all { checkSelfPermission(this, it) == PERMISSION_GRANTED }
+    .all { PermissionChecker.checkSelfPermission(this, it) == PERMISSION_GRANTED }

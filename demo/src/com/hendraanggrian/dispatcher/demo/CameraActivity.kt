@@ -1,12 +1,11 @@
-package com.example.result
+package com.hendraanggrian.dispatcher.demo
 
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.example.dispatcher.R
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.cameraview.CameraView
 import com.google.android.cameraview.CameraView.FACING_BACK
 import com.google.android.cameraview.CameraView.FACING_FRONT
@@ -15,6 +14,7 @@ import com.google.android.cameraview.CameraView.FLASH_OFF
 import com.google.android.cameraview.CameraView.FLASH_ON
 import com.hendraanggrian.bundler.Bundler
 import com.hendraanggrian.dispatcher.Dispatcher
+import com.hendraanggrian.dispatcher.R
 import com.hendraanggrian.dispatcher.requestPermissions
 import com.hendraanggrian.dispatcher.startActivity
 import com.hendraanggrian.preferencer.Preference

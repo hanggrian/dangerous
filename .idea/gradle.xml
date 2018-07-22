@@ -11,8 +11,8 @@
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/cameraview" />
             <option value="$PROJECT_DIR$/cameraview/library" />
+            <option value="$PROJECT_DIR$/demo" />
             <option value="$PROJECT_DIR$/dispatcher" />
-            <option value="$PROJECT_DIR$/example" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -1,15 +1,16 @@
 @file:JvmMultifileClass
 @file:JvmName("DispatchersKt")
-@file:Suppress("NOTHING_TO_INLINE", "UNUSED")
+@file:Suppress("DEPRECATION", "NOTHING_TO_INLINE", "UNUSED")
 
 package com.hendraanggrian.dispatcher
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Fragment
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
 
 /**
  * Start an activity for result with auto-generated request code.
@@ -42,6 +43,7 @@ inline fun <T : Activity> T.startActivity(
  * @see Activity.startActivityForResult
  */
 @RequiresApi(16)
+@SuppressLint("NewApi")
 inline fun <T : Activity> T.startActivity(
     intent: Intent,
     options: Bundle,
@@ -79,6 +81,7 @@ inline fun <T : Fragment> T.startActivity(
  * @see Fragment.startActivityForResult
  */
 @RequiresApi(16)
+@SuppressLint("NewApi")
 inline fun <T : Fragment> T.startActivity(
     intent: Intent,
     options: Bundle,
@@ -97,7 +100,7 @@ inline fun <T : Fragment> T.startActivity(
  *
  * @see android.support.v4.app.Fragment.startActivityForResult
  */
-inline fun <T : android.support.v4.app.Fragment> T.startActivity(
+inline fun <T : androidx.fragment.app.Fragment> T.startActivity(
     intent: Intent,
     noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, Dispatcher.appendActivity(callback))
@@ -116,7 +119,7 @@ inline fun <T : android.support.v4.app.Fragment> T.startActivity(
  * @see android.support.v4.app.Fragment.startActivityForResult
  */
 @RequiresApi(16)
-inline fun <T : android.support.v4.app.Fragment> T.startActivity(
+inline fun <T : androidx.fragment.app.Fragment> T.startActivity(
     intent: Intent,
     options: Bundle,
     noinline callback: T.(resultCode: Int, data: Intent?) -> Unit

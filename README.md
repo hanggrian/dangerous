@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.hendraanggrian.dispatcher:dispatcher:0.1'
+    compile 'com.hendraanggrian.appcompat:dispatcher:0.1'
 }
 ```
 

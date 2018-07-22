@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/item_flash"
         android:title="Flash"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
     <item
         android:id="@+id/item_facing"
         android:title="Facing"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 </menu>

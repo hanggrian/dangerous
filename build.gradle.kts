@@ -17,7 +17,7 @@ ext["buildToolsVersion"] = BUILD_TOOLS
 ext["compileSdkVersion"] = SDK_TARGET
 ext["minSdkVersion"] = SDK_MIN
 ext["targetSdkVersion"] = SDK_TARGET
-ext["supportLibraryVersion"] = VERSION_SUPPORT
+ext["supportLibraryVersion"] = "28.0.0"
 
 allprojects {
     repositories {
@@ -38,7 +38,3 @@ tasks {
         gradleVersion = VERSION_GRADLE
     }
 }
-
-/** bintray upload snippet
-./gradlew bintrayUpload -PbintrayUser=hendraanggrian -PdryRun=false -PbintrayKey=
- */

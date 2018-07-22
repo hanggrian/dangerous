@@ -1,7 +1,9 @@
+import com.android.build.gradle.ProguardFiles.getDefaultProguardFile
 import org.gradle.kotlin.dsl.kotlin
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
-    `android-application`
+    android("application")
     kotlin("android")
     kotlin("android.extensions")
     kotlin("kapt")
@@ -40,18 +42,14 @@ android {
     }
 }
 
-repositories {
-    maven("https://dl.bintray.com/hendraanggrian/bundler")
-}
-
 dependencies {
     implementation(project(":$RELEASE_ARTIFACT"))
     implementation(project(":cameraview:library"))
     implementation(kotlin("stdlib", VERSION_KOTLIN))
 
-    implementation(support("preference-v7", VERSION_SUPPORT))
-    implementation(support("appcompat-v7", VERSION_SUPPORT))
-    implementation(support("design", VERSION_SUPPORT))
+    implementation(androidx("preference"))
+    implementation(androidx("appcompat"))
+    implementation(material())
 
     implementation(anko("commons"))
 
@@ -61,9 +59,9 @@ dependencies {
     debugImplementation(leakCanary())
     releaseImplementation(leakCanary("no-op"))
 
-    implementation(hendraanggrian("preferencer", VERSION_PREFERENCER))
-    kapt(hendraanggrian("preferencer", VERSION_PREFERENCER, "compiler"))
+    implementation(hendraanggrian("preferencer", version = VERSION_PREFERENCER))
+    kapt(hendraanggrian("preferencer", "preferencer-compiler", VERSION_PREFERENCER))
 
-    implementation(hendraanggrian("bundler", VERSION_BUNDLER))
-    kapt(hendraanggrian("bundler", VERSION_BUNDLER, "compiler"))
+    implementation(hendraanggrian("bundler", version = VERSION_BUNDLER))
+    kapt(hendraanggrian("bundler", "bundler-compiler", VERSION_BUNDLER))
 }

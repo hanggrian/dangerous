@@ -1,11 +1,12 @@
+@file:Suppress("DEPRECATION")
+
 package com.hendraanggrian.dispatcher
 
 import android.app.Activity
 import android.app.Fragment
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.support.v4.util.SparseArrayCompat
-import com.hendraanggrian.dispatcher.internal.containsKey
+import androidx.collection.SparseArrayCompat
 import java.lang.ref.WeakReference
 import java.util.Random
 
@@ -95,7 +96,7 @@ object Dispatcher {
      * so that it may be triggered on [startActivity].
      */
     @Suppress("NOTHING_TO_INLINE")
-    inline fun <T : android.support.v4.app.Fragment> onActivityResult(
+    inline fun <T : androidx.fragment.app.Fragment> onActivityResult(
         fragment: T,
         requestCode: Int,
         resultCode: Int,
@@ -132,7 +133,7 @@ object Dispatcher {
      * so that it may be triggered on [requestPermissions].
      */
     @Suppress("NOTHING_TO_INLINE")
-    inline fun <T : android.support.v4.app.Fragment> onRequestPermissionsResult(
+    inline fun <T : androidx.fragment.app.Fragment> onRequestPermissionsResult(
         fragment: T,
         requestCode: Int,
         grantResults: IntArray

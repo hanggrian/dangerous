@@ -1,6 +1,6 @@
 @file:JvmMultifileClass
 @file:JvmName("DispatchersKt")
-@file:Suppress("NOTHING_TO_INLINE", "UNUSED")
+@file:Suppress("DEPRECATION", "NOTHING_TO_INLINE", "UNUSED")
 
 package com.hendraanggrian.dispatcher
 
@@ -9,7 +9,7 @@ import android.app.Fragment
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
 
 /**
  * Same as [startActivity] but will only trigger [callback] if result matches expected.
@@ -99,7 +99,7 @@ inline fun <T : Fragment> T.startActivity(
  *
  * @see android.support.v4.app.Fragment.startActivityForResult
  */
-inline fun <T : android.support.v4.app.Fragment> T.startActivity(
+inline fun <T : androidx.fragment.app.Fragment> T.startActivity(
     expectedResultCode: Int,
     intent: Intent,
     noinline callback: T.(data: Intent?) -> Unit
@@ -119,7 +119,7 @@ inline fun <T : android.support.v4.app.Fragment> T.startActivity(
  * @see android.support.v4.app.Fragment.startActivityForResult
  */
 @RequiresApi(16)
-inline fun <T : android.support.v4.app.Fragment> T.startActivity(
+inline fun <T : androidx.fragment.app.Fragment> T.startActivity(
     expectedResultCode: Int,
     intent: Intent,
     options: Bundle,

@@ -1,12 +1,12 @@
-package com.example.result
+package com.hendraanggrian.dispatcher.demo
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
-import com.example.dispatcher.R
+import androidx.appcompat.app.AppCompatActivity
 import com.hendraanggrian.bundler.Bundler
 import com.hendraanggrian.bundler.Extra
+import com.hendraanggrian.dispatcher.R
 import kotlinx.android.synthetic.main.activity_next.*
 
 class NextActivity : AppCompatActivity(), View.OnClickListener {

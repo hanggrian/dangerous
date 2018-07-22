@@ -1,8 +1,7 @@
-package com.example.result
+package com.hendraanggrian.dispatcher.demo
 
 import android.app.Application
 import android.content.Context
-import com.example.dispatcher.BuildConfig
 import com.hendraanggrian.bundler.Bundler
 import com.hendraanggrian.preferencer.Preferencer
 import com.squareup.leakcanary.LeakCanary

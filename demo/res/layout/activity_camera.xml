@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.rxpermissionexample.CameraActivity">
+    tools:context=".CameraActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@null"
@@ -19,35 +18,35 @@
             android:id="@+id/cameraView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="false"/>
-    </android.support.design.widget.AppBarLayout>
+            android:fitsSystemWindows="false" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@null"
         app:elevation="0dp">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"/>
-    </android.support.design.widget.AppBarLayout>
+            android:layout_height="?actionBarSize" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <android.support.v7.widget.ButtonBarLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="16dp"
         android:gravity="center"
-        app:allowStacking="false">
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/imageButtonClose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_close_white_48dp"/>
+            android:src="@drawable/ic_close_white_48dp" />
 
         <ImageButton
             android:id="@+id/imageButtonCapture"
@@ -57,13 +56,13 @@
             android:layout_marginRight="32dp"
             android:background="?selectableItemBackgroundBorderless"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_camera_white_48dp"/>
+            android:src="@drawable/ic_camera_white_48dp" />
 
         <ImageButton
             android:id="@+id/imageButtonGallery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_photo_library_white_48dp"/>
-    </android.support.v7.widget.ButtonBarLayout>
-</android.support.design.widget.CoordinatorLayout>
+            android:src="@drawable/ic_photo_library_white_48dp" />
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

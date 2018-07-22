@@ -1,11 +1,12 @@
-package com.example.result
+package com.hendraanggrian.dispatcher.demo
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.preference.PreferenceFragmentCompat
-import com.example.dispatcher.R
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceFragmentCompat
 import com.hendraanggrian.dispatcher.Dispatcher
+import com.hendraanggrian.dispatcher.R
 import com.hendraanggrian.dispatcher.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
@@ -28,10 +29,10 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 .add(R.id.container, Content(), TAG_RETAINED_FRAGMENT)
                 .commitNow()
         }
-        fragmentManager.beginTransaction()
-            .add(android.app.Fragment(), "asdasd")
+        supportFragmentManager.beginTransaction()
+            .add(Fragment(), "asdasd")
             .commitAllowingStateLoss()
-        fragmentManager.executePendingTransactions()
+        supportFragmentManager.executePendingTransactions()
         toolbar2.setOnClickListener {
             startActivity(Intent(this, NextActivity::class.java).putExtra("from", "activity")) { _, _ ->
                 debug("$this callback")
