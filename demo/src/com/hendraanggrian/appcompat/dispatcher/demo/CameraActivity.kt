@@ -5,9 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.cameraview.CameraView
-import com.google.android.cameraview.CameraView.*
+import com.google.android.cameraview.CameraView.FACING_BACK
+import com.google.android.cameraview.CameraView.FACING_FRONT
+import com.google.android.cameraview.CameraView.FLASH_AUTO
+import com.google.android.cameraview.CameraView.FLASH_OFF
+import com.google.android.cameraview.CameraView.FLASH_ON
 import com.hendraanggrian.appcompat.dispatcher.Dispatcher
 import com.hendraanggrian.appcompat.dispatcher.R
 import com.hendraanggrian.appcompat.dispatcher.requestPermissions
@@ -19,7 +24,6 @@ import com.hendraanggrian.preferencer.Saver
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_camera.*
-import org.jetbrains.anko.toast
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -51,10 +55,12 @@ class CameraActivity : AppCompatActivity() {
                                 startActivity(Intent(this, ImageActivity::class.java)
                                     .putExtras(Bundler.extrasOf(ImageActivity::class.java, file, null)))
                             }, { e ->
-                                runOnUiThread { toast(e.message!!) }
+                                runOnUiThread {
+                                    Toast.makeText(this, e.message!!, Toast.LENGTH_SHORT).show()
+                                }
                             })
                     } else {
-                        toast("Storage permission denied!")
+                        Toast.makeText(this, "Storage permission denied!", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -78,7 +84,7 @@ class CameraActivity : AppCompatActivity() {
                 // if (!alreadyGranted) ProcessPhoenix.triggerRebirth(this)
                 cameraView.start()
             } else {
-                toast("Camera permission denied!")
+                Toast.makeText(this, "Camera permission denied!", Toast.LENGTH_SHORT).show()
                 finish()
             }
         }

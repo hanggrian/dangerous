@@ -2,6 +2,7 @@ package com.hendraanggrian.appcompat.dispatcher.demo
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceFragmentCompat
@@ -9,11 +10,8 @@ import com.hendraanggrian.appcompat.dispatcher.Dispatcher
 import com.hendraanggrian.appcompat.dispatcher.R
 import com.hendraanggrian.appcompat.dispatcher.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.debug
-import org.jetbrains.anko.toast
 
-class MainActivity : AppCompatActivity(), AnkoLogger {
+class MainActivity : AppCompatActivity() {
 
     companion object {
         const val TAG_RETAINED_FRAGMENT = "RetainedFragment"
@@ -22,7 +20,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        debug("$this onCreate")
         setSupportActionBar(toolbar)
         if (supportFragmentManager.findFragmentByTag(TAG_RETAINED_FRAGMENT) == null) {
             supportFragmentManager.beginTransaction()
@@ -35,7 +32,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         supportFragmentManager.executePendingTransactions()
         toolbar2.setOnClickListener {
             startActivity(Intent(this, NextActivity::class.java).putExtra("from", "activity")) { _, _ ->
-                debug("$this callback")
                 textView.text = "ok result"
             }
         }
@@ -44,13 +40,11 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     override fun onDestroy() {
         super.onDestroy()
         refWatcher.watch(this)
-        debug("$this onDestroy")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Dispatcher.onActivityResult(this, requestCode, resultCode, data)
-        debug("$this onActivityResult")
     }
 
     class Content : PreferenceFragmentCompat() {
@@ -63,7 +57,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             addPreferencesFromResource(R.xml.activity_main)
             findPreference("fragmentPreference").setOnPreferenceClickListener {
                 startActivity(Intent(context, NextActivity::class.java).putExtra("from", "fragment")) { resultCode, _ ->
-                    context!!.toast("Result code $resultCode")
+                    Toast.makeText(context, "Result code $resultCode", Toast.LENGTH_SHORT).show()
                 }
                 false
             }
