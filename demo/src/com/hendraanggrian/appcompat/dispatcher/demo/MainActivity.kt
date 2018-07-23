@@ -1,13 +1,13 @@
-package com.hendraanggrian.dispatcher.demo
+package com.hendraanggrian.appcompat.dispatcher.demo
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceFragmentCompat
-import com.hendraanggrian.dispatcher.Dispatcher
-import com.hendraanggrian.dispatcher.R
-import com.hendraanggrian.dispatcher.startActivity
+import com.hendraanggrian.appcompat.dispatcher.Dispatcher
+import com.hendraanggrian.appcompat.dispatcher.R
+import com.hendraanggrian.appcompat.dispatcher.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug

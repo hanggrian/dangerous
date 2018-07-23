@@ -2,7 +2,7 @@
 @file:JvmName("DispatchersKt")
 @file:Suppress("DEPRECATION", "NOTHING_TO_INLINE", "UNUSED")
 
-package com.hendraanggrian.dispatcher
+package com.hendraanggrian.appcompat.dispatcher
 
 import android.app.Activity
 import android.app.Fragment

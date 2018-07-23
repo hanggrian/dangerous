@@ -1,13 +1,13 @@
-package com.hendraanggrian.dispatcher.demo
+package com.hendraanggrian.appcompat.dispatcher.demo
 
 import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.hendraanggrian.appcompat.dispatcher.R
 import com.hendraanggrian.bundler.Bundler
 import com.hendraanggrian.bundler.Extra
-import com.hendraanggrian.dispatcher.R
 import kotlinx.android.synthetic.main.activity_image.*
 import java.io.File
 import java.io.Serializable

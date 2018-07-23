@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.hendraanggrian.dispatcher
+package com.hendraanggrian.appcompat.dispatcher
 
 import android.app.Activity
 import android.app.Fragment

@@ -2,13 +2,13 @@
 @file:JvmName("DispatchersKt")
 @file:Suppress("DEPRECATION", "NOTHING_TO_INLINE", "UNUSED")
 
-package com.hendraanggrian.dispatcher
+package com.hendraanggrian.appcompat.dispatcher
 
 import android.app.Activity
 import android.app.Fragment
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.M
-import com.hendraanggrian.dispatcher.internal.isAllGranted
+import com.hendraanggrian.appcompat.dispatcher.internal.isAllGranted
 
 /**
  * Request permissions with auto-generated request code.

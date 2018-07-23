@@ -15,7 +15,7 @@ android {
     defaultConfig {
         minSdkVersion(SDK_MIN)
         targetSdkVersion(SDK_TARGET)
-        applicationId = "com.example.$RELEASE_ARTIFACT"
+        applicationId = "$RELEASE_GROUP.$RELEASE_ARTIFACT.demo"
         versionCode = 1
         versionName = RELEASE_VERSION
     }
@@ -50,8 +50,6 @@ dependencies {
     implementation(androidx("preference"))
     implementation(androidx("appcompat"))
     implementation(material())
-
-    implementation(anko("commons"))
 
     implementation(rxJava2("rxjava"))
     implementation(photoView())

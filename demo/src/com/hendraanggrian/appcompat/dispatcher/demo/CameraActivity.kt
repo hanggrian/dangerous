@@ -1,4 +1,4 @@
-package com.hendraanggrian.dispatcher.demo
+package com.hendraanggrian.appcompat.dispatcher.demo
 
 import android.Manifest
 import android.content.Intent
@@ -7,16 +7,12 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.cameraview.CameraView
-import com.google.android.cameraview.CameraView.FACING_BACK
-import com.google.android.cameraview.CameraView.FACING_FRONT
-import com.google.android.cameraview.CameraView.FLASH_AUTO
-import com.google.android.cameraview.CameraView.FLASH_OFF
-import com.google.android.cameraview.CameraView.FLASH_ON
+import com.google.android.cameraview.CameraView.*
+import com.hendraanggrian.appcompat.dispatcher.Dispatcher
+import com.hendraanggrian.appcompat.dispatcher.R
+import com.hendraanggrian.appcompat.dispatcher.requestPermissions
+import com.hendraanggrian.appcompat.dispatcher.startActivity
 import com.hendraanggrian.bundler.Bundler
-import com.hendraanggrian.dispatcher.Dispatcher
-import com.hendraanggrian.dispatcher.R
-import com.hendraanggrian.dispatcher.requestPermissions
-import com.hendraanggrian.dispatcher.startActivity
 import com.hendraanggrian.preferencer.Preference
 import com.hendraanggrian.preferencer.Preferencer
 import com.hendraanggrian.preferencer.Saver
@@ -48,10 +44,10 @@ class CameraActivity : AppCompatActivity() {
                             .observeOn(Schedulers.io())
                             .subscribe({ bytes ->
                                 val file = File(getExternalFilesDir(null), "image.jpg")
-                                val stream = BufferedOutputStream(FileOutputStream(file))
-                                stream.write(bytes)
-                                stream.flush()
-                                stream.close()
+                                BufferedOutputStream(FileOutputStream(file)).use {
+                                    it.write(bytes)
+                                    it.flush()
+                                }
                                 startActivity(Intent(this, ImageActivity::class.java)
                                     .putExtras(Bundler.extrasOf(ImageActivity::class.java, file, null)))
                             }, { e ->
@@ -140,7 +136,9 @@ class CameraActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Dispatcher.onActivityResult(this, requestCode, resultCode, data)
-        if (!cameraView.isCameraOpened) cameraView.start()
+        if (!cameraView.isCameraOpened) {
+            cameraView.start()
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
