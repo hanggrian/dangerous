@@ -1,6 +1,6 @@
 @file:JvmMultifileClass
 @file:JvmName("DispatchersKt")
-@file:Suppress("DEPRECATION", "NOTHING_TO_INLINE", "UNUSED")
+@file:Suppress("DEPRECATION", "UNUSED")
 
 package com.hendraanggrian.appcompat.dispatcher
 

@@ -12,11 +12,10 @@ const val VERSION_RUNNER = "1.1.0-alpha3"
 const val VERSION_RULES = "1.1.0-alpha3"
 
 const val VERSION_RXJAVA2 = "2.1.16"
-const val VERSION_PHOTOVIEW = "2.0.0"
 const val VERSION_PROCESSPHOENIX = "2.0.0"
 const val VERSION_LEAKCANARY = "1.5.4"
-const val VERSION_PREFERENCER = "0.1"
-const val VERSION_BUNDLER = "0.1"
+const val VERSION_PREFERENCER = "0.2"
+const val VERSION_BUNDLER = "0.2"
 
 internal const val VERSION_JUNIT = "4.12"
 internal const val VERSION_KTLINT = "0.23.1"

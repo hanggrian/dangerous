@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.hendraanggrian.appcompat.dispatcher.R
 import com.hendraanggrian.bundler.Bundler
 import com.hendraanggrian.bundler.Extra
 import kotlinx.android.synthetic.main.activity_image.*
@@ -24,9 +23,9 @@ class ImageActivity : AppCompatActivity() {
         supportActionBar?.title = ""
         Bundler.bindExtras(this)
         if (file != null) {
-            photoView!!.setImageURI(Uri.fromFile(file as File?))
+            imageView!!.setImageURI(Uri.fromFile(file as File?))
         } else if (uri != null) {
-            photoView!!.setImageURI(uri as Uri?)
+            imageView!!.setImageURI(uri as Uri?)
         }
     }
 

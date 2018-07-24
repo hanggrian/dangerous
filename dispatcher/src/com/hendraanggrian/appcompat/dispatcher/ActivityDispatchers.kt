@@ -1,6 +1,6 @@
 @file:JvmMultifileClass
 @file:JvmName("DispatchersKt")
-@file:Suppress("DEPRECATION", "NOTHING_TO_INLINE", "UNUSED")
+@file:Suppress("DEPRECATION", "UNUSED")
 
 package com.hendraanggrian.appcompat.dispatcher
 
@@ -24,9 +24,9 @@ import androidx.annotation.RequiresApi
  *
  * @see Activity.startActivityForResult
  */
-inline fun <T : Activity> T.startActivity(
+fun <T : Activity> T.startActivity(
     intent: Intent,
-    noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
+    callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, Dispatcher.appendActivity(callback))
 
 /**
@@ -44,10 +44,10 @@ inline fun <T : Activity> T.startActivity(
  */
 @RequiresApi(16)
 @SuppressLint("NewApi")
-inline fun <T : Activity> T.startActivity(
+fun <T : Activity> T.startActivity(
     intent: Intent,
     options: Bundle,
-    noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
+    callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, Dispatcher.appendActivity(callback), options)
 
 /**
@@ -62,9 +62,9 @@ inline fun <T : Activity> T.startActivity(
  *
  * @see Fragment.startActivityForResult
  */
-inline fun <T : Fragment> T.startActivity(
+fun <T : Fragment> T.startActivity(
     intent: Intent,
-    noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
+    callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, Dispatcher.appendActivity(callback))
 
 /**
@@ -82,10 +82,10 @@ inline fun <T : Fragment> T.startActivity(
  */
 @RequiresApi(16)
 @SuppressLint("NewApi")
-inline fun <T : Fragment> T.startActivity(
+fun <T : Fragment> T.startActivity(
     intent: Intent,
     options: Bundle,
-    noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
+    callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, Dispatcher.appendActivity(callback), options)
 
 /**
@@ -100,9 +100,9 @@ inline fun <T : Fragment> T.startActivity(
  *
  * @see android.support.v4.app.Fragment.startActivityForResult
  */
-inline fun <T : androidx.fragment.app.Fragment> T.startActivity(
+fun <T : androidx.fragment.app.Fragment> T.startActivity(
     intent: Intent,
-    noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
+    callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, Dispatcher.appendActivity(callback))
 
 /**
@@ -119,8 +119,8 @@ inline fun <T : androidx.fragment.app.Fragment> T.startActivity(
  * @see android.support.v4.app.Fragment.startActivityForResult
  */
 @RequiresApi(16)
-inline fun <T : androidx.fragment.app.Fragment> T.startActivity(
+fun <T : androidx.fragment.app.Fragment> T.startActivity(
     intent: Intent,
     options: Bundle,
-    noinline callback: T.(resultCode: Int, data: Intent?) -> Unit
+    callback: T.(resultCode: Int, data: Intent?) -> Unit
 ) = startActivityForResult(intent, Dispatcher.appendActivity(callback), options)

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.hendraanggrian.appcompat.dispatcher.R
 import com.hendraanggrian.bundler.Bundler
 import com.hendraanggrian.bundler.Extra
 import kotlinx.android.synthetic.main.activity_next.*

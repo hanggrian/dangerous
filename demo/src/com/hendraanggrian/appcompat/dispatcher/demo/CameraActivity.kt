@@ -14,7 +14,6 @@ import com.google.android.cameraview.CameraView.FLASH_AUTO
 import com.google.android.cameraview.CameraView.FLASH_OFF
 import com.google.android.cameraview.CameraView.FLASH_ON
 import com.hendraanggrian.appcompat.dispatcher.Dispatcher
-import com.hendraanggrian.appcompat.dispatcher.R
 import com.hendraanggrian.appcompat.dispatcher.requestPermissions
 import com.hendraanggrian.appcompat.dispatcher.startActivity
 import com.hendraanggrian.bundler.Bundler

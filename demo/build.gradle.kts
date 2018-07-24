@@ -52,7 +52,6 @@ dependencies {
     implementation(material())
 
     implementation(rxJava2("rxjava"))
-    implementation(photoView())
     implementation(processPhoenix())
     debugImplementation(leakCanary())
     releaseImplementation(leakCanary("no-op"))

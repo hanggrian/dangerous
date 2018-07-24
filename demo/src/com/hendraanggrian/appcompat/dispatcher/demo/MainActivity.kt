@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceFragmentCompat
 import com.hendraanggrian.appcompat.dispatcher.Dispatcher
-import com.hendraanggrian.appcompat.dispatcher.R
 import com.hendraanggrian.appcompat.dispatcher.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
 

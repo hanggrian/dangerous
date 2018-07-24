@@ -22,8 +22,6 @@ const val GROUP_SUPPORT = "com.android.support"
 
 fun DependencyHandler.rxJava2(module: String) = "io.reactivex.rxjava2:$module:$VERSION_RXJAVA2"
 
-fun DependencyHandler.photoView() = "com.github.chrisbanes:PhotoView:$VERSION_PHOTOVIEW"
-
 fun DependencyHandler.processPhoenix() = "com.jakewharton:process-phoenix:$VERSION_PROCESSPHOENIX"
 
 fun DependencyHandler.leakCanary(module: String? = null) = "com.squareup.leakcanary:${module?.let { "leakcanary-android-$it" }
