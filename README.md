@@ -1,8 +1,9 @@
 Dispatcher
 ==========
-[![Download](https://api.bintray.com/packages/hendraanggrian/dispatcher/dispatcher/images/download.svg) ](https://bintray.com/hendraanggrian/dispatcher/dispatcher/_latestVersion)
-[![Build Status](https://travis-ci.org/hendraanggrian/dispatcher.svg)](https://travis-ci.org/hendraanggrian/dispatcher)
-[![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
+[![bintray](https://img.shields.io/badge/bintray-appcompat-brightgreen.svg)](https://bintray.com/hendraanggrian/appcompat)
+[![download](https://api.bintray.com/packages/hendraanggrian/appcompat/dispatcher/images/download.svg) ](https://bintray.com/hendraanggrian/appcompat/dispatcher/_latestVersion)
+[![build](https://travis-ci.com/hendraanggrian/dispatcher.svg)](https://travis-ci.com/hendraanggrian/dispatcher)
+[![license](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 Kotlin-focused library to simplify the process of handling result from an Activity and requesting permissions.
  * Direct activity and permission result. Traditionally, code must be split into `onActivityResult` and `onRequestPermissionsResult`.
