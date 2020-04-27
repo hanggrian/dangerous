@@ -6,9 +6,7 @@
             android:key="launchActivity"
             android:title="Launch activity" />
 
-        <androidx.preference.MultiSelectListPreference
-            android:entries="@array/permissions"
-            android:entryValues="@array/permission_values"
+        <androidx.preference.Preference
             android:key="launchPermissions"
             android:title="Launch permissions" />
     </androidx.preference.PreferenceCategory>
