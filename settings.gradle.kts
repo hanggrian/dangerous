@@ -1,4 +1,3 @@
-include(":$RELEASE_ARTIFACT")
-
-// include(":cameraview:library")
-// include(":demo")
+include("launchy")
+include("website")
+include("example")

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.preference.PreferenceCategory>
+        <androidx.preference.Preference
+            android:key="launchActivity"
+            android:title="Launch activity" />
+
+        <androidx.preference.MultiSelectListPreference
+            android:entries="@array/permissions"
+            android:entryValues="@array/permission_values"
+            android:key="launchPermissions"
+            android:title="Launch permissions" />
+    </androidx.preference.PreferenceCategory>
+</androidx.preference.PreferenceScreen>

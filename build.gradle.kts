@@ -4,8 +4,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath(android())
         classpath(kotlin("gradle-plugin", VERSION_KOTLIN))
+        classpath(android())
         classpath(dokka())
         classpath(gitPublish())
         classpath(bintrayRelease())
@@ -13,7 +13,7 @@ buildscript {
 }
 
 // submodule cameraview config
-ext["buildToolsVersion"] = BUILD_TOOLS
+ext["buildToolsVersion"] = "28.0.1"
 ext["compileSdkVersion"] = SDK_TARGET
 ext["minSdkVersion"] = SDK_MIN
 ext["targetSdkVersion"] = SDK_TARGET
@@ -25,16 +25,11 @@ allprojects {
         jcenter()
         maven("https://jitpack.io")
     }
-    tasks.withType<Javadoc> {
-        isEnabled = false
+    tasks.withType<Delete> {
+        delete(projectDir.resolve("out"))
     }
 }
 
-tasks {
-    "clean"(Delete::class) {
-        delete(buildDir)
-    }
-    "wrapper"(Wrapper::class) {
-        gradleVersion = VERSION_GRADLE
-    }
+tasks.register<Delete>("clean") {
+    delete(buildDir)
 }
