@@ -1,6 +1,6 @@
 @file:JvmMultifileClass
 @file:JvmName("LaunchyKt")
-@file:Suppress("DEPRECATION", "UNUSED")
+@file:Suppress("DEPRECATION")
 
 package com.hendraanggrian.appcompat.launchy
 
@@ -27,7 +27,7 @@ import androidx.annotation.RequiresApi
 fun <T : Activity> T.launchActivity(
     intent: Intent,
     callback: T.(resultCode: Int, data: Intent?) -> Unit
-) = startActivityForResult(intent, Launchy.appendActivity(callback))
+): Unit = startActivityForResult(intent, Launchy.appendActivity(callback))
 
 /**
  * Start an activity for result with auto-generated request code.
@@ -48,7 +48,7 @@ fun <T : Activity> T.launchActivity(
     intent: Intent,
     options: Bundle,
     callback: T.(resultCode: Int, data: Intent?) -> Unit
-) = startActivityForResult(intent, Launchy.appendActivity(callback), options)
+): Unit = startActivityForResult(intent, Launchy.appendActivity(callback), options)
 
 /**
  * Start an activity for result with auto-generated request code.

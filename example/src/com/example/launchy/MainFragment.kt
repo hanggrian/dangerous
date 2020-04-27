@@ -1,10 +1,10 @@
 package com.example.launchy
 
 import android.Manifest
+import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.FrameLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.content.PermissionChecker
@@ -12,13 +12,25 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.snackbar.bannerbar
 import com.hendraanggrian.appcompat.launchy.Launchy
+import com.hendraanggrian.appcompat.launchy.launchActivity
 import com.hendraanggrian.appcompat.launchy.launchPermission
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.fragment_main)
         findPreference<Preference>("launchActivity")!!.setOnPreferenceClickListener {
+            launchActivity(Intent(context, NextActivity::class.java)) { resultCode, _ ->
+                view!!.bannerbar("Activity result") {
+                    subtitle = when (resultCode) {
+                        Activity.RESULT_OK -> "Ok."
+                        Activity.RESULT_CANCELED -> "Canceled."
+                        else -> "First user."
+                    }
+                    addAction(android.R.string.ok)
+                }
+            }
             false
         }
         findPreference<Preference>("launchPermissions")!!.setOnPreferenceClickListener {
@@ -27,10 +39,8 @@ class MainFragment : PreferenceFragmentCompat() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.d("FRAGMENT1", requestCode.toString())
-    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) =
+        Launchy.onActivityResult(this, requestCode, resultCode, data)
 
     class PermissionsDialog : AppCompatDialogFragment() {
 
@@ -59,8 +69,8 @@ class MainFragment : PreferenceFragmentCompat() {
                 }
                 .setNegativeButton(android.R.string.cancel) { _, _ -> }
                 .setPositiveButton(android.R.string.ok) { _, _ ->
-                    launchPermission(*requestedPermissions.toTypedArray()) { isGranted ->
-                        dialog!!.window!!.findViewById<FrameLayout>(android.R.id.content).bannerbar(
+                    launchPermission<MainActivity>(*requestedPermissions.toTypedArray()) { isGranted ->
+                        container.bannerbar(
                             when {
                                 isGranted -> "All permissions are granted"
                                 else -> "At least one permission is denied"
@@ -69,7 +79,7 @@ class MainFragment : PreferenceFragmentCompat() {
                             subtitle = buildString {
                                 val getResult: (permission: String) -> String = {
                                     when (PermissionChecker.PERMISSION_GRANTED) {
-                                        PermissionChecker.checkSelfPermission(context!!, it) -> "granted."
+                                        PermissionChecker.checkSelfPermission(this@launchPermission, it) -> "granted."
                                         else -> " denied."
                                     }
                                 }
@@ -78,15 +88,11 @@ class MainFragment : PreferenceFragmentCompat() {
                                 appendln("Contacts is ${getResult(Manifest.permission.READ_CONTACTS)}")
                                 append("SMS is ${getResult(Manifest.permission.READ_SMS)}")
                             }
+                            addAction(android.R.string.ok)
                         }
                     }
                 }
                 .create()
-        }
-
-        override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-            Log.d("FRAGMENT2", requestCode.toString())
         }
     }
 }

@@ -3,12 +3,14 @@ package com.example.launchy
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.hendraanggrian.appcompat.launchy.Launchy
 import com.hendraanggrian.prefy.Prefy
 import com.hendraanggrian.prefy.android.get
 import com.jakewharton.processphoenix.ProcessPhoenix
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.toolbar
+import kotlinx.android.synthetic.main.activity_next.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,8 +39,6 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) =
         Launchy.onRequestPermissionsResult(this, requestCode, grantResults)
-    }
 }

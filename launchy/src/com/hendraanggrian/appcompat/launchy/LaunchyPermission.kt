@@ -1,6 +1,6 @@
 @file:JvmMultifileClass
 @file:JvmName("LaunchyKt")
-@file:Suppress("DEPRECATION", "UNUSED")
+@file:Suppress("DEPRECATION")
 
 package com.hendraanggrian.appcompat.launchy
 
@@ -8,7 +8,7 @@ import android.app.Activity
 import android.app.Fragment
 import android.os.Build
 import androidx.core.app.ActivityCompat
-import com.hendraanggrian.appcompat.launchy.internal.isAllGranted
+import androidx.core.content.PermissionChecker
 
 /**
  * Request permissions with auto-generated request code.
@@ -20,13 +20,24 @@ import com.hendraanggrian.appcompat.launchy.internal.isAllGranted
  *
  * @see Activity.launchPermission
  */
-fun <T : Activity> T.launchPermission(
+@Suppress("UNCHECKED_CAST")
+fun <T : Activity> Activity.launchPermission(
     vararg permissions: String,
     callback: T.(isGranted: Boolean) -> Unit
-) = when {
-    Build.VERSION.SDK_INT >= 23 && !isAllGranted(*permissions) ->
-        ActivityCompat.requestPermissions(this, permissions, Launchy.appendPermission(callback))
-    else -> callback.invoke(this, true)
+) {
+    val sb = StringBuilder("launchPermission: ")
+    if (Build.VERSION.SDK_INT < 23) {
+        Launchy.debug(sb.append("passed (pre-M)"))
+        callback.invoke(this as T, true)
+        return
+    }
+    when {
+        permissions.all { PermissionChecker.checkSelfPermission(this, it) == PermissionChecker.PERMISSION_GRANTED } -> {
+            Launchy.debug(sb.append("passed (already granted)"))
+            callback.invoke(this as T, true)
+        }
+        else -> ActivityCompat.requestPermissions(this, permissions, Launchy.appendPermission(callback))
+    }
 }
 
 /**
@@ -39,14 +50,11 @@ fun <T : Activity> T.launchPermission(
  *
  * @see Fragment.launchPermission
  */
-fun <T : Fragment> T.launchPermission(
+@Suppress("NOTHING_TO_INLINE")
+inline fun <T : Activity> Fragment.launchPermission(
     vararg permissions: String,
-    callback: T.(isGranted: Boolean) -> Unit
-) = when {
-    Build.VERSION.SDK_INT >= 23 && !activity.isAllGranted(*permissions) ->
-        requestPermissions(permissions, Launchy.appendPermission(callback))
-    else -> callback.invoke(this, true)
-}
+    noinline callback: T.(isGranted: Boolean) -> Unit
+): Unit = activity.launchPermission(*permissions, callback = callback)
 
 /**
  * Request permissions with auto-generated request code.
@@ -58,11 +66,8 @@ fun <T : Fragment> T.launchPermission(
  *
  * @see android.support.v4.app.Fragment.requestPermissions
  */
-fun <T : androidx.fragment.app.Fragment> T.launchPermission(
+@Suppress("NOTHING_TO_INLINE")
+inline fun <T : Activity> androidx.fragment.app.Fragment.launchPermission(
     vararg permissions: String,
-    callback: T.(isGranted: Boolean) -> Unit
-) = when {
-    Build.VERSION.SDK_INT >= 23 && !context!!.isAllGranted(*permissions) ->
-        requestPermissions(permissions, Launchy.appendPermission(callback))
-    else -> callback.invoke(this, true)
-}
+    noinline callback: T.(isGranted: Boolean) -> Unit
+): Unit = activity!!.launchPermission(*permissions, callback = callback)
