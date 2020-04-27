@@ -5,21 +5,29 @@ package com.hendraanggrian.appcompat.launchy
 import android.app.Activity
 import android.app.Fragment
 import android.content.Intent
+import android.util.Log
 import androidx.collection.SparseArrayCompat
+import androidx.core.app.ActivityCompat
 import androidx.core.content.PermissionChecker
-import java.lang.ref.WeakReference
-import java.util.Random
 
+/**
+ * Queued callbacks that will be invoked one-by-one on activity result.
+ * Once invoked, callback will be removed from this collection.
+ */
 object Launchy {
-    /** Weak reference of Random to generate random number. */
-    private var RANDOM: WeakReference<Random>? = null
-
-    /**
-     * Queued callbacks that will be invoked one-by-one on activity result.
-     * Once invoked, callback will be removed from this collection.
-     */
     private var ACTIVITY_CALLBACKS: SparseArrayCompat<Any.(Int, Intent?) -> Unit>? = null
     private var PERMISSION_CALLBACKS: SparseArrayCompat<Any.(Boolean) -> Unit>? = null
+    private var DEBUG: Boolean = false
+
+    private const val TAG = "Launchy"
+
+    fun setDebug(debug: Boolean = true) {
+        DEBUG = debug
+    }
+
+    private fun StringBuilder.print() {
+        if (DEBUG) Log.d(TAG, "$this")
+    }
 
     /**
      * Redirect [Activity.onActivityResult],
@@ -31,9 +39,18 @@ object Launchy {
         resultCode: Int,
         data: Intent?
     ) {
-        ACTIVITY_CALLBACKS
-            ?.slice(requestCode)
-            ?.invoke(activity, resultCode, data)
+        val sb = StringBuilder("onActivityResult #$requestCode: ")
+        when (val callback = ACTIVITY_CALLBACKS?.slice(requestCode)) {
+            null -> sb.append("no result")
+            else -> try {
+                callback(activity, resultCode, data)
+                sb.append("success")
+            } catch (e: Exception) {
+                if (DEBUG) e.printStackTrace()
+                sb.append("failed")
+            }
+        }
+        sb.print()
     }
 
     /**
@@ -46,9 +63,18 @@ object Launchy {
         resultCode: Int,
         data: Intent?
     ) {
-        ACTIVITY_CALLBACKS
-            ?.slice(requestCode)
-            ?.invoke(fragment, resultCode, data)
+        val sb = StringBuilder("onActivityResult #$requestCode: ")
+        when (val callback = ACTIVITY_CALLBACKS?.slice(requestCode)) {
+            null -> sb.append("no result")
+            else -> try {
+                callback(fragment, resultCode, data)
+                sb.append("success")
+            } catch (e: Exception) {
+                if (DEBUG) e.printStackTrace()
+                sb.append("failed")
+            }
+        }
+        sb.print()
     }
 
     /**
@@ -61,9 +87,18 @@ object Launchy {
         resultCode: Int,
         data: Intent?
     ) {
-        ACTIVITY_CALLBACKS
-            ?.slice(requestCode)
-            ?.invoke(fragment, resultCode, data)
+        val sb = StringBuilder("onActivityResult #$requestCode: ")
+        when (val callback = ACTIVITY_CALLBACKS?.slice(requestCode)) {
+            null -> sb.append("no result")
+            else -> try {
+                callback(fragment, resultCode, data)
+                sb.append("success")
+            } catch (e: Exception) {
+                if (DEBUG) e.printStackTrace()
+                sb.append("failed")
+            }
+        }
+        sb.print()
     }
 
     /**
@@ -75,9 +110,18 @@ object Launchy {
         requestCode: Int,
         grantResults: IntArray
     ) {
-        PERMISSION_CALLBACKS
-            ?.slice(requestCode)
-            ?.invoke(activity, grantResults.all { it == PermissionChecker.PERMISSION_GRANTED })
+        val sb = StringBuilder("onRequestPermissionsResult #$requestCode: ")
+        when (val callback = PERMISSION_CALLBACKS?.slice(requestCode)) {
+            null -> sb.append("no result")
+            else -> try {
+                callback(activity, grantResults.all { it == PermissionChecker.PERMISSION_GRANTED })
+                sb.append("success")
+            } catch (e: Exception) {
+                if (DEBUG) e.printStackTrace()
+                sb.append("failed")
+            }
+        }
+        sb.print()
     }
 
     /**
@@ -89,9 +133,18 @@ object Launchy {
         requestCode: Int,
         grantResults: IntArray
     ) {
-        PERMISSION_CALLBACKS
-            ?.slice(requestCode)
-            ?.invoke(fragment, grantResults.all { it == PermissionChecker.PERMISSION_GRANTED })
+        val sb = StringBuilder("onRequestPermissionsResult #$requestCode: ")
+        when (val callback = PERMISSION_CALLBACKS?.slice(requestCode)) {
+            null -> sb.append("no result")
+            else -> try {
+                callback(fragment, grantResults.all { it == PermissionChecker.PERMISSION_GRANTED })
+                sb.append("success")
+            } catch (e: Exception) {
+                if (DEBUG) e.printStackTrace()
+                sb.append("failed")
+            }
+        }
+        sb.print()
     }
 
     /**
@@ -103,30 +156,43 @@ object Launchy {
         requestCode: Int,
         grantResults: IntArray
     ) {
-        PERMISSION_CALLBACKS
-            ?.slice(requestCode)
-            ?.invoke(fragment, grantResults.all { it == PermissionChecker.PERMISSION_GRANTED })
+        val sb = StringBuilder("onRequestPermissionsResult #$requestCode: ")
+        when (val callback = PERMISSION_CALLBACKS?.slice(requestCode)) {
+            null -> sb.append("no result")
+            else -> try {
+                callback(fragment, grantResults.all { it == PermissionChecker.PERMISSION_GRANTED })
+                sb.append("success")
+            } catch (e: Exception) {
+                if (DEBUG) e.printStackTrace()
+                sb.append("failed")
+            }
+        }
+        sb.print()
     }
 
     @Suppress("UNCHECKED_CAST")
     internal fun <T> appendActivity(callback: T.(Int, Intent?) -> Unit): Int {
+        val sb = StringBuilder("appendActivity #")
         if (ACTIVITY_CALLBACKS == null) {
             ACTIVITY_CALLBACKS = SparseArrayCompat()
         }
         // unsigned 16-bit int, as required by FragmentActivity precondition
-        val requestCode = ACTIVITY_CALLBACKS!! newRequestCode 65535
+        val requestCode = requestCodeOf(ACTIVITY_CALLBACKS!!, 65535)
         ACTIVITY_CALLBACKS!!.append(requestCode, (callback as Any.(Int, Intent?) -> Unit))
+        sb.append(requestCode).print()
         return requestCode
     }
 
     @Suppress("UNCHECKED_CAST")
     internal fun <T> appendPermission(callback: T.(Boolean) -> Unit): Int {
+        val sb = StringBuilder("appendPermission #")
         if (PERMISSION_CALLBACKS == null) {
             PERMISSION_CALLBACKS = SparseArrayCompat()
         }
         // unsigned 8-bit int
-        val requestCode = PERMISSION_CALLBACKS!! newRequestCode 255
+        val requestCode = requestCodeOf(PERMISSION_CALLBACKS!!, 255)
         PERMISSION_CALLBACKS!!.append(requestCode, (callback as Any.(Boolean) -> Unit))
+        sb.append(requestCode).print()
         return requestCode
     }
 
@@ -137,21 +203,13 @@ object Launchy {
         return callback
     }
 
-    /**
-     * Attempt to get [Random] instance from [WeakReference].
-     * When no instance is found, create a new one and save it.
-     * Then generate a random number that is guaranteed to be non-duplicate of [ACTIVITY_CALLBACKS] key.
-     */
-    private infix fun SparseArrayCompat<*>.newRequestCode(bound: Int): Int {
-        var random = RANDOM?.get()
-        if (random == null) {
-            random = Random()
-            RANDOM = WeakReference(random)
-        }
+    /** Generate a random number that is guaranteed to be non-duplicate. */
+    @Suppress("NOTHING_TO_INLINE")
+    private inline fun requestCodeOf(array: SparseArrayCompat<*>, bound: Int): Int {
         var requestCode: Int
         do {
-            requestCode = random.nextInt(bound)
-        } while (containsKey(requestCode))
+            requestCode = (0..bound).random()
+        } while (array.containsKey(requestCode))
         return requestCode
     }
 }

@@ -6,8 +6,8 @@ package com.hendraanggrian.appcompat.launchy
 
 import android.app.Activity
 import android.app.Fragment
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.M
+import android.os.Build
+import androidx.core.app.ActivityCompat
 import com.hendraanggrian.appcompat.launchy.internal.isAllGranted
 
 /**
@@ -24,8 +24,8 @@ fun <T : Activity> T.launchPermission(
     vararg permissions: String,
     callback: T.(isGranted: Boolean) -> Unit
 ) = when {
-    SDK_INT >= M && !isAllGranted(*permissions) ->
-        requestPermissions(permissions, Launchy.appendPermission(callback))
+    Build.VERSION.SDK_INT >= 23 && !isAllGranted(*permissions) ->
+        ActivityCompat.requestPermissions(this, permissions, Launchy.appendPermission(callback))
     else -> callback.invoke(this, true)
 }
 
@@ -43,7 +43,7 @@ fun <T : Fragment> T.launchPermission(
     vararg permissions: String,
     callback: T.(isGranted: Boolean) -> Unit
 ) = when {
-    SDK_INT >= M && !activity.isAllGranted(*permissions) ->
+    Build.VERSION.SDK_INT >= 23 && !activity.isAllGranted(*permissions) ->
         requestPermissions(permissions, Launchy.appendPermission(callback))
     else -> callback.invoke(this, true)
 }
@@ -62,7 +62,7 @@ fun <T : androidx.fragment.app.Fragment> T.launchPermission(
     vararg permissions: String,
     callback: T.(isGranted: Boolean) -> Unit
 ) = when {
-    SDK_INT >= M && !context!!.isAllGranted(*permissions) ->
+    Build.VERSION.SDK_INT >= 23 && !context!!.isAllGranted(*permissions) ->
         requestPermissions(permissions, Launchy.appendPermission(callback))
     else -> callback.invoke(this, true)
 }

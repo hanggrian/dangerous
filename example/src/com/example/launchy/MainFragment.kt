@@ -27,6 +27,11 @@ class MainFragment : PreferenceFragmentCompat() {
         }
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        Log.d("FRAGMENT1", requestCode.toString())
+    }
+
     class PermissionsDialog : AppCompatDialogFragment() {
 
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -77,6 +82,11 @@ class MainFragment : PreferenceFragmentCompat() {
                     }
                 }
                 .create()
+        }
+
+        override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+            Log.d("FRAGMENT2", requestCode.toString())
         }
     }
 }
