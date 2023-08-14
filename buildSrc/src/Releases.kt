@@ -1,7 +1,37 @@
-const val RELEASE_USER = "hendraanggrian"
-const val RELEASE_REPO = "appcompat"
-const val RELEASE_GROUP = "com.$RELEASE_USER.$RELEASE_REPO"
-const val RELEASE_ARTIFACT = "launchy"
+import org.gradle.api.Project
+import org.gradle.api.publish.maven.MavenPom
+
+const val DEVELOPER_ID = "hendraanggrian"
+const val DEVELOPER_NAME = "Hendra Anggrian"
+const val DEVELOPER_URL = "https://github.com/$DEVELOPER_ID/"
+
+const val RELEASE_GROUP = "com.hendraanggrian.appcompat"
+const val RELEASE_ARTIFACT = "hallpass"
 const val RELEASE_VERSION = "0.1"
-const val RELEASE_DESC = "Direct Android activity and permission result"
-const val RELEASE_WEB = "https://github.com/$RELEASE_USER/$RELEASE_ARTIFACT"
+const val RELEASE_DESCRIPTION = "Leverage Kotlin API for Android permissions"
+const val RELEASE_URL = "https://github.com/$DEVELOPER_ID/$RELEASE_ARTIFACT/"
+
+fun Project.configurePom(pom: MavenPom) {
+    pom.name.set(name)
+    pom.description.set(RELEASE_DESCRIPTION)
+    pom.url.set(RELEASE_URL)
+    pom.licenses {
+        license {
+            name.set("The Apache License, Version 2.0")
+            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+            distribution.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+        }
+    }
+    pom.scm {
+        connection.set("scm:git:https://github.com/$DEVELOPER_ID/$RELEASE_ARTIFACT.git")
+        developerConnection.set("scm:git:ssh://git@github.com/$DEVELOPER_ID/$RELEASE_ARTIFACT.git")
+        url.set(RELEASE_URL)
+    }
+    pom.developers {
+        developer {
+            id.set(DEVELOPER_ID)
+            name.set(DEVELOPER_NAME)
+            url.set(DEVELOPER_URL)
+        }
+    }
+}

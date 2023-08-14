@@ -3,9 +3,10 @@
 [![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
 [![license](https://img.shields.io/github/license/hendraanggrian/launchy)](http://www.apache.org/licenses/LICENSE-2.0)
 
-Launchy
-=======
+# Hall Pass
+
 Kotlin-focused library to simplify the process of handling result from an Activity and requesting permissions.
+
 * Put activity/permission result logic directly in the caller, no more `if-else` in `onActivityResult` and `onRequestPermissionsResult`.
 * Never have to deal with request code again, they are auto-generated.
 
@@ -13,7 +14,7 @@ Kotlin-focused library to simplify the process of handling result from an Activi
 launchActivity(Intent(Intent.ACTION_GET_CONTENT).setType("image/*")) { resultCode, data ->
     if (resultCode == Activity.RESULT_OK) {
         val uri = data.getData()
-        imageView.setImageUri(uri)   
+        imageView.setImageUri(uri)
     }
 }
 
@@ -24,8 +25,8 @@ launchPermissions(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_
 }
 ```
 
-Download
---------
+## Download
+
 ```gradle
 repositories {
     google()
@@ -37,20 +38,20 @@ dependencies {
 }
 ```
 
-Usage
------
+## Usage
 
 ### Launching activity
+
 Start activity for result from Activity, Fragment, or support Fragment.
 
 ```kotlin
 class MyActivity : Activity() {
-    
+
     fun onClick(view: View) {
         launchActivity(Intent(Intent.ACTION_GET_CONTENT).setType("image/*")) { resultCode, data ->
             if (resultCode == Activity.RESULT_OK) {
                 val uri = data.getData()
-                imageView.setImageUri(uri)   
+                imageView.setImageUri(uri)
             }
         }
     }
@@ -61,6 +62,7 @@ class MyActivity : Activity() {
 ```
 
 ### Requesting permissions
+
 Request permission is a little different, it can only be implanted in Activity.
 That activity is then used as type `T` in `launchPermission<T>`.
 

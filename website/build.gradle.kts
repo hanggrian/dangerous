@@ -1,18 +1,30 @@
 plugins {
-    `git-publish`
+    alias(libs.plugins.pages)
+    alias(libs.plugins.git.publish)
+}
+
+pages {
+    styles.add("https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css")
+    scripts.addAll(
+        "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-groovy.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-kotlin.min.js"
+    )
+    minimal {
+        authorName = DEVELOPER_NAME
+        authorUrl = DEVELOPER_URL
+        projectName = RELEASE_ARTIFACT
+        projectDescription = RELEASE_DESCRIPTION
+        projectUrl = RELEASE_URL
+    }
 }
 
 gitPublish {
-    repoUri.set(RELEASE_WEB)
+    repoUri.set("git@github.com:$DEVELOPER_ID/$RELEASE_ARTIFACT.git")
     branch.set("gh-pages")
-    contents.from(
-        "src",
-        "../$RELEASE_ARTIFACT/build/docs"
-    )
+    contents.from(pages.outputDirectory)
 }
 
-tasks {
-    "gitPublishCopy" {
-        dependsOn(":$RELEASE_ARTIFACT:dokka")
-    }
+tasks.register(LifecycleBasePlugin.CLEAN_TASK_NAME) {
+    delete(buildDir)
 }
