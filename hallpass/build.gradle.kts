@@ -24,6 +24,7 @@ mavenPublishing {
 dependencies {
     ktlint(libs.ktlint, ::configureKtlint)
     ktlint(libs.rulebook.ktlint)
-    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.fragment)
     testImplementation(libs.bundles.androidx.test)
 }

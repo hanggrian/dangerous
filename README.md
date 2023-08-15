@@ -3,24 +3,23 @@
 [![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
 [![license](https://img.shields.io/github/license/hendraanggrian/launchy)](http://www.apache.org/licenses/LICENSE-2.0)
 
-# Hall Pass
+# Hallpass
 
-Kotlin-focused library to simplify the process of handling result from an Activity and requesting permissions.
+Kotlin-focused library to simplify the process of requesting permissions.
 
-* Put activity/permission result logic directly in the caller, no more `if-else` in `onActivityResult` and `onRequestPermissionsResult`.
-* Never have to deal with request code again, they are auto-generated.
+- Blocking call using `requirePermission`.
+- Or use Kotlin DSL using `withPermission`.
+- Force user to open settings when the permission is always declined.
 
 ```kotlin
-launchActivity(Intent(Intent.ACTION_GET_CONTENT).setType("image/*")) { resultCode, data ->
-    if (resultCode == Activity.RESULT_OK) {
-        val uri = data.getData()
-        imageView.setImageUri(uri)
-    }
-}
+requirePermission(Manifest.permission.CAMERA)
+camera.start()
 
-launchPermissions(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE) { granted ->
-    if (granted) {
-        openCamera()
+// or
+
+withPermission(Manifest.permission.CAMERA) { isGranted ->
+    if (isGranted) {
+        camera.start()
     }
 }
 ```
@@ -30,55 +29,29 @@ launchPermissions(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_
 ```gradle
 repositories {
     google()
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
-    compile 'com.hendraanggrian.appcompat:launchy:0.1'
+    compile 'com.hendraanggrian.appcompat:hallpass:0.1'
 }
 ```
 
 ## Usage
 
-### Launching activity
-
-Start activity for result from Activity, Fragment, or support Fragment.
+To force user open Settings app, provide the second DSL.
 
 ```kotlin
-class MyActivity : Activity() {
-
-    fun onClick(view: View) {
-        launchActivity(Intent(Intent.ACTION_GET_CONTENT).setType("image/*")) { resultCode, data ->
-            if (resultCode == Activity.RESULT_OK) {
-                val uri = data.getData()
-                imageView.setImageUri(uri)
-            }
-        }
+requestPermissions(Manifest.permission.CAMERA, { isGranted ->
+    if (isGranted) {
+        camera.start()
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) =
-        Launchy.onActivityResult(this, requestCode, resultCode, data)
-}
-```
-
-### Requesting permissions
-
-Request permission is a little different, it can only be implanted in Activity.
-That activity is then used as type `T` in `launchPermission<T>`.
-
-```kotlin
-class MyActivity : Activity() {
-
-    override fun onCreate() {
-        super.onCreate()
-        launchPermissions<MyActivity>(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE) { isGranted ->
-            if (isGranted) {
-                openCamera()
-            }
+}) { settingsIntent ->
+    AlertDialog.Builder(this)
+        .setTitle("Permission Denied")
+        .setMessage("Need to be enabled manually.")
+        .setPositiveButton("Go to Settings") { _, _ ->
+            startActivity(settingsIntent)
         }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) =
-        Launchy.onRequestPermissionsResult(this, requestCode, grantResults)
 }
 ```

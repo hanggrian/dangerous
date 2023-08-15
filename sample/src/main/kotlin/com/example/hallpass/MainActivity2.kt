@@ -7,10 +7,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.appbar.AppBarLayout
+import com.hendraanggrian.appcompat.hallpass.requirePermission
 import com.hendraanggrian.appcompat.hallpass.withPermission
 import com.priyankvasa.android.cameraviewex.CameraView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity2 : AppCompatActivity() {
     lateinit var appbarLayout: AppBarLayout
     lateinit var toolbar: Toolbar
     lateinit var cameraView: CameraView
@@ -24,24 +25,18 @@ class MainActivity : AppCompatActivity() {
         cameraView = findViewById(R.id.cameraView)
         setSupportActionBar(toolbar)
 
-        withPermission(Manifest.permission.CAMERA, { isGranted ->
-            when {
-                isGranted -> cameraView.start()
-                else -> finish()
-            }
-        }) { settingsIntent ->
-            AlertDialog.Builder(this)
-                .setTitle("Permission Denied")
-                .setMessage("You need to manually enable it.")
-                .setPositiveButton("Go to Settings") { _, _ ->
-                    startActivity(settingsIntent)
-                    finish()
-                }
-                .setNegativeButton(android.R.string.no) { _, _ ->
-                    finish()
-                }
-                .show()
-        }
+        requirePermission(Manifest.permission.CAMERA)
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun onResume() {
+        super.onResume()
+        cameraView.start()
+    }
+
+    override fun onPause() {
+        cameraView.stop()
+        super.onPause()
     }
 
     override fun onDestroy() {
