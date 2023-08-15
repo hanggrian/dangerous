@@ -20,7 +20,7 @@
                 <h1>hallpass</h1>
                 <p>Leverage Kotlin API for Android permissions</p>
                 <p class="view">
-                    <a href="https://github.com/hendraanggrian/hallpass/">View the Project on GitHub <small>hendraanggrian/hallpass</small></a>
+                    <a href="https://github.com/hendraanggrian/hallpass/">View the Project on GitHub <small>hendraanggrian/hallpas</small></a>
                 </p>
             </header>
             <section>
@@ -31,25 +31,25 @@
 <a href="https://s01.oss.sonatype.org/content/repositories/snapshots/com/hendraanggrian/hallpass/"><img alt="Nexus Snapshot" src="https://img.shields.io/nexus/s/com.hendraanggrian/hallpass?server=https%3A%2F%2Fs01.oss.sonatype.org"></a>
 <a href="https://developer.android.com/studio/releases/platforms/#4.0"><img alt="Android SDK" src="https://img.shields.io/badge/sdk-14%2B-informational"></a>
                 </p>
-
+                
                 <h1>Hallpass</h1>
-
+                
                 <p>Lightweight library to simplify the process of requesting permissions.</p>
-
+                
                 <ul>
-
+                    
                     <li>
                         Blocking call using <code>requirePermission</code>.
                     </li>
-
+                    
                     <li>
                         Or use Kotlin DSL using <code>withPermission</code>.
                     </li>
-
+                    
                     <li>Force user to open settings when the permission is always declined.</li>
-
+                    
                 </ul>
-
+                
                 <pre><code class="language-kotlin">requirePermission(Manifest.permission.CAMERA)
 camera.start()
 
@@ -61,10 +61,10 @@ withPermission(Manifest.permission.CAMERA) { isGranted -&gt;
     }
 }
 </code></pre>
-
+                
                 <h2>Download</h2>
-
-                <pre><code class="language-groovy">repositories {
+                
+                <pre><code class="language-gradle">repositories {
     google()
     mavenCentral()
 }
@@ -72,11 +72,11 @@ dependencies {
     compile 'com.hendraanggrian.appcompat:hallpass:0.1'
 }
 </code></pre>
-
+                
                 <h2>Usage</h2>
-
+                
                 <p>To force user open Settings app, provide the second DSL.</p>
-
+                
                 <pre><code class="language-kotlin">withPermission(Manifest.permission.CAMERA, { settingsIntent -&gt;
   AlertDialog.Builder(this)
     .setTitle("Permission Denied")
@@ -90,7 +90,7 @@ dependencies {
   }
 }
 </code></pre>
-
+                
             </section>
             <footer>
                 <p>
