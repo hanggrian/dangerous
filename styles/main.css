@@ -177,7 +177,7 @@ header {
         display: block;
         color: var(--button-text2); }
   header li {
-    width: 270px;
+    width: 269px;
     float: left;
     border-right: 1px solid var(--button-border);
     height: 40px; }
