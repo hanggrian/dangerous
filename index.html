@@ -3,7 +3,7 @@
     <head>
         <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
-        <title>hallpass</title>
+        <title>dangerous</title>
         <meta content="width=device-width" name="viewport">
         <meta content="chrome=1" http-equiv="X-UA-Compatible">
         <link href="styles/main.css" rel="stylesheet">
@@ -11,45 +11,45 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
         <script src="scripts/theme.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-groovy.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-kotlin.min.js"></script>
         <!--Primary meta tags-->
-        <meta content="hallpass" name="title">
-        <meta content="Leverage Kotlin API for Android permissions" name="description">
+        <meta content="dangerous" name="title">
+        <meta content="Leverage Kotlin API for Android runtime permissions" name="description">
     </head>
     <body>
         <div class="wrapper">
             <header>
-                <h1>hallpass</h1>
-                <p>Leverage Kotlin API for Android permissions</p>
+                <h1>dangerous</h1>
+                <p>Leverage Kotlin API for Android runtime permissions</p>
                 <p class="view">
-                    <a href="https://github.com/hendraanggrian/hallpass/">View the Project on GitHub <small>hendraanggrian/hallpas</small></a>
+                    <a href="https://github.com/hendraanggrian/dangerous/">View the Project on GitHub <small>hendraanggrian/dangerous</small></a>
                 </p>
             </header>
             <section>
                 <p>
-                    <a href="https://travis-ci.com/github/hendraanggrian/hallpass"><img alt="Travis CI" src="https://img.shields.io/travis/com/hendraanggrian/hallpass"></a>
-<a href="https://codecov.io/gh/hendraanggrian/hallpass/"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/hendraanggrian/hallpass"></a>
-<a href="https://search.maven.org/artifact/com.hendraanggrian/hallpass/"><img alt="Maven Central" src="https://img.shields.io/maven-central/v/com.hendraanggrian/hallpass"></a>
-<a href="https://s01.oss.sonatype.org/content/repositories/snapshots/com/hendraanggrian/hallpass/"><img alt="Nexus Snapshot" src="https://img.shields.io/nexus/s/com.hendraanggrian/hallpass?server=https%3A%2F%2Fs01.oss.sonatype.org"></a>
+                    <a href="https://travis-ci.com/github/hendraanggrian/dangerous"><img alt="Travis CI" src="https://img.shields.io/travis/com/hendraanggrian/dangerous"></a>
+<a href="https://codecov.io/gh/hendraanggrian/dangerous/"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/hendraanggrian/dangerous"></a>
+<a href="https://search.maven.org/artifact/com.hendraanggrian.appcompat/dangerous/"><img alt="Maven Central" src="https://img.shields.io/maven-central/v/com.hendraanggrian.appcompat/dangerous"></a>
+<a href="https://s01.oss.sonatype.org/content/repositories/snapshots/com/hendraanggrian/appcompat/dangerous/"><img alt="Nexus Snapshot" src="https://img.shields.io/nexus/s/com.hendraanggrian.appcompat/dangerous?server=https%3A%2F%2Fs01.oss.sonatype.org"></a>
 <a href="https://developer.android.com/studio/releases/platforms/#4.0"><img alt="Android SDK" src="https://img.shields.io/badge/sdk-14%2B-informational"></a>
                 </p>
-                
-                <h1>Hallpass</h1>
-                
+
+                <h1>Dangerous</h1>
+
                 <p>Lightweight library to simplify the process of requesting permissions.</p>
-                
+
                 <ul>
-                    
+
                     <li>
                         Blocking call using <code>requirePermission</code>.
                     </li>
-                    
+
                     <li>
                         Or use Kotlin DSL using <code>withPermission</code>.
                     </li>
-                    
+
                     <li>Force user to open settings when the permission is always declined.</li>
-                    
+
                 </ul>
-                
+
                 <pre><code class="language-kotlin">requirePermission(Manifest.permission.CAMERA)
 camera.start()
 
@@ -61,36 +61,36 @@ withPermission(Manifest.permission.CAMERA) { isGranted -&gt;
     }
 }
 </code></pre>
-                
+
                 <h2>Download</h2>
-                
-                <pre><code class="language-gradle">repositories {
+
+                <pre><code class="language-groovy">repositories {
     google()
     mavenCentral()
 }
 dependencies {
-    compile 'com.hendraanggrian.appcompat:hallpass:0.1'
+    compile 'com.hendraanggrian.appcompat:dangerous:0.1'
 }
 </code></pre>
-                
+
                 <h2>Usage</h2>
-                
+
                 <p>To force user open Settings app, provide the second DSL.</p>
-                
+
                 <pre><code class="language-kotlin">withPermission(Manifest.permission.CAMERA, { settingsIntent -&gt;
-  AlertDialog.Builder(this)
-    .setTitle("Permission Denied")
-    .setMessage("Need to be enabled manually.")
-    .setPositiveButton("Go to Settings") { _, _ -&gt;
-      startActivity(settingsIntent)
-    }
+    AlertDialog.Builder(this)
+        .setTitle("Permission Denied")
+        .setMessage("Need to be enabled manually.")
+        .setPositiveButton("Go to Settings") { _, _ -&gt;
+            startActivity(settingsIntent)
+        }
 }) { isGranted -&gt;
-  if (isGranted) {
-    camera.start()
-  }
+    if (isGranted) {
+        camera.start()
+    }
 }
 </code></pre>
-                
+
             </section>
             <footer>
                 <p>
