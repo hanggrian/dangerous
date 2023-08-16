@@ -3,12 +3,13 @@
   <uses-permission android:name="android.permission.CAMERA"/>
 
   <application
+    android:name="androidx.multidex.MultiDexApplication"
     android:allowBackup="true"
-    android:label="Hallpass Example"
+    android:label="Dangerous Example"
     android:supportsRtl="true"
     android:theme="@style/Theme.MaterialComponents.NoActionBar">
     <activity
-      android:name="com.example.hallpass.MainActivity"
+      android:name="com.example.dangerous.MainActivity"
       android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>

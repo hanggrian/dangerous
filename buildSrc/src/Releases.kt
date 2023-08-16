@@ -6,9 +6,9 @@ const val DEVELOPER_NAME = "Hendra Anggrian"
 const val DEVELOPER_URL = "https://github.com/$DEVELOPER_ID/"
 
 const val RELEASE_GROUP = "com.hendraanggrian.appcompat"
-const val RELEASE_ARTIFACT = "hallpass"
+const val RELEASE_ARTIFACT = "dangerous"
 const val RELEASE_VERSION = "0.1"
-const val RELEASE_DESCRIPTION = "Leverage Kotlin API for Android permissions"
+const val RELEASE_DESCRIPTION = "Leverage Kotlin API for Android runtime permissions"
 const val RELEASE_URL = "https://github.com/$DEVELOPER_ID/$RELEASE_ARTIFACT/"
 
 fun Project.configurePom(pom: MavenPom) {

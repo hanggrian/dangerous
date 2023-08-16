@@ -4,6 +4,8 @@ import com.vanniktech.maven.publish.SonatypeHost
 plugins {
     alias(libs.plugins.android.library)
     kotlin("android")
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.kotlinx.kover)
     alias(libs.plugins.maven.publish)
 }
 
@@ -26,5 +28,11 @@ dependencies {
     ktlint(libs.rulebook.ktlint)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.fragment)
+    testImplementation(kotlin("test-junit", libs.versions.kotlin.get()))
+    testImplementation(libs.androidx.appcompat)
     testImplementation(libs.bundles.androidx.test)
+}
+
+tasks.dokkaHtml {
+    outputDirectory.set(buildDir.resolve("dokka/dokka/"))
 }

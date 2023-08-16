@@ -1,14 +1,17 @@
-[![download](https://api.bintray.com/packages/hendraanggrian/appcompat/launchy/images/download.svg)](https://bintray.com/hendraanggrian/appcompat/launchy/_latestVersion)
-[![build](https://travis-ci.com/hendraanggrian/launchy.svg)](https://travis-ci.com/hendraanggrian/launchy)
-[![ktlint](https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg)](https://ktlint.github.io/)
-[![license](https://img.shields.io/github/license/hendraanggrian/launchy)](http://www.apache.org/licenses/LICENSE-2.0)
+[![Travis CI](https://img.shields.io/travis/com/hendraanggrian/dangerous)](https://travis-ci.com/github/hendraanggrian/dangerous/)
+[![Codecov](https://img.shields.io/codecov/c/github/hendraanggrian/dangerous)](https://codecov.io/gh/hendraanggrian/dangerous/)
+[![Maven Central](https://img.shields.io/maven-central/v/com.hendraanggrian.appcompat/dangerous)](https://search.maven.org/artifact/com.hendraanggrian.appcompat/dangerous/)
+[![Nexus Snapshot](https://img.shields.io/nexus/s/com.hendraanggrian.appcompat/dangerous?server=https%3A%2F%2Fs01.oss.sonatype.org)](https://s01.oss.sonatype.org/content/repositories/snapshots/com/hendraanggrian/appcompat/dangerous/)
+[![Android SDK](https://img.shields.io/badge/sdk-14%2B-informational)](https://developer.android.com/studio/releases/platforms/#4.0)
 
-# Hallpass
+# Dangerous
 
-Kotlin-focused library to simplify the process of requesting permissions.
+Lightweight library to simplify the process of requesting runtime permissions.
+Powered by the newer [Activity Result APIs](https://developer.android.com/training/basics/intents/result),
+so we no longer have to override `onActivityResult()`.
 
-- Blocking call using `requirePermission`.
-- Or use Kotlin DSL using `withPermission`.
+- Blocking call with `requirePermission`, or use Kotlin DSL
+  with `withPermission`.
 - Force user to open settings when the permission is always declined.
 
 ```kotlin
@@ -31,9 +34,8 @@ repositories {
     google()
     mavenCentral()
 }
-
 dependencies {
-    compile 'com.hendraanggrian.appcompat:hallpass:0.1'
+    compile 'com.hendraanggrian.appcompat:dangerous:0.1'
 }
 ```
 
@@ -42,16 +44,16 @@ dependencies {
 To force user open Settings app, provide the second DSL.
 
 ```kotlin
-requestPermissions(Manifest.permission.CAMERA, { isGranted ->
-    if (isGranted) {
-        camera.start()
-    }
-}) { settingsIntent ->
+withPermission(Manifest.permission.CAMERA, { settingsIntent ->
     AlertDialog.Builder(this)
         .setTitle("Permission Denied")
         .setMessage("Need to be enabled manually.")
         .setPositiveButton("Go to Settings") { _, _ ->
             startActivity(settingsIntent)
         }
+}) { isGranted ->
+    if (isGranted) {
+        camera.start()
+    }
 }
 ```

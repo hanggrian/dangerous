@@ -2,7 +2,7 @@
 jdk = "17" # min for android
 kotlin = "1.8.20"
 sdk-min = "14"
-sdk-target = "33"
+sdk-target = "33" # max for robolectric
 android-plugin = "8.1.0"
 androidx = "1.6.0"
 androidx-test = "1.5.0"
@@ -10,6 +10,8 @@ androidx-test = "1.5.0"
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-plugin" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "kotlin" }
+kotlinx-kover = "org.jetbrains.kotlinx.kover:0.6.1"
 maven-publish = "com.vanniktech.maven.publish.base:0.25.3"
 git-publish = "org.ajoberstar.git-publish:4.2.0"
 pages = "com.hendraanggrian.pages:0.1"
@@ -19,7 +21,6 @@ pages = "com.hendraanggrian.pages:0.1"
 ktlint = "com.pinterest:ktlint:0.49.1"
 rulebook-ktlint = "com.hendraanggrian.rulebook:rulebook-ktlint:0.3-SNAPSHOT"
 # main
-kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
 material = { module = "com.google.android.material:material", version.ref = "androidx" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx" }

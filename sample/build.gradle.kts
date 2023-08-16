@@ -1,11 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     kotlin("android") version libs.versions.kotlin
-    kotlin("kapt") version libs.versions.kotlin
 }
 
 android {
-    namespace = "com.example.hallpass"
+    namespace = "com.example.$RELEASE_ARTIFACT"
     testNamespace = "$namespace.test"
     defaultConfig {
         applicationId = namespace
